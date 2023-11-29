@@ -1,0 +1,45 @@
+type IUser = {
+  token?: string | null
+  Address: string
+  AreaId: number
+  AreaName: null
+  Avatar: string
+  BankAccountName: null
+  BankAccountNumber: null
+  BankBranch: null
+  BankName: null
+  BranchIds: string
+  CreatedBy: string
+  CreatedOn: string
+  DOB: string
+  DistrictId: number
+  DistrictName: null
+  Email: string
+  Enable: true
+  Extension: string
+  FullName: string
+  Gender: number
+  JobId: null
+  LearningNeedId: null
+  LearningNeedName: null
+  LearningStatus: number
+  LearningStatusName: string
+  Mobile: string
+  ModifiedBy: string
+  ModifiedOn: string
+  ParentId: number
+  PurposeId: null
+  PurposeName: null
+  RoleId: number
+  RoleName: string
+  SaleId: number
+  SaleName: null
+  SourceId: null
+  SourceName: null
+  StatusId: number
+  UserCode: string
+  UserInformationId: number
+  UserName: string
+  WardId: number
+  WardName: null
+}

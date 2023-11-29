@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
+
+        <!--    Custom    -->
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item> // Status bar text white
+    </style>
+
+    <style name="SplashScreenTheme" parent="SplashScreen_SplashTheme">
+        <item name="android:statusBarColor">@android:color/white</item> // Status bar background
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+</resources>
