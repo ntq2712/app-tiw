@@ -23,7 +23,7 @@ const Tabs = ({route, focused}: {route: any; focused: boolean}) => {
     ))
   }
 
-  if (route.name == 'Cart') {
+  if (route.name == 'ClassTab') {
     return (iconName = focused ? (
       <Tab actived={true} title="DS Lớp" icon={require('~/assets/icons/acivated/cart.png')} />
     ) : (

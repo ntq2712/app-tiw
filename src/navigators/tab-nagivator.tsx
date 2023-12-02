@@ -6,10 +6,10 @@ import Tabs from '~/common/components/TabNavigator'
 import HomeScreen from '~/views/home'
 import UserTab from '~/views/user-tab'
 import SearchTab from '~/views/search-tab'
-import CartTab from '~/views/cart'
 import {isIOS} from 'green-native-ts'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {useGlobalContext} from '~/provider/AppProvider'
+import ClassTab from '~/views/class'
 
 function SettingsScreen() {
   return (
@@ -40,7 +40,7 @@ function TabNavigator() {
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
       {isProd && <Tab.Screen name="Search" component={SearchTab} />}
-      {isProd && <Tab.Screen name="Cart" component={CartTab} />}
+      {isProd && <Tab.Screen name="ClassTab" component={ClassTab} />}
       <Tab.Screen name="User" component={UserTab} />
     </Tab.Navigator>
   )

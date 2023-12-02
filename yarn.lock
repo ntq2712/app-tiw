@@ -3682,10 +3682,10 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6,
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.10.tgz#147d3a006da4ca3ce14728c7aefc287c367d7a6c"
   integrity sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==
 
-green-native-ts@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/green-native-ts/-/green-native-ts-1.0.5.tgz#6c120ee518870d2323c3c250c1db6122ef2ec99c"
-  integrity sha512-SoytA0N9nV/a+4Zd5FwocvLPQP0LkKstIxLFw10ry6z7oART0ifHQm/WOosLKeO4vhpc9M4BbIWAQlxXc89ONw==
+green-native-ts@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/green-native-ts/-/green-native-ts-1.2.0.tgz#5727e9120ccabb5200fe5db3d6f4d48444036b06"
+  integrity sha512-vqef3YoWsZWibHqMzPxMP9zNaqDCbS8WKpIjxzXug1OPMlhpRcS4uHfOOgmMAvChHRMA+ui+OH3pdrmpa7E9yQ==
   dependencies:
     react-native-vector-icons "^8.1.0"
 

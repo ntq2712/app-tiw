@@ -1,0 +1,44 @@
+type TClassType = {
+  AcademicId: number
+  AcademicName: string
+  BranchId: number
+  BranchName: string
+  CertificateTemplateId: null
+  CreatedBy: string
+  CreatedOn: string
+  CurriculumId: number
+  CurriculumName: string
+  Enable: true
+  EndDay: string
+  GradeId: number
+  GradeName: string
+  Id: number
+  IsMonthly: false
+  LessonCompleted: number
+  MaxQuantity: number
+  ModifiedBy: string
+  ModifiedOn: string
+  Name: string
+  PaymentType: number
+  PaymentTypeName: string
+  Price: number
+  ProgramId: number
+  ProgramName: string
+  ScoreboardTemplateId: number
+  StartDay: string
+  Status: number
+  StatusName: string
+  TeacherId: number
+  TeacherName: null
+  Thumbnail: null
+  Time: number
+  TotalLesson: number
+  TotalStudent: number
+  Type: number
+  TypeName: string
+  Teachers: Array<{
+    TeacherCode: string
+    TeacherId: number
+    TeacherName: string
+  }>
+}

@@ -28,10 +28,12 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
   const [isProd, setIsProd] = useState(true)
 
   function parseJwt(token) {
-    var base64Url = token.split('.')[1]
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-    var jsonPayload = decodeURIComponent(Buffer.from(base64, 'base64').toString())
-    return JSON.parse(jsonPayload) || {}
+    if (token) {
+      var base64Url = token.split('.')[1]
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+      var jsonPayload = decodeURIComponent(Buffer.from(base64, 'base64').toString())
+      return JSON.parse(jsonPayload) || {}
+    }
   }
 
   useEffect(() => {
@@ -106,6 +108,34 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     getCurrentToken()
   }, [])
 
+  // ----------------------------------------------------------------
+
+  useEffect(() => {
+    if (user?.RoleId == 3) {
+      // Học viên
+      getMyClass()
+    }
+  }, [user])
+
+  const [classes, setClasses] = useState([])
+
+  console.log('-------- classes: ', classes)
+
+  async function getMyClass() {
+    if (user?.UserName) {
+      try {
+        const response = await RestApi.get<any>('Class', {pageIndex: 1, pageSize: 999999})
+        if (response?.status == 200) {
+          setClasses(response.data?.data)
+        } else {
+          setClasses([])
+        }
+      } catch (error) {
+        setCarts([])
+      }
+    }
+  }
+
   const contextValue = {
     mainText,
     setMainText,
@@ -148,6 +178,8 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
 
     isWelcome,
     setIsWelcome: setIsWelcome,
+    classes,
+    getClasses: getMyClass,
   }
 
   return <GlobalContext.Provider value={contextValue}>{children}</GlobalContext.Provider>

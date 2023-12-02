@@ -8,7 +8,7 @@ import TabNavigator from './tab-nagivator'
 import WebScreen from '~/views/WebScreen'
 import {wait} from '~/common'
 import Signup from '~/views/auth/signup'
-import ReviewOrderScreen from '~/views/cart/review'
+import ReviewOrderScreen from '~/views/class/ClassDetail'
 import UserInformation from '~/views/user-tab/information'
 import UserPassword from '~/views/user-tab/password'
 import Orders from '~/views/order'
@@ -23,6 +23,7 @@ import NotiScreen from '~/views/notificaions'
 import RechargeScreen from '~/views/money/recharge'
 import {View} from 'react-native'
 import WelcomeScreen from '~/welcome'
+import ClassDetail from '~/views/class/ClassDetail'
 
 const Stack = createNativeStackNavigator<TRootNavigator>()
 
@@ -60,7 +61,7 @@ const RootNavigator = () => {
         />
         <Stack.Screen options={{animation: 'slide_from_right'}} name="NotiScreen" component={NotiScreen} />
 
-        <Stack.Screen options={{animation: 'slide_from_right'}} name="RechargeScreen" component={RechargeScreen} />
+        <Stack.Screen options={{animation: 'slide_from_right'}} name="ClassDetail" component={ClassDetail} />
         <Stack.Screen options={{animation: 'fade_from_bottom'}} name="UserPassword" component={UserPassword} />
         <Stack.Screen options={{animation: 'fade_from_bottom'}} name="UserInformation" component={UserInformation} />
         <Stack.Screen options={{animation: 'simple_push'}} name="Orders" component={Orders} />

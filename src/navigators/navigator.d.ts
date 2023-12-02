@@ -31,4 +31,6 @@ type TRootNavigator = {
   NotiScreen: any
 
   RechargeScreen: any
+
+  ClassDetail: any
 }

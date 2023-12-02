@@ -44,6 +44,8 @@ type IMainProvider = {
   setIsWelcome?: Function
 
   isWelcome?: boolean
+  classes?: Array<TClassType>
+  getClasses?: Function
 }
 
 type IChildren = {
