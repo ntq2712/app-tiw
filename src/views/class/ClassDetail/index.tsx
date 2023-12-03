@@ -12,6 +12,7 @@ import HeaderDetail from '~/common/components/Header/HeaderDetail'
 import ClassMenu from './ClassMenu'
 import Info from './Info'
 import StudySessions from './StudySessions'
+import Attackdance from './Attackdance'
 
 const ClassDetail = () => {
   const insets = useSafeAreaInsets()
@@ -64,6 +65,14 @@ const ClassDetail = () => {
 
   const [curTab, setCurTab] = useState(1)
 
+  const [curStudent, setCurStudent] = useState(null)
+
+  useEffect(() => {
+    if (user?.RoleId == 3) {
+      setCurStudent(user?.UserInformationId)
+    }
+  }, [])
+
   return (
     <View style={{backgroundColor: '#f1f1f1', flex: 1}}>
       <StatusBar barStyle="light-content" />
@@ -74,6 +83,7 @@ const ClassDetail = () => {
       <ScrollView>
         {curTab == 1 && <Info router={router} detail={detail} />}
         {curTab == 2 && <StudySessions router={router} detail={detail} schedule={schedule} />}
+        {curTab == 3 && <Attackdance router={router} detail={detail} schedule={schedule} curStudent={curStudent} />}
 
         <View style={{flex: 1}}></View>
 
