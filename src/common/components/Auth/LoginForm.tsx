@@ -19,8 +19,8 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
     formState: {errors},
   } = useForm({
     defaultValues: {
-      userName: 'admin@gmail.com', //
-      password: 'lmsteam', // 123456
+      userName: 'thuypham', //
+      password: '123456', // 123456
     },
   })
 

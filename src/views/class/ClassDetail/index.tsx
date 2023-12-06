@@ -1,31 +1,27 @@
-import {Alert, Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {ScrollView, StatusBar, View} from 'react-native'
 import React, {FC, useEffect, useState} from 'react'
-import {colors, fonts} from '~/configs'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
-import {CheckBox, Colors, Icon, isIOS, parseMoney} from 'green-native-ts'
 import {useGlobalContext} from '~/provider/AppProvider'
 import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native'
-import Spinner from 'react-native-loading-spinner-overlay'
 import RestApi from '~/api/RestApi'
-import CartItem from '../ClassItem'
 import HeaderDetail from '~/common/components/Header/HeaderDetail'
 import ClassMenu from './ClassMenu'
 import Info from './Info'
 import StudySessions from './StudySessions'
 import Attackdance from './Attackdance'
+import Document from './Document'
+import SuperLoading from '~/common/components/SuperLoading'
 
 const ClassDetail = () => {
   const insets = useSafeAreaInsets()
+  const navigation = useNavigation<any>()
 
-  const {user, carts, getCarts, cartChecked, setCartChecked} = useGlobalContext()
+  const {user} = useGlobalContext()
 
-  const [loading, setLoading] = useState<boolean>(false)
-  const [shipTypes, setShipTypes] = useState([])
+  const [loading, setLoading] = useState<boolean>(true)
 
   const router: any = useRoute()
   const focused = useIsFocused()
-
-  const [data, setData] = useState([])
 
   useEffect(() => {
     if (focused && router?.params) {
@@ -35,16 +31,19 @@ const ClassDetail = () => {
   }, [focused, router])
 
   const [detail, setDetail] = useState<any>({})
-
   const [schedule, setSchedule] = useState([])
 
   async function getDetail() {
+    setLoading(true)
     try {
       const res = await RestApi.getBy<any>('Class', router?.params?.Id)
       if (res.status == 200) {
         setDetail(res.data.data)
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setLoading(false)
+    }
   }
 
   async function getSchedule() {
@@ -56,15 +55,7 @@ const ClassDetail = () => {
     } catch (error) {}
   }
 
-  useEffect(() => {
-    if (focused) {
-    }
-  }, [focused])
-
-  const navigation = useNavigation<any>()
-
   const [curTab, setCurTab] = useState(1)
-
   const [curStudent, setCurStudent] = useState(null)
 
   useEffect(() => {
@@ -85,43 +76,15 @@ const ClassDetail = () => {
         {curTab == 2 && <StudySessions router={router} detail={detail} schedule={schedule} />}
         {curTab == 3 && <Attackdance router={router} detail={detail} schedule={schedule} curStudent={curStudent} />}
 
-        <View style={{flex: 1}}></View>
+        {curTab == 4 && <Document router={router} detail={detail} schedule={schedule} curStudent={curStudent} />}
+        <View style={{flex: 1}} />
 
         <View style={{height: 24}} />
       </ScrollView>
 
-      <Spinner visible={loading} textContent={'Chờ xíu, tôi đang xử lý...'} />
+      <SuperLoading loading={loading} />
     </View>
   )
 }
 
 export default ClassDetail
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
-    marginHorizontal: 16,
-    padding: 16,
-    borderRadius: 10,
-    flexDirection: 'row',
-  },
-  name: {
-    fontFamily: fonts.Bold,
-    fontSize: 16,
-    color: '#0B1B19',
-    flex: 1,
-  },
-  thumbnail: {
-    backgroundColor: '#E9E9E9',
-    borderRadius: 10,
-    width: 90,
-    height: 90,
-  },
-  textInfo: {
-    fontFamily: fonts.Medium,
-    color: '#000',
-    fontSize: 14,
-    marginLeft: 8,
-    marginTop: -2,
-  },
-})

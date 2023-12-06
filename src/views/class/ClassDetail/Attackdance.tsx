@@ -2,10 +2,10 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import React, {useEffect, useRef, useState} from 'react'
 import {fonts} from '~/configs'
 import moment from 'moment'
-
 import RNPickerSelect from 'react-native-picker-select'
 import {Icon, isIOS} from 'green-native-ts'
 import RestApi from '~/api/RestApi'
+import SuperLoading from '~/common/components/SuperLoading'
 
 const Attackdance = ({detail, router, schedule, curStudent}) => {
   const [curSchedule, setCurSchedule] = useState(null)
@@ -46,7 +46,10 @@ const Attackdance = ({detail, router, schedule, curStudent}) => {
 
   const [data, setData] = useState([])
 
+  const [loading, setLoading] = useState<boolean>(true)
+
   async function getAttackdance() {
+    setLoading(true)
     try {
       const res = await RestApi.get<any>('RollUp', {
         classId: router?.params?.Id,
@@ -58,10 +61,11 @@ const Attackdance = ({detail, router, schedule, curStudent}) => {
       if (res.status == 200) {
         setData(res.data.data)
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setLoading(false)
+    }
   }
-
-  console.log('--- curSchedule: ', curSchedule)
 
   const whfRef = useRef(null)
 
@@ -155,6 +159,8 @@ const Attackdance = ({detail, router, schedule, curStudent}) => {
             </View>
           )
         })}
+
+      <SuperLoading loading={loading} />
     </>
   )
 }
@@ -175,18 +181,4 @@ const styles = StyleSheet.create({
     color: '#0B1B19',
     flex: 1,
   },
-  thumbnail: {
-    backgroundColor: '#E9E9E9',
-    borderRadius: 10,
-    width: 90,
-    height: 90,
-  },
-  textInfo: {
-    fontFamily: fonts.Medium,
-    color: '#000',
-    fontSize: 14,
-    marginLeft: 8,
-    marginTop: -2,
-  },
-  main: {flex: 1, marginLeft: 16, alignItems: 'flex-start'},
 })

@@ -2,10 +2,13 @@ import {StyleSheet, Text, View} from 'react-native'
 import React from 'react'
 import {fonts} from '~/configs'
 import moment from 'moment'
+import Empty from '~/common/components/Empty'
 
 const StudySessions = ({detail, router, schedule}) => {
   return (
     <>
+      {schedule?.length == 0 && <Empty />}
+
       {schedule &&
         schedule.map((item, index) => {
           return (
@@ -56,18 +59,4 @@ const styles = StyleSheet.create({
     color: '#0B1B19',
     flex: 1,
   },
-  thumbnail: {
-    backgroundColor: '#E9E9E9',
-    borderRadius: 10,
-    width: 90,
-    height: 90,
-  },
-  textInfo: {
-    fontFamily: fonts.Medium,
-    color: '#000',
-    fontSize: 14,
-    marginLeft: 8,
-    marginTop: -2,
-  },
-  main: {flex: 1, marginLeft: 16, alignItems: 'flex-start'},
 })

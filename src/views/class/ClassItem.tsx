@@ -1,8 +1,8 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import React, {useState} from 'react'
 import {fonts} from '~/configs'
-import Spinner from 'react-native-loading-spinner-overlay'
 import {useNavigation} from '@react-navigation/native'
+import SuperLoading from '~/common/components/SuperLoading'
 
 const ClassItem = ({item}: {item: TClassType}) => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -91,11 +91,7 @@ const ClassItem = ({item}: {item: TClassType}) => {
         </View>
       </TouchableOpacity>
 
-      <Spinner
-        visible={loading}
-        textContent={'Chờ xíu, tôi đang xử lý...'}
-        textStyle={{color: '#fff', fontSize: 14, fontFamily: fonts.Semibold}}
-      />
+      <SuperLoading loading={loading} />
     </>
   )
 }
