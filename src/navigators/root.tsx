@@ -24,6 +24,7 @@ import RechargeScreen from '~/views/money/recharge'
 import {View} from 'react-native'
 import WelcomeScreen from '~/welcome'
 import ClassDetail from '~/views/class/ClassDetail'
+import Transcript from '~/views/class/ClassDetail/Transcript'
 
 const Stack = createNativeStackNavigator<TRootNavigator>()
 
@@ -53,6 +54,8 @@ const RootNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="RootTabs" component={TabNavigator} />
+        <Stack.Screen name="Transcript" component={Transcript} />
+
         <Stack.Screen name="Webview" component={WebScreen} />
         <Stack.Screen
           options={{animation: 'slide_from_right'}}

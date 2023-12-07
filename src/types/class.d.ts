@@ -1,23 +1,56 @@
-type TClassType = {
+type TClassDetail = TApiAuth & {
+  AcademicId: number
+  AcademicName: string
+  BranchId: number
+  BranchName: string
+  CertificateTemplateId: any
+  CurriculumId: number
+  CurriculumName: string
+  EndDay: string
+  GradeId: number
+  GradeName: string
+  IsMonthly: boolean
+  LessonCompleted: any
+  MaxQuantity: number
+  Name: string
+  PaymentType: number
+  PaymentTypeName: string
+  Price: number
+  ProgramId: number
+  ProgramName: string
+  ScoreboardTemplateId: number
+  StartDay: string
+  Status: number
+  StatusName: string
+  TeacherId: any
+  TeacherName: string
+  Teachers: Array<{
+    TeacherCode: string
+    TeacherId: number
+    TeacherName: string
+  }>
+  Thumbnail: string
+  Time: number
+  TotalLesson: number
+  TotalStudent: number
+  Type: number
+  TypeName: string
+}
+
+type TClassType = TApiAuth & {
   AcademicId: number
   AcademicName: string
   BranchId: number
   BranchName: string
   CertificateTemplateId: null
-  CreatedBy: string
-  CreatedOn: string
   CurriculumId: number
   CurriculumName: string
-  Enable: true
   EndDay: string
   GradeId: number
   GradeName: string
-  Id: number
   IsMonthly: false
   LessonCompleted: number
   MaxQuantity: number
-  ModifiedBy: string
-  ModifiedOn: string
   Name: string
   PaymentType: number
   PaymentTypeName: string

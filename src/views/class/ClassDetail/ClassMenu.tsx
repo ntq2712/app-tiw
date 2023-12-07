@@ -4,25 +4,20 @@ import {colors, fonts} from '~/configs'
 import {Colors, Icon} from 'green-native-ts'
 
 function TabIcon({thisTab, curTab, setCurTab, children, title}) {
+  const background = curTab == thisTab ? colors.primary : Colors.transparent
+  const flex = curTab == thisTab ? null : 1
+
   return (
     <TouchableOpacity
       onPress={() => curTab !== thisTab && setCurTab(thisTab)}
       activeOpacity={curTab == thisTab ? 1 : 0.7}
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 8,
-        paddingVertical: 6,
-        backgroundColor: curTab == thisTab ? colors.primary : Colors.transparent,
-        borderRadius: 99,
-        flex: curTab == thisTab ? null : 1,
-      }}>
+      style={[styles.itemContainer, {backgroundColor: background, flex: flex}]}>
       {children}
+
       {curTab == thisTab && (
         <Text
           numberOfLines={1}
-          style={{marginLeft: 6, color: '#fff', fontFamily: fonts.Semibold, fontSize: 16, marginTop: -1}}>
+          style={{marginLeft: 6, color: '#fff', fontFamily: fonts.Semibold, fontSize: 14, marginTop: -1}}>
           {title}
         </Text>
       )}
@@ -32,16 +27,7 @@ function TabIcon({thisTab, curTab, setCurTab, children, title}) {
 
 const ClassMenu = ({curTab, setCurTab}) => {
   return (
-    <View
-      style={{
-        padding: 8,
-        backgroundColor: '#fff',
-        borderRadius: 99,
-        margin: 16,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}>
+    <View style={styles.container}>
       <TabIcon title="Thông tin" thisTab={1} curTab={curTab} setCurTab={setCurTab}>
         <Icon
           type="fontawesome5"
@@ -64,22 +50,49 @@ const ClassMenu = ({curTab, setCurTab}) => {
         <Icon
           type="fontawesome5"
           name="calendar-check"
-          size={curTab == 3 ? 16 : 20}
+          size={curTab == 3 ? 16 : 18}
           color={curTab == 3 ? '#fff' : '#000'}
         />
       </TabIcon>
 
-      <TabIcon title="Tài liệu" thisTab={4} curTab={curTab} setCurTab={setCurTab}>
-        <Icon type="fontawesome5" name="book-open" size={curTab == 4 ? 14 : 18} color={curTab == 4 ? '#fff' : '#000'} />
+      <TabIcon title="Bảng điểm" thisTab={6} curTab={curTab} setCurTab={setCurTab}>
+        <Icon
+          type="fontawesome5"
+          name="file-signature"
+          size={curTab == 6 ? 14 : 16}
+          color={curTab == 6 ? '#fff' : '#000'}
+        />
       </TabIcon>
 
-      {/* <TabIcon title="Thông báo" thisTab={5} curTab={curTab} setCurTab={setCurTab}>
+      <TabIcon title="Tài liệu" thisTab={4} curTab={curTab} setCurTab={setCurTab}>
+        <Icon type="fontawesome5" name="book-open" size={curTab == 4 ? 14 : 17} color={curTab == 4 ? '#fff' : '#000'} />
+      </TabIcon>
+
+      <TabIcon title="Thông báo" thisTab={5} curTab={curTab} setCurTab={setCurTab}>
         <Icon type="ionicons" name="notifications" size={curTab == 5 ? 16 : 20} color={curTab == 5 ? '#fff' : '#000'} />
-      </TabIcon> */}
+      </TabIcon>
     </View>
   )
 }
 
 export default ClassMenu
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    padding: 8,
+    backgroundColor: '#fff',
+    borderRadius: 99,
+    margin: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRadius: 99,
+  },
+})

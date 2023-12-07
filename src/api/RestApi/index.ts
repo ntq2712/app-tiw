@@ -1,9 +1,15 @@
 import instance from '../instance'
 
+const getAll = {
+  pageSize: 99999,
+  pageIndex: 1,
+}
+
 const RestApi = {
-  get<T>(url: string, params: Object) {
-    return instance.get<IApiResult<T>>(`/${url}`, {
-      params,
+  get<T>(url: string, params: Object, isAll?: boolean) {
+    const systemParams = isAll ? getAll : null
+    return instance.get<IArrayResult<T>>(`/${url}`, {
+      params: {...params, ...systemParams},
     })
   },
   getBy<T>(url: string, ID: string) {

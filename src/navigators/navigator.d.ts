@@ -33,4 +33,5 @@ type TRootNavigator = {
   RechargeScreen: any
 
   ClassDetail: any
+  Transcript?: any
 }

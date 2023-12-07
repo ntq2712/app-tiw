@@ -3,6 +3,7 @@ import React from 'react'
 import {fonts} from '~/configs'
 import moment from 'moment'
 import Empty from '~/common/components/Empty'
+import {Divider} from '~/common/components'
 
 const StudySessions = ({detail, router, schedule}) => {
   return (
@@ -11,8 +12,10 @@ const StudySessions = ({detail, router, schedule}) => {
 
       {schedule &&
         schedule.map((item, index) => {
+          const marginTop = index == 0 ? 0 : 16
+
           return (
-            <View style={[styles.container, {marginTop: index == 0 ? 0 : 16, flexDirection: 'column'}]}>
+            <View style={[styles.container, {marginTop: marginTop}]}>
               <View
                 style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                 <Text
@@ -31,7 +34,7 @@ const StudySessions = ({detail, router, schedule}) => {
                 </Text>
               </View>
 
-              <View style={{width: '100%', backgroundColor: '#A4A4A433', height: 1, marginVertical: 8}} />
+              <Divider />
 
               <Text style={{fontFamily: fonts.Semibold, color: '#000', fontSize: 15}}>
                 {moment(item?.StartTime).format('HH:mm')} - {moment(item?.EndTime).format('HH:mm')}
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     padding: 16,
     borderRadius: 10,
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   name: {
     fontFamily: fonts.Bold,

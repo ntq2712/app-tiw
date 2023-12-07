@@ -7,6 +7,7 @@ import {useGlobalContext} from '~/provider/AppProvider'
 import {useIsFocused, useNavigation} from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import ClassItem from './ClassItem'
+import {GreenHeader} from '~/common/components'
 
 const ClassTab = () => {
   const insets = useSafeAreaInsets()
@@ -30,11 +31,7 @@ const ClassTab = () => {
       <View style={{flex: 1}}>
         <StatusBar barStyle="light-content" />
 
-        <View style={[{paddingTop: isIOS() ? insets.top + 4 : insets.top + 12}, styles.headerContainer]}>
-          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={styles.headerTitle}>Danh sách lớp</Text>
-          </View>
-        </View>
+        <GreenHeader canBack={false}>Danh sách lớp</GreenHeader>
 
         <FlatList
           key="piget-classes"

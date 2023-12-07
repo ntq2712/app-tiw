@@ -22,10 +22,10 @@ const appConfigs = {
     dH: height,
   },
   fonts: {
-    Bold: 'SFProDisplay-Bold',
-    Medium: 'SFProDisplay-Medium',
-    Semibold: 'SFProDisplay-Semibold',
-    Regular: 'SFProDisplay-Regular',
+    Bold: 'Roboto-Bold',
+    Medium: 'Roboto-Medium',
+    Semibold: 'Roboto-Medium',
+    Regular: 'Roboto-Regular',
   },
 }
 
