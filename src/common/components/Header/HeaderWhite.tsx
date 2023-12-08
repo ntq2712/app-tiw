@@ -6,7 +6,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {headerStyles, whiteStyles} from './header.styles'
 
 const HeaderWhite: FC<TGreenHeader> = props => {
-  const {children, insetPadding = true, canBack = true} = props
+  const {children, insetPadding = true, canBack = true, customRight} = props
 
   const insets = useSafeAreaInsets()
   const navigation = useNavigation()
@@ -37,9 +37,13 @@ const HeaderWhite: FC<TGreenHeader> = props => {
           </Text>
         </View>
 
-        <TouchableOpacity style={headerStyles.right}>
-          <Icon type="materialicons" name="arrow-back-ios" color="#fff" size={20} />
-        </TouchableOpacity>
+        {customRight ? (
+          customRight
+        ) : (
+          <TouchableOpacity style={headerStyles.right}>
+            <Icon type="materialicons" name="arrow-back-ios" color="#fff" size={20} />
+          </TouchableOpacity>
+        )}
       </View>
     </>
   )

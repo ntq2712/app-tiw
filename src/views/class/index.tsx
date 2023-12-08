@@ -29,7 +29,7 @@ const ClassTab = () => {
   return (
     <>
       <View style={{flex: 1}}>
-        <StatusBar barStyle="light-content" />
+        {focused && <StatusBar barStyle="dark-content" />}
 
         <GreenHeader canBack={false}>Danh sách lớp</GreenHeader>
 

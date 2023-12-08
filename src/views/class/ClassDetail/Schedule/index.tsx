@@ -44,7 +44,13 @@ const Schedule = () => {
   function handleSchedule() {
     let temp = {}
     schedule.forEach(element => {
-      temp = {...temp, [moment(element.StartTime).format('YYYY-MM-DD')]: {marked: true, dotColor: '#1E88E5'}}
+      temp = {
+        ...temp,
+        [moment(element.StartTime).format('YYYY-MM-DD')]: {
+          marked: true,
+          dotColor: element?.Status == 2 ? '#59b96c' : '#fb862d',
+        },
+      }
     })
     setMarkedDates(temp)
   }
@@ -90,7 +96,7 @@ const Schedule = () => {
                 styles.name,
                 {
                   fontSize: 15,
-                  color: new Date(item?.StartTime).getTime() < new Date().getTime() ? 'red' : '#2196F3',
+                  color: item?.Status == 2 ? '#59b96c' : '#fb862d',
                 },
               ]}>
               {moment(item?.StartTime).format('DD/MM/YYYY')}
@@ -100,7 +106,7 @@ const Schedule = () => {
             </Text>
           </View>
 
-          <Divider />
+          <Divider marginBottom={4} />
 
           <InfoItem title="Giảng viên" value={item?.TeacherName} />
           {item?.RoomName && <InfoItem title="Phòng học" value={item?.RoomName} />}
@@ -133,6 +139,6 @@ const styles = StyleSheet.create({
     color: '#0B1B19',
     flex: 1,
   },
-  scheduleItemInfo: {flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'},
+  scheduleItemInfo: {flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 4},
   scheduleText: {fontFamily: fonts.Semibold, color: '#000', fontSize: 14},
 })

@@ -15,7 +15,7 @@ const Tabs = ({route, focused}: {route: any; focused: boolean}) => {
     ))
   }
 
-  if (route.name == 'Search') {
+  if (route.name == 'ScheduleTab') {
     return (iconName = focused ? (
       <Tab actived={true} title="Lịch học" icon={require('~/assets/icons/acivated/search.png')} />
     ) : (

@@ -8,4 +8,5 @@ type TGreenHeader = {
   canBack?: boolean
   backgroundColor?: string // Only for background header type
   color?: string // Only for background header type
+  customRight?: React.ReactNode
 }

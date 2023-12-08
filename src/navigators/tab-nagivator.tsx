@@ -10,6 +10,7 @@ import {isIOS} from 'green-native-ts'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {useGlobalContext} from '~/provider/AppProvider'
 import ClassTab from '~/views/class'
+import ScheduleTab from '~/views/Schedule'
 
 function SettingsScreen() {
   return (
@@ -39,7 +40,7 @@ function TabNavigator() {
         headerShown: false,
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
-      {isProd && <Tab.Screen name="Search" component={SearchTab} />}
+      {isProd && <Tab.Screen name="ScheduleTab" component={ScheduleTab} />}
       {isProd && <Tab.Screen name="ClassTab" component={ClassTab} />}
       <Tab.Screen name="User" component={UserTab} />
     </Tab.Navigator>

@@ -70,7 +70,7 @@ const ClassProvider: FC<{children: React.ReactNode}> = ({children}) => {
   // LẤY LỊCH HỌC CỦA LỚP
   async function getSchedule() {
     try {
-      const res = await RestApi.get<any>('Schedule', {classId: router?.params?.Id})
+      const res = await RestApi.get<any>('Schedule', {classId: router?.params?.Id, pageSize: 99999, pageIndex: 1})
       if (res.status == 200) {
         setSchedule(res.data.data)
       }

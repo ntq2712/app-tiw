@@ -1,3 +1,4 @@
+import {Colors} from 'green-native-ts'
 import {StyleSheet} from 'react-native'
 import {fonts} from '~/configs'
 
@@ -33,5 +34,7 @@ export const whiteStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.trans07,
   },
 })
