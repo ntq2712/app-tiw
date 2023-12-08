@@ -1,10 +1,7 @@
 import {ScrollView, StatusBar, View} from 'react-native'
-import React, {FC, useEffect, useState} from 'react'
-import {useSafeAreaInsets} from 'react-native-safe-area-context'
+import React, {useState} from 'react'
 import {useGlobalContext} from '~/provider/AppProvider'
-import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native'
-import RestApi from '~/api/RestApi'
-import HeaderBackground from '~/common/components/Header/HeaderBackground'
+import {useIsFocused, useRoute} from '@react-navigation/native'
 import ClassMenu from './ClassMenu'
 import Info from './Info'
 import StudySessions from './StudySessions'
@@ -15,13 +12,11 @@ import {HeaderWhite} from '~/common/components'
 import ClassNotifications from './ClassNotifications'
 import {useClassContext} from '~/provider'
 import Examinations from './Transcript/Examinations'
+import Schedule from './Schedule'
 
 const ClassDetailScreen = () => {
   const {loading, detail, schedule, curStudent} = useClassContext()
   const {user} = useGlobalContext()
-
-  const insets = useSafeAreaInsets()
-  const navigation = useNavigation<any>()
 
   const router: any = useRoute()
   const focused = useIsFocused()
@@ -43,6 +38,7 @@ const ClassDetailScreen = () => {
         {curTab == 4 && <Document router={router} detail={detail} schedule={schedule} curStudent={curStudent} />}
         {curTab == 5 && <ClassNotifications />}
         {curTab == 6 && <Examinations />}
+        {curTab == 7 && <Schedule />}
 
         <View style={{flex: 1}} />
         <View style={{height: 24}} />

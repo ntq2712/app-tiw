@@ -1,13 +1,5 @@
 import React, {createContext, useContext, useState, useEffect, FC} from 'react'
-import {setToken} from '~/api/instance'
-import {LocalStorage, logout, wait} from '~/common'
-import ConfigsApi from '~/api/Configs'
 import RestApi from '~/api/RestApi'
-import SplashScreen from 'react-native-splash-screen'
-import {Alert, Platform} from 'react-native'
-import {getVersion} from 'react-native-device-info'
-import {isIOS} from 'green-native-ts'
-import {Buffer} from 'buffer'
 import {useIsFocused, useRoute} from '@react-navigation/native'
 import {useGlobalContext} from './AppProvider'
 
@@ -84,8 +76,6 @@ const ClassProvider: FC<{children: React.ReactNode}> = ({children}) => {
       }
     } catch (error) {}
   }
-
-  // Transcript/by-class/1102
 
   // LẤY LỊCH HỌC CỦA LỚP
   async function getNotifications() {

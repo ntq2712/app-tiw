@@ -37,6 +37,15 @@ const ClassMenu = ({curTab, setCurTab}) => {
         />
       </TabIcon>
 
+      <TabIcon title="Lịch học" thisTab={7} curTab={curTab} setCurTab={setCurTab}>
+        <Icon
+          type="materialcommunityicons"
+          name="calendar-month"
+          size={curTab == 7 ? 16 : 20}
+          color={curTab == 7 ? '#fff' : '#000'}
+        />
+      </TabIcon>
+
       <TabIcon title="Buổi học" thisTab={2} curTab={curTab} setCurTab={setCurTab}>
         <Icon
           type="materialcommunityicons"
@@ -94,5 +103,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 6,
     borderRadius: 99,
+  },
+  name: {
+    fontFamily: fonts.Bold,
+    fontSize: 15,
+    color: '#0B1B19',
+    flex: 1,
   },
 })

@@ -1,5 +1,4 @@
 import React from 'react'
-
 import {ClassProvider} from '~/provider'
 import ClassDetailScreen from './ClassDetail.Screen'
 
