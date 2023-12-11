@@ -35,4 +35,8 @@ type TRootNavigator = {
   ClassDetail: any
   Transcript?: any
   LearningHistory?: any
+
+  Feedback?: any
+  CreateFeedback?: any
+  FeedbackDetail?: any
 }

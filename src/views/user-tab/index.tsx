@@ -101,6 +101,15 @@ const UserTab = () => {
             iconColor="#3391e7"
             title="Lịch sử học"
           />
+
+          <Divider marginVertical={16} />
+
+          <Item
+            onPress={() => navigation.navigate('Feedback')}
+            icon={<Image source={require('~/assets/icons/message-dots.png')} style={{width: 20, height: 20}} />}
+            iconColor="#3391e7"
+            title="Phản hồi cho trung tâm"
+          />
         </View>
 
         <View style={[styles.itemContainer, {width: windowWidth - 32, flexDirection: 'column'}]}>

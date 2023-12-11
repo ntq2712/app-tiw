@@ -25,6 +25,9 @@ import WelcomeScreen from '~/welcome'
 import ClassDetail from '~/views/class/ClassDetail'
 import Transcript from '~/views/class/ClassDetail/Transcript'
 import LearningHistory from '~/views/LearningHistory'
+import Feedback from '~/views/Feedback'
+import CreateFeedback from '~/views/Feedback/CreateFeedback'
+import FeedbackDetail from '~/views/Feedback/Feedback.Detail'
 
 const Stack = createNativeStackNavigator<TRootNavigator>()
 
@@ -56,6 +59,9 @@ const RootNavigator = () => {
         <Stack.Screen name="RootTabs" component={TabNavigator} />
         <Stack.Screen name="Transcript" component={Transcript} />
         <Stack.Screen name="LearningHistory" component={LearningHistory} />
+        <Stack.Screen name="Feedback" component={Feedback} />
+        <Stack.Screen name="CreateFeedback" options={{animation: 'slide_from_right'}} component={CreateFeedback} />
+        <Stack.Screen name="FeedbackDetail" component={FeedbackDetail} />
 
         <Stack.Screen name="Webview" component={WebScreen} />
         <Stack.Screen
