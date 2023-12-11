@@ -13,7 +13,6 @@ import UserInformation from '~/views/user-tab/information'
 import UserPassword from '~/views/user-tab/password'
 import Orders from '~/views/order'
 import DetailOrder from '~/views/order/DetailOrder'
-import PaymentHistories from '~/views/order/PaymentHistories'
 import CreateOtherOrder from '~/views/other-order/create'
 import OtherOrders from '~/views/order/Other'
 import TransportationOrders from '~/views/transportation'
@@ -25,6 +24,7 @@ import {View} from 'react-native'
 import WelcomeScreen from '~/welcome'
 import ClassDetail from '~/views/class/ClassDetail'
 import Transcript from '~/views/class/ClassDetail/Transcript'
+import LearningHistory from '~/views/LearningHistory'
 
 const Stack = createNativeStackNavigator<TRootNavigator>()
 
@@ -55,6 +55,7 @@ const RootNavigator = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="RootTabs" component={TabNavigator} />
         <Stack.Screen name="Transcript" component={Transcript} />
+        <Stack.Screen name="LearningHistory" component={LearningHistory} />
 
         <Stack.Screen name="Webview" component={WebScreen} />
         <Stack.Screen
@@ -77,7 +78,6 @@ const RootNavigator = () => {
         <Stack.Screen options={{animation: 'simple_push'}} name="CreateTrans" component={CreateTrans} />
         <Stack.Screen options={{animation: 'simple_push'}} name="DetailTrans" component={DetailTrans} />
         <Stack.Screen options={{animation: 'simple_push'}} name="DetailOrder" component={DetailOrder} />
-        <Stack.Screen options={{animation: 'slide_from_right'}} name="PaymentHistories" component={PaymentHistories} />
         <Stack.Screen options={{animation: 'simple_push'}} name="CreateOtherOrder" component={CreateOtherOrder} />
       </Stack.Navigator>
     </NavigationContainer>

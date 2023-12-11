@@ -79,6 +79,13 @@ const UserTab = () => {
         </TouchableOpacity>
 
         <View style={[styles.itemContainer, {width: windowWidth - 32, flexDirection: 'column'}]}>
+          {/* <Item
+            onPress={() => navigation.navigate('UserInformation')}
+            icon={<Image source={require('~/assets/icons/lr-switch.png')} style={{width: 22, height: 22}} />}
+            iconColor="#3391e7"
+            title="Lịch sử học"
+          /> */}
+
           <Item
             onPress={() => navigation.navigate('UserPassword')}
             icon={<Image source={require('~/assets/icons/key.png')} style={{width: 26, height: 26}} />}
@@ -89,10 +96,10 @@ const UserTab = () => {
           <Divider marginVertical={16} />
 
           <Item
-            onPress={() => navigation.navigate('UserInformation')}
+            onPress={() => navigation.navigate('LearningHistory')}
             icon={<Image source={require('~/assets/icons/lr-switch.png')} style={{width: 22, height: 22}} />}
             iconColor="#3391e7"
-            title="Lịch sử chuyển lớp"
+            title="Lịch sử học"
           />
         </View>
 

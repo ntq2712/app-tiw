@@ -34,4 +34,5 @@ type TRootNavigator = {
 
   ClassDetail: any
   Transcript?: any
+  LearningHistory?: any
 }
