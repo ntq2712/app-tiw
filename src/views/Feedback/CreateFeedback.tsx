@@ -1,42 +1,22 @@
-import {
-  Alert,
-  FlatList,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  Switch,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import React, {useEffect, useState} from 'react'
-import {Empty, GInput, GStatusBar, HeaderWhite, SuperLoading, TextError} from '~/common/components'
-import {useIsFocused, useNavigation} from '@react-navigation/native'
+import {Alert, ScrollView, StyleSheet, Switch, Text, View} from 'react-native'
+import React, {useState} from 'react'
+import {GInput, GStatusBar, HeaderWhite, SuperLoading, TextError} from '~/common/components'
+import {useNavigation} from '@react-navigation/native'
 import RestApi from '~/api/RestApi'
 import {useGlobalContext} from '~/provider'
-import Timeline from 'react-native-timeline-flatlist'
-import moment from 'moment'
 import {fonts} from '~/configs'
-import FeedbackItem from './Feedback.Item'
-import {Colors, Icon} from 'green-native-ts'
+import {Colors} from 'green-native-ts'
 import GTextArea from '~/common/components/GTextArea'
-import {TextInput} from 'react-native'
-import MyTextArea from '~/common/components/GTextArea/MyTextArea'
 import Button from '~/common/components/Button'
 
 const CreateFeedback = () => {
   const {user} = useGlobalContext()
 
   const [loading, setLoading] = useState<boolean>(false)
-  const [data, setData] = useState<Array<TLearningHistory>>([])
 
-  const focused = useIsFocused()
   const navigation = useNavigation<any>()
 
-  const [refreshing, setRefreshing] = React.useState(false)
-
   const [privated, setPrivated] = useState<boolean>(false)
-
   const [title, setTitle] = useState<string>('')
   const [content, setContent] = useState<string>('')
   const [prioritize, setPrioritize] = useState<boolean>(false)

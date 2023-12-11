@@ -1,34 +1,23 @@
-import {Alert, FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
-import React, {FC, useEffect, useState} from 'react'
+import {Alert, FlatList, StyleSheet, Text, View} from 'react-native'
+import React, {useEffect, useState} from 'react'
 import moment from 'moment'
 import {fonts} from '~/configs'
 import {Colors} from 'green-native-ts'
-import {Divider, Empty, GStatusBar, HeaderWhite} from '~/common/components'
+import {Divider, GStatusBar, HeaderWhite, SuperLoading} from '~/common/components'
 import {useRoute} from '@react-navigation/native'
 import RestApi from '~/api/RestApi'
 import MyTextArea from '~/common/components/GTextArea/MyTextArea'
 import Button from '~/common/components/Button'
-import GreenAvatar from '~/common/components/Avatar'
 import {RefreshControl} from 'react-native'
 import FeedbackDetailItem from './Feedback.Detail.Item'
-import ModalCentered from '~/common/components/ModalCentered'
 import {Rating} from 'react-native-ratings'
 
-type TFeedbackItem = {
-  item?: TFeedback
-  index?: number
-}
-
 const FeedbackDetail = props => {
-  // const {item, index} = props
-
   const router = useRoute<any>()
 
   const [thisItem, setThisItem] = useState<TFeedback>(null)
-
   const [detail, setDetail] = useState<TFeedback>(null)
-
-  console.log('--- thisItem: ', thisItem)
+  const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     if (router?.params) {
@@ -50,6 +39,7 @@ const FeedbackDetail = props => {
   const [replyData, setReplyData] = useState([])
 
   async function getMessage(id) {
+    setLoading(true)
     try {
       const res = await RestApi.get<any>('FeedbackReply', {
         pageIndex: 1,
@@ -59,7 +49,10 @@ const FeedbackDetail = props => {
       if (res.status == 200) {
         setReplyData(res?.data?.data)
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setLoading(false)
+    }
   }
 
   const [submiting, setSubmiting] = useState<boolean>(false)
@@ -92,8 +85,6 @@ const FeedbackDetail = props => {
   }, [])
 
   const [star, setStar] = useState<number>(5)
-  const [visible, setVisible] = useState<boolean>(false)
-
   const [rating, setRating] = useState<boolean>(false)
 
   async function rateThisFB() {
@@ -102,7 +93,6 @@ const FeedbackDetail = props => {
       const res = await RestApi.put(`Feedback/rating-feedback/${detail?.Id}?rating=${star}`, {})
       if (res.status == 200) {
         getDetails(detail?.Id)
-        setVisible(false)
       }
     } catch (error) {
       Alert.alert('Lỗi', error?.data?.message)
@@ -202,6 +192,8 @@ const FeedbackDetail = props => {
         ListEmptyComponent={<View style={{paddingLeft: 16}}></View>}
         ListFooterComponent={<View style={{height: 16}} />}
       />
+
+      <SuperLoading loading={loading} />
     </>
   )
 }

@@ -2,7 +2,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import React, {FC} from 'react'
 import moment from 'moment'
 import {fonts} from '~/configs'
-import {Colors} from 'green-native-ts'
+import {Colors, Icon} from 'green-native-ts'
 import {Divider} from '~/common/components'
 import {useNavigation} from '@react-navigation/native'
 import {Rating} from 'react-native-ratings'
@@ -38,6 +38,21 @@ const FeedbackItem: FC<TFeedbackItem> = props => {
       </View>
 
       <Divider marginVertical={16} />
+
+      {item?.IsIncognito ? (
+        <View style={{alignItems: 'flex-start', marginBottom: 8}}>
+          <View
+            style={[
+              styles.statusTag,
+              {backgroundColor: Colors.trans10, paddingTop: 3, flexDirection: 'row', alignItems: 'center'},
+            ]}>
+            <Icon type="fontawesome" name="user-secret" color="#000" size={12} />
+            <Text style={{fontSize: 12, fontFamily: fonts.Medium, color: '#000', marginLeft: 4}}>Ẩn danh</Text>
+          </View>
+        </View>
+      ) : (
+        <></>
+      )}
 
       <Text style={{fontFamily: fonts.Bold, color: '#000', fontSize: 16}}>{item?.Title}</Text>
       <Text style={{fontFamily: fonts.Regular, color: '#000', marginTop: 8}}>{item?.Content}</Text>

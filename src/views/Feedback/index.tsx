@@ -1,12 +1,9 @@
-import {FlatList, RefreshControl, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {FlatList, RefreshControl, TouchableOpacity, View} from 'react-native'
 import React, {useEffect, useState} from 'react'
 import {Empty, GStatusBar, HeaderWhite, SuperLoading} from '~/common/components'
 import {useIsFocused, useNavigation} from '@react-navigation/native'
 import RestApi from '~/api/RestApi'
 import {useGlobalContext} from '~/provider'
-import Timeline from 'react-native-timeline-flatlist'
-import moment from 'moment'
-import {fonts} from '~/configs'
 import FeedbackItem from './Feedback.Item'
 import {Icon} from 'green-native-ts'
 
@@ -28,13 +25,13 @@ const Feedback = () => {
   }, [])
 
   useEffect(() => {
-    if (focused && data.length == 0) {
+    if (focused) {
       getData()
     }
   }, [focused])
 
   async function getData() {
-    setLoading(false)
+    setLoading(true)
     try {
       const res = await RestApi.get<TFeedback>('Feedback', {
         userIds: user?.UserInformationId,
@@ -90,5 +87,3 @@ const Feedback = () => {
 }
 
 export default Feedback
-
-const styles = StyleSheet.create({})
