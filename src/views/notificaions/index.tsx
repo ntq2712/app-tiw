@@ -7,6 +7,7 @@ import {useGlobalContext} from '~/provider/AppProvider'
 import {useIsFocused, useNavigation} from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import NotiItem from './CartItem'
+import {HeaderWhite} from '~/common/components'
 
 const NotiScreen = () => {
   const insets = useSafeAreaInsets()
@@ -30,20 +31,7 @@ const NotiScreen = () => {
     <>
       <View style={{flex: 1}}>
         <StatusBar barStyle="light-content" />
-        <View style={[{paddingTop: isIOS() ? insets.top + 4 : insets.top + 12}, styles.headerContainer]}>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigation.goBack()}
-            style={{alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16}}>
-            <Icon type="MaterialIcons" name="arrow-back-ios" color="#fff" size={20} />
-          </TouchableOpacity>
-          <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={styles.headerTitle}>Thông báo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center', paddingHorizontal: 16, opacity: 0}}>
-            <Icon type="MaterialIcons" name="arrow-back-ios" color="#fff" size={20} />
-          </TouchableOpacity>
-        </View>
+        <HeaderWhite>Thông báo</HeaderWhite>
 
         <FlatList
           key="piget-noti"
