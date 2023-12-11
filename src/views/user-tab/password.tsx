@@ -1,165 +1,121 @@
-import {Alert, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {Alert, ScrollView, StyleSheet, View} from 'react-native'
 import React, {useState} from 'react'
-import {Colors, Icon, isIOS} from 'green-native-ts'
-import appConfigs, {colors, fonts, sizes} from '~/configs'
-import Spinner from 'react-native-loading-spinner-overlay'
-import {useIsFocused, useNavigation} from '@react-navigation/native'
+import {Colors} from 'green-native-ts'
+import {sizes} from '~/configs'
+import {useNavigation} from '@react-navigation/native'
 import RestApi from '~/api/RestApi'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
-import {useGlobalContext} from '~/provider/AppProvider'
-import {useForm} from 'react-hook-form'
-import Input from '~/common/components/Controller/Input'
+import {GInput, GStatusBar, HeaderWhite, TextError} from '~/common/components'
+import Button from '~/common/components/Button'
 
 const UserPassword = () => {
   const insets = useSafeAreaInsets()
 
-  const {user, setUser} = useGlobalContext()
-
   const [loading, setLoading] = useState<boolean>(false)
 
-  const focused = useIsFocused()
-
-  const {
-    control,
-    handleSubmit,
-    formState: {errors},
-  } = useForm({
-    defaultValues: {...user},
-  })
-
-  const scrollHeight = sizes.dH - insets.top
+  const [curPass, setCurPass] = useState('')
+  const [newPass, setNewPass] = useState('')
+  const [confPass, setConfPass] = useState('')
 
   const navigation = useNavigation<any>()
 
   const [textError, setTextError] = useState<string>('')
 
   async function updateInformation(params) {
-    console.log('---- updateInformation: ', params)
-
     setLoading(true)
-
     try {
-      const res = await RestApi.post('Auth/change-password', params)
+      const res = await RestApi.post('ChangePassword', params)
       if (res.status == 200) {
-        navigation.goBack()
+        Alert.alert('Thành công', 'Mật khẩu đã được thay đổi', [{text: 'OK', onPress: () => navigation.goBack()}])
       }
     } catch (error) {
-      Alert.alert('Ồ.. có lỗi rồi', error?.message)
+      setTextError(error?.data?.message || 'Lỗi không xác định')
     } finally {
       setLoading(false)
     }
   }
 
-  const onSubmit = data => {
+  const onSubmit = () => {
     setTextError('')
 
-    if (data?.Phone.length < 9) {
-      setTextError('Số điện thoại không hợp lệ')
+    if (!curPass || !newPass || !confPass) {
+      setTextError('Vui lòng điền đầy đủ thông tin')
+      return
+    }
+
+    if (newPass.length < 6) {
+      setTextError('Mật khẩu phải trên 6 ký tự')
+      return
+    }
+
+    if (newPass != confPass) {
+      setTextError('Mật khẩu nhập lại không khớp')
+      return
+    }
+
+    if (curPass == newPass) {
+      setTextError('Mật khẩu không có sự thay đổi')
       return
     }
 
     updateInformation({
-      OldPassword: data?.OldPassword,
-      NewPassword: data?.NewPassword,
-      ConfirmNewPassword: data?.ConfirmNewPassword,
+      OldPassword: curPass,
+      NewPassword: newPass,
+      ConfirmNewPassword: confPass,
     })
   }
 
   return (
     <>
-      <ScrollView
-        endFillColor={Colors.transparent}
-        automaticallyAdjustKeyboardInsets={true}
-        contentContainerStyle={[{minHeight: scrollHeight}]}>
+      <GStatusBar.Dark />
+
+      <HeaderWhite>Đổi mật khẩu</HeaderWhite>
+
+      <ScrollView endFillColor={Colors.transparent} automaticallyAdjustKeyboardInsets={true}>
         <View style={{flex: 1}}>
-          <StatusBar barStyle="light-content" />
-
-          <View style={[{paddingTop: isIOS() ? insets.top + 4 : insets.top + 12}, styles.headerContainer]}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => navigation.goBack()}
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                paddingHorizontal: 16,
-              }}>
-              <Icon type="MaterialIcons" name="arrow-back-ios" color="#fff" size={20} />
-            </TouchableOpacity>
-            <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={styles.headerTitle}>Đổi mật khẩu</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                paddingHorizontal: 16,
-                opacity: 0,
-              }}>
-              <Icon type="MaterialIcons" name="arrow-back-ios" color="#fff" size={20} />
-            </TouchableOpacity>
-          </View>
-
-          <View style={{width: '100%', backgroundColor: '#fff', marginTop: 8, padding: 16}}>
-            <Input
+          <View style={styles.formWrapper}>
+            <GInput
+              value={curPass}
+              onChange={e => setCurPass(e)}
               inputStyle={{height: 40}}
-              control={control}
-              name="OldPassword"
               label="Mật khẩu cũ"
               isPassword
               wrapStyle={{marginTop: 16}}
+              disabled={loading}
             />
 
-            <Input
+            <GInput
+              value={newPass}
+              onChange={e => setNewPass(e)}
               inputStyle={{height: 40}}
-              control={control}
-              name="NewPassword"
               label="Mật khẩu mới"
               isPassword
+              disabled={loading}
               wrapStyle={{marginTop: 16}}
             />
 
-            <Input
+            <GInput
+              value={confPass}
+              onChange={e => setConfPass(e)}
               inputStyle={{height: 40}}
-              control={control}
-              name="ConfirmNewPassword"
               label="Nhập lại mật khẩu"
+              disabled={loading}
               isPassword
               wrapStyle={{marginTop: 16}}
             />
 
-            {textError && (
-              <Text
-                style={{
-                  color: 'red',
-                  marginTop: 16,
-                  fontSize: 14,
-                  fontFamily: fonts.Regular,
-                  textAlign: 'left',
-                  width: '100%',
-                }}>
-                {textError}
-              </Text>
-            )}
+            <TextError>{textError}</TextError>
 
-            <TouchableOpacity
-              onPress={handleSubmit(onSubmit)}
-              activeOpacity={0.7}
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: colors.primary,
-                borderRadius: 12,
-                height: 44,
-                marginTop: 16,
-              }}>
-              <Text style={{fontFamily: fonts.Bold, fontSize: 16, color: '#fff'}}>Lưu thay đổi</Text>
-            </TouchableOpacity>
+            <Button
+              onPress={onSubmit}
+              loading={loading}
+              disabled={!curPass || !newPass || !confPass}
+              style={{marginTop: 16, height: 42}}>
+              Lưu thay đổi
+            </Button>
           </View>
         </View>
       </ScrollView>
-
-      <Spinner visible={loading} textContent={'Chờ xíu, tôi đang xử lý...'} />
     </>
   )
 }
@@ -167,43 +123,10 @@ const UserPassword = () => {
 export default UserPassword
 
 const styles = StyleSheet.create({
-  headerContainer: {
+  formWrapper: {
     width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.primary,
-    paddingBottom: 12,
-  },
-  headerTitle: {
-    fontFamily: fonts.Bold,
-    fontSize: 20,
-    color: '#fff',
-  },
-  lable: {
-    color: '#000',
-    marginBottom: 8,
-    fontSize: 16,
-    fontWeight: 'bold',
-    fontFamily: appConfigs.fonts.Bold,
-  },
-  wrapInput: {
     backgroundColor: '#fff',
-    width: '100%',
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.2)',
-    flexDirection: 'row',
-    position: 'relative',
-    height: 42,
-    paddingHorizontal: 16,
-  },
-  fullName: {
-    fontFamily: fonts.Semibold,
-    fontSize: 16,
-    color: '#000',
-  },
-  phone: {
-    fontFamily: fonts.Semibold,
-    fontSize: 16,
+    marginTop: 8,
+    padding: 16,
   },
 })

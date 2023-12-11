@@ -10,7 +10,7 @@ type TDivider = {
 }
 
 const Divider: FC<TDivider> = props => {
-  const {height = 1, marginVertical = 8, marginBottom = 8, width = '100%', color = '#A4A4A433'} = props
+  const {height = 1, marginVertical = 8, marginBottom, width = '100%', color = '#A4A4A433'} = props
 
   return (
     <View

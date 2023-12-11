@@ -100,7 +100,7 @@ const ScheduleTab = () => {
               type="materialicons"
               name={visible ? 'arrow-forward-ios' : 'arrow-forward-ios'}
               color={Colors.trans90}
-              size={18}
+              size={16}
             />
           </TouchableOpacity>
         }>

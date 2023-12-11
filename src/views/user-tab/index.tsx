@@ -8,12 +8,15 @@ import {logout, wait} from '~/common'
 import {useIsFocused, useNavigation} from '@react-navigation/native'
 import Spinner from 'react-native-loading-spinner-overlay'
 import {getReadableVersion} from 'react-native-device-info'
+import {Divider, HeaderWhite} from '~/common/components'
+import GreenAvatar from '~/common/components/Avatar'
+import GreenTag from '~/common/components/GreenTag'
 
 function Item(props: any) {
   const {onPress, icon, title, iconColor} = props
 
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={[{width: windowWidth - 32}, styles.itemContainer]}>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={{flexDirection: 'row', alignItems: 'center'}}>
       <View
         style={{
           width: 36,
@@ -27,7 +30,7 @@ function Item(props: any) {
         {icon}
       </View>
       <Text style={{fontFamily: fonts.Medium, fontSize: 16, color: '#000', flex: 1}}>{title}</Text>
-      <Icon type="MaterialIcons" name="chevron-right" size={22} color="#000" />
+      <Icon type="materialicons" name="chevron-right" size={22} color="#000" />
     </TouchableOpacity>
   )
 }
@@ -47,77 +50,62 @@ const UserTab = () => {
 
   return (
     <>
-      {focused && <StatusBar barStyle="light-content" />}
+      {focused && <StatusBar barStyle="dark-content" />}
 
-      <View style={[{paddingTop: isIOS() ? insets.top + 4 : insets.top + 12}, styles.headerContainer]}>
-        <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={styles.headerTitle}>Quản lý tài khoản</Text>
-        </TouchableOpacity>
-      </View>
+      <HeaderWhite canBack={false}>Tài khoản</HeaderWhite>
 
       <ScrollView style={{flex: 1}}>
-        <View style={[{width: windowWidth - 32}, styles.itemContainer]}>
-          <Image
-            source={user?.ImgUser ? {uri: user?.ImgUser} : require('~/assets/images/logo.png')}
-            style={styles.avatar}
+        <TouchableOpacity
+          activeOpacity={0.75}
+          onPress={() => navigation.navigate('UserInformation')}
+          style={[{width: windowWidth - 32}, styles.itemContainer]}>
+          <GreenAvatar
+            key="user-avt"
+            source={user?.Avatar}
+            imageProps={{
+              style: {width: 66, height: 66},
+            }}
           />
-          <View style={{marginLeft: 16}}>
-            <Text style={styles.fullName}>{user?.FirstName + ' ' + user?.LastName}</Text>
-            <Text style={styles.phone}>{user?.UserName}</Text>
+
+          <View style={{marginLeft: 16, alignItems: 'flex-start', flex: 1}}>
+            <Text style={styles.fullName}>{user?.FullName}</Text>
+            <Text style={[styles.phone, {marginBottom: 4}]}>{user?.UserName}</Text>
+            <GreenTag rounded={99} background={user?.RoleId == 3 ? 'blue' : 'green'}>
+              <Text style={{fontFamily: fonts.Medium, fontSize: 11, color: '#fff'}}>{user?.RoleName}</Text>
+            </GreenTag>
           </View>
+
+          <Icon type="materialicons" name="chevron-right" size={22} color="#000" />
+        </TouchableOpacity>
+
+        <View style={[styles.itemContainer, {width: windowWidth - 32, flexDirection: 'column'}]}>
+          <Item
+            onPress={() => navigation.navigate('UserPassword')}
+            icon={<Image source={require('~/assets/icons/key.png')} style={{width: 26, height: 26}} />}
+            iconColor="#3391e7"
+            title="Đổi mật khẩu"
+          />
+
+          <Divider marginVertical={16} />
+
+          <Item
+            onPress={() => navigation.navigate('UserInformation')}
+            icon={<Image source={require('~/assets/icons/lr-switch.png')} style={{width: 22, height: 22}} />}
+            iconColor="#3391e7"
+            title="Lịch sử chuyển lớp"
+          />
         </View>
 
-        {isProd && (
-          <>
-            <TouchableOpacity
-              onPress={() => {
-                Alert.alert('Tính năng đang phát triển', 'Vui lòng thử lại sau')
-              }}
-              activeOpacity={0.7}
-              style={[styles.itemContainer, {width: windowWidth - 32}]}>
-              <View style={{flex: 1}}>
-                <Text style={{fontFamily: fonts.Medium, fontSize: 16, color: '#000', flex: 1}}>Ví của bạn</Text>
-                <Text style={{fontFamily: fonts.Bold, fontSize: 22, color: colors.primary, flex: 1}}>
-                  {parseMoney(user?.Wallet + '')}
-                  <Text style={{fontSize: 14}}> VNĐ</Text>
-                </Text>
-              </View>
-              <Icon type="MaterialIcons" name="chevron-right" size={22} color="#000" />
-            </TouchableOpacity>
-
-            <Item
-              onPress={() => navigation.navigate('RechargeScreen')}
-              icon={<Icon type="MaterialCommunityIcons" name="bank" size={18} color="#fff" />}
-              iconColor="#66BB6A"
-              title="Nạp tiền"
-            />
-          </>
-        )}
-
-        {isProd && (
+        <View style={[styles.itemContainer, {width: windowWidth - 32, flexDirection: 'column'}]}>
           <Item
-            onPress={() => navigation.navigate('Orders')}
-            icon={<Icon type="MaterialCommunityIcons" name="cart" size={18} color="#fff" />}
-            iconColor="#E91E63"
-            title="Đơn hàng của bạn"
+            onPress={handleLogout}
+            icon={<Image source={require('~/assets/icons/out.png')} style={{width: 24, height: 24}} />}
+            iconColor="#f27375"
+            title="Đăng xuất"
           />
-        )}
+        </View>
 
-        <Item
-          onPress={() => navigation.navigate('UserInformation')}
-          icon={<Icon type="FontAwesome5" name="user-edit" size={16} color="#fff" />}
-          iconColor="#3391e7"
-          title="Thay đổi thông tin"
-        />
-
-        <Item
-          onPress={() => navigation.navigate('UserPassword')}
-          icon={<Icon type="FontAwesome5" name="edit" size={16} color="#fff" />}
-          iconColor="#b44ac6"
-          title="Đổi mật khẩu"
-        />
-
-        <Item
+        {/* <Item
           onPress={() => {
             Alert.alert(
               'Yêu cầu xoá tài khoản',
@@ -140,19 +128,14 @@ const UserTab = () => {
               ],
             )
           }}
-          icon={<Icon type="Ionicons" name="close-sharp" size={20} color="#fff" />}
+          icon={<Icon type="ionicons" name="close-sharp" size={20} color="#fff" />}
           iconColor="#F44336"
           title="Xoá tài khoản"
         />
 
         <View style={styles.divider} />
 
-        <Item
-          onPress={handleLogout}
-          icon={<Icon type="MaterialIcons" name="logout" size={18} color="#fff" />}
-          iconColor="#f27375"
-          title="Đăng xuất"
-        />
+     */}
 
         <Text style={styles.appVersion}>v{getReadableVersion()}</Text>
 
@@ -203,6 +186,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.trans05,
   },
-  fullName: {fontFamily: fonts.Semibold, fontSize: 16, color: '#000'},
-  phone: {fontFamily: fonts.Semibold, fontSize: 16},
+  fullName: {fontFamily: fonts.Bold, fontSize: 14, color: '#000'},
+  phone: {fontFamily: fonts.Semibold, fontSize: 14},
 })
