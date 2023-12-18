@@ -8,6 +8,7 @@ import {Alert, Platform} from 'react-native'
 import {getVersion} from 'react-native-device-info'
 import {isIOS} from 'green-native-ts'
 import {Buffer} from 'buffer'
+import moment from 'moment'
 
 const initUser = null
 
@@ -43,6 +44,8 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
 
   async function getNotifications() {
     if (user?.UserName) {
+      getSchedule()
+
       try {
         const response = await RestApi.get<any>('Notification', {pageIndex: 1, pageSize: 999999})
         if (response?.status == 200) {
@@ -54,6 +57,26 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
         setCarts([])
       }
     }
+  }
+
+  const [schedule, setSchedule] = useState<Array<TClassSchedule>>([])
+
+  // LẤY LỊCH HỌC
+  async function getSchedule() {
+    try {
+      const res = await RestApi.get<any>('Schedule', {
+        pageSize: 99999,
+        pageIndex: 1,
+        studentId: user?.UserInformationId,
+        from: moment().startOf('day').format('YYYY-MM-DDTHH:mm:ssZ'),
+        to: moment().endOf('day').format('YYYY-MM-DDTHH:mm:ssZ'),
+      })
+      if (res.status == 200) {
+        setSchedule(res.data.data)
+      } else {
+        setSchedule([])
+      }
+    } catch (error) {}
   }
 
   async function getMyInfo(token, id) {
@@ -114,12 +137,14 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     if (user?.RoleId == 3) {
       // Học viên
       getMyClass()
+
+      getHomeClass()
     }
   }, [user])
 
   const [classes, setClasses] = useState([])
 
-  console.log('-------- classes: ', classes)
+  // console.log('-------- classes: ', classes)
 
   async function getMyClass() {
     if (user?.UserName) {
@@ -136,12 +161,35 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     }
   }
 
+  const [homeClasses, setHomeClasses] = useState([])
+
+  async function getHomeClass() {
+    if (user?.UserName) {
+      try {
+        const response = await RestApi.get<any>('Class', {
+          pageIndex: 1,
+          pageSize: 3,
+          status: 2,
+        })
+        if (response?.status == 200) {
+          setHomeClasses(response.data?.data)
+        } else {
+          setHomeClasses([])
+        }
+      } catch (error) {
+        setCarts([])
+      }
+    }
+  }
+
   const contextValue = {
     mainText,
     setMainText,
     mainLoading,
     setMainLoading,
     user,
+    schedule,
+    homeClasses,
     setUser: setUser,
     remoteConfigs,
     setRemoteConfig,

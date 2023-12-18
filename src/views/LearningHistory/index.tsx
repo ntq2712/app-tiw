@@ -50,7 +50,8 @@ const LearningHistory = () => {
 
       {!loading && data.length > 0 && (
         <Timeline
-          style={{padding: 16, marginTop: 8, paddingLeft: 0}}
+          style={{paddingLeft: 0, paddingRight: 0, flex: 1}}
+          listViewStyle={{paddingRight: 16, paddingTop: 16, flex: 1, paddingBottom: 32}}
           showTime={false}
           data={data.map((item, index) => {
             return {time: index + '', ...item}
@@ -85,6 +86,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginTop: -8,
     alignItems: 'flex-start',
+    marginRight: 16,
   },
   textDate: {fontSize: 14, fontFamily: fonts.Medium},
   textContent: {fontSize: 16, marginBottom: 4, color: '#000', fontFamily: fonts.Medium},

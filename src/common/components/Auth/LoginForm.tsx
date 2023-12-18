@@ -19,7 +19,7 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
     formState: {errors},
   } = useForm({
     defaultValues: {
-      userName: 'thuypham', //
+      userName: 'thupham', //
       password: '123456', // 123456
     },
   })

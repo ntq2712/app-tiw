@@ -16,6 +16,16 @@ import {Colors, GreenStyles, Icon, parseMoney, windowHeight, windowWidth} from '
 import {useIsFocused, useNavigation} from '@react-navigation/native'
 import {useGlobalContext} from '~/provider/AppProvider'
 import FakeHome from './HomeX'
+import {GStatusBar} from '~/common/components'
+import GreenAvatar from '~/common/components/Avatar'
+import RoleBlock from './components/RoleBlock'
+import NotiBlock from './components/NotiBlock'
+import LinearGradient from 'react-native-linear-gradient'
+import HomeHeader from './components/Header'
+import HomeMenu from './components/Menu'
+import {ScheduleItem} from '../Schedule'
+import ScheduleBlock from './components/ScheduleBlock'
+import ClassBlock from './components/ClassBlock'
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets()
@@ -29,6 +39,7 @@ const HomeScreen = () => {
     getOrderStatus,
     getOtherOrders,
     getCarts,
+    schedule,
   } = useGlobalContext()
 
   const navigation = useNavigation<any>()
@@ -45,74 +56,24 @@ const HomeScreen = () => {
     }
   }, [focused])
 
+  console.log('--- schedule: ', schedule)
+
   return (
     <>
-      {focused && <StatusBar translucent barStyle="light-content" />}
+      <GStatusBar.Light />
 
-      <View
-        style={{
-          backgroundColor: '#F87171',
-          width: '100%',
-          padding: 16,
-          paddingTop: 16 + insets.top,
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        <Text style={{color: '#fff', fontFamily: fonts.Semibold, fontSize: 18, flex: 1}}>TRANG CHỦ</Text>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('NotiScreen')}
-            activeOpacity={0.7}
-            style={{position: 'relative'}}>
-            <Image style={{width: 24, height: 24}} source={require('~/assets/icons/bell.png')} resizeMode="contain" />
-            {notifications?.length > 0 && (
-              <View
-                style={{
-                  borderRadius: 999,
-                  width: 16,
-                  height: 16,
-                  backgroundColor: '#FCD34D',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  position: 'absolute',
-                  top: -3,
-                  right: -4,
-                }}>
-                <Text style={{fontFamily: fonts.Bold, fontSize: 8, color: '#393D48'}}>
-                  {notifications?.length > 98 ? 99 : notifications?.length || 0}
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        </View>
-      </View>
+      <HomeHeader />
 
-      <ScrollView style={{flex: 1, backgroundColor: isProd ? '#fff' : null}}>
-        <View style={{position: 'relative'}}>
-          <View
-            style={{
-              height: 110,
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: -110,
-              zIndex: 12,
-              paddingHorizontal: 16,
-            }}>
-            <Image
-              source={{uri: user?.Avatar}}
-              resizeMode="cover"
-              style={[{width: 80, height: 80, borderRadius: 99}]}
-            />
-            <View style={{marginLeft: 16}}>
-              <Text style={{color: '#fff', fontFamily: fonts.Regular, fontSize: 14}}>{user?.RoleName}</Text>
-              <Text style={{color: '#fff', fontFamily: fonts.Semibold, fontSize: 16}}>{user?.FullName}</Text>
-              <Text style={{color: '#fff', fontFamily: fonts.Regular, fontSize: 14}}>Mã: {user?.UserCode}</Text>
-            </View>
-          </View>
-          <Image resizeMode="stretch" source={require('~/assets/608.png')} style={{width: windowWidth, height: 120}} />
+      <ScrollView style={{flex: 1, backgroundColor: null}}>
+        <View>
+          <HomeMenu />
+
+          <ScheduleBlock />
+
+          <ClassBlock />
         </View>
 
-        <View style={{}}>
+        {/* <View style={{}}>
           <Text
             style={{
               color: '#393D48',
@@ -145,18 +106,18 @@ const HomeScreen = () => {
               <Text style={{color: '#393D48', fontFamily: fonts.Semibold, fontSize: 16, marginTop: 16}}>Công nợ</Text>
             </TouchableOpacity>
 
-            {/* <TouchableOpacity activeOpacity={0.7} style={{flex: 1, alignItems: 'center', marginTop: 16}}>
+            <TouchableOpacity activeOpacity={0.7} style={{flex: 1, alignItems: 'center', marginTop: 16}}>
               <Image
                 resizeMode="contain"
                 source={require('~/assets/37563.png')}
                 style={{width: '80%', height: windowWidth / 3.6}}
               />
               <Text style={{color: '#393D48', fontFamily: fonts.Semibold, fontSize: 16, marginTop: 16}}>Lịch học</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
 
-        <View style={{height: windowHeight}}></View>
+        {/* <View style={{height: windowHeight}}></View> */}
 
         <View style={{height: 24}} />
       </ScrollView>

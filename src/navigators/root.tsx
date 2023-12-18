@@ -28,6 +28,8 @@ import LearningHistory from '~/views/LearningHistory'
 import Feedback from '~/views/Feedback'
 import CreateFeedback from '~/views/Feedback/CreateFeedback'
 import FeedbackDetail from '~/views/Feedback/Feedback.Detail'
+import PaymentHistories from '~/views/payments'
+import PayDetail from '~/views/payments/PayDetail'
 
 const Stack = createNativeStackNavigator<TRootNavigator>()
 
@@ -62,6 +64,9 @@ const RootNavigator = () => {
         <Stack.Screen name="Feedback" component={Feedback} />
         <Stack.Screen name="CreateFeedback" options={{animation: 'slide_from_right'}} component={CreateFeedback} />
         <Stack.Screen name="FeedbackDetail" component={FeedbackDetail} />
+
+        <Stack.Screen name="PaymentHistories" component={PaymentHistories} />
+        <Stack.Screen name="PayDetail" component={PayDetail} />
 
         <Stack.Screen name="Webview" component={WebScreen} />
         <Stack.Screen

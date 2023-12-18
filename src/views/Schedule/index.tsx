@@ -12,7 +12,7 @@ import {headerStyles} from '~/common/components/Header/header.styles'
 LocaleConfig.locales['vi'] = calendarConfigs
 LocaleConfig.defaultLocale = 'vi'
 
-function InfoItem({title, value}) {
+export function InfoItem({title, value}) {
   return (
     <View style={styles.scheduleItemInfo}>
       <Text style={styles.scheduleText}>{title}</Text>
@@ -21,9 +21,37 @@ function InfoItem({title, value}) {
   )
 }
 
-const ScheduleTab = () => {
-  const [schedule, setSchedule] = useState<Array<TClassSchedule>>([])
+export function ScheduleItem({item, index}) {
+  return (
+    <View style={[styles.container, {marginTop: 16}]}>
+      <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+        <Text
+          style={[
+            styles.name,
+            {
+              fontSize: 15,
+              color: item?.Status == 2 ? '#59b96c' : '#fb862d',
+            },
+          ]}>
+          {moment(item?.StartTime).format('DD/MM/YYYY')}
+        </Text>
+        <Text style={{fontFamily: fonts.Semibold, color: '#000', fontSize: 15}}>
+          {moment(item?.StartTime).format('HH:mm')} - {moment(item?.EndTime).format('HH:mm')}
+        </Text>
+      </View>
 
+      <Divider marginBottom={4} />
+
+      <InfoItem title="Lớp" value={item?.ClassName} />
+      <InfoItem title="Giảng viên" value={item?.TeacherName} />
+      {item?.RoomName && <InfoItem title="Phòng học" value={item?.RoomName} />}
+      {item?.ZoomId && <InfoItem title="Phòng Zoom" value={item?.ZoomId} />}
+      {item?.ZoomPass && <InfoItem title="Mật khẩu" value={item?.ZoomPass} />}
+    </View>
+  )
+}
+
+const ScheduleTab = () => {
   const [selected, setSelected] = useState('')
   const selectedDate = selected ? {[selected]: {selected: true}} : null
 
@@ -38,15 +66,7 @@ const ScheduleTab = () => {
     setSelected(moment(new Date()).format('YYYY-MM-DD'))
   }, [])
 
-  useEffect(() => {
-    handleSchedule()
-  }, [schedule])
-
-  useEffect(() => {
-    if (selected && schedule.length > 0) {
-      searchData()
-    }
-  }, [selected, schedule])
+  const [schedule, setSchedule] = useState<Array<TClassSchedule>>([])
 
   // LẤY LỊCH HỌC
   async function getSchedule() {
@@ -58,6 +78,16 @@ const ScheduleTab = () => {
       }
     } catch (error) {}
   }
+
+  useEffect(() => {
+    handleSchedule()
+  }, [schedule])
+
+  useEffect(() => {
+    if (selected && schedule.length > 0) {
+      searchData()
+    }
+  }, [selected, schedule])
 
   // MAP CỤC DATA BACK-END TRẢ RA THÀNH CỤC MÀ CALENDAR NHẬN
   function handleSchedule() {
@@ -152,31 +182,7 @@ const ScheduleTab = () => {
           </>
         }
         renderItem={({item, index}: {item: TClassSchedule; index: number}) => (
-          <View key={`sche-${item?.Id}-${index}`} style={[styles.container, {marginTop: 16}]}>
-            <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-              <Text
-                style={[
-                  styles.name,
-                  {
-                    fontSize: 15,
-                    color: item?.Status == 2 ? '#59b96c' : '#fb862d',
-                  },
-                ]}>
-                {moment(item?.StartTime).format('DD/MM/YYYY')}
-              </Text>
-              <Text style={{fontFamily: fonts.Semibold, color: '#000', fontSize: 15}}>
-                {moment(item?.StartTime).format('HH:mm')} - {moment(item?.EndTime).format('HH:mm')}
-              </Text>
-            </View>
-
-            <Divider marginBottom={4} />
-
-            <InfoItem title="Lớp" value={item?.ClassName} />
-            <InfoItem title="Giảng viên" value={item?.TeacherName} />
-            {item?.RoomName && <InfoItem title="Phòng học" value={item?.RoomName} />}
-            {item?.ZoomId && <InfoItem title="Phòng Zoom" value={item?.ZoomId} />}
-            {item?.ZoomPass && <InfoItem title="Mật khẩu" value={item?.ZoomPass} />}
-          </View>
+          <ScheduleItem key={`sche-${item?.Id}-${index}`} index={index} item={item} />
         )}
         keyExtractor={(item: any) => {
           return item.Id

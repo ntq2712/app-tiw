@@ -39,4 +39,5 @@ type TRootNavigator = {
   Feedback?: any
   CreateFeedback?: any
   FeedbackDetail?: any
+  PayDetail?: any
 }

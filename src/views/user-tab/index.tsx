@@ -96,6 +96,15 @@ const UserTab = () => {
           <Divider marginVertical={16} />
 
           <Item
+            onPress={() => navigation.navigate('PaymentHistories')}
+            icon={<Image source={require('~/assets/icons/paper_line.png')} style={{width: 22, height: 22}} />}
+            iconColor="#3391e7"
+            title="Lịch sử thanh toán"
+          />
+
+          <Divider marginVertical={16} />
+
+          <Item
             onPress={() => navigation.navigate('LearningHistory')}
             icon={<Image source={require('~/assets/icons/lr-switch.png')} style={{width: 22, height: 22}} />}
             iconColor="#3391e7"

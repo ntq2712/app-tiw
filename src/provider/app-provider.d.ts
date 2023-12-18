@@ -6,6 +6,7 @@ type IMainProvider = {
   remoteConfigs?: IRemoteConfig
   canBack?: boolean
   setCanBack?: Function
+  schedule?: Array<any>
 
   webState?: any
   setWebState?: Function
@@ -45,6 +46,7 @@ type IMainProvider = {
 
   isWelcome?: boolean
   classes?: Array<TClassType>
+  homeClasses?: Array<TClassType>
   getClasses?: Function
 }
 
