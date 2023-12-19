@@ -48,6 +48,8 @@ type IMainProvider = {
   classes?: Array<TClassType>
   homeClasses?: Array<TClassType>
   getClasses?: Function
+
+  navigation?: any
 }
 
 type IChildren = {

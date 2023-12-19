@@ -1,7 +1,7 @@
 import instance from '../instance'
 
 const getAll = {
-  pageSize: 99999,
+  pageSize: 9999,
   pageIndex: 1,
 }
 

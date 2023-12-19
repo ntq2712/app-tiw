@@ -9,6 +9,7 @@ import {getVersion} from 'react-native-device-info'
 import {isIOS} from 'green-native-ts'
 import {Buffer} from 'buffer'
 import moment from 'moment'
+import {useNavigation} from '@react-navigation/native'
 
 const initUser = null
 
@@ -182,6 +183,8 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     }
   }
 
+  // const nav = useNavigation<any>()
+
   const contextValue = {
     mainText,
     setMainText,
@@ -190,6 +193,7 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     user,
     schedule,
     homeClasses,
+    // navigation: nav,
     setUser: setUser,
     remoteConfigs,
     setRemoteConfig,

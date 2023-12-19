@@ -19,7 +19,10 @@ const HomeMenu = () => {
           <Text style={styles.btnText}>Lịch sử học</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity activeOpacity={0.7} style={[styles.button, {marginLeft: 8}]}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('LibraryFolders')}
+          activeOpacity={0.7}
+          style={[styles.button, {marginLeft: 8}]}>
           <View style={[styles.iconWrapper, {backgroundColor: '#f9ae2b'}]}>
             <Image source={require('~/assets/icons/home/book_5_line.png')} style={styles.imgButton} />
           </View>

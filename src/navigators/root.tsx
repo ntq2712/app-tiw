@@ -30,6 +30,8 @@ import CreateFeedback from '~/views/Feedback/CreateFeedback'
 import FeedbackDetail from '~/views/Feedback/Feedback.Detail'
 import PaymentHistories from '~/views/payments'
 import PayDetail from '~/views/payments/PayDetail'
+import {LibraryFolders} from '~/views/library'
+import LibraryFiles from '~/views/library/screens/Files'
 
 const Stack = createNativeStackNavigator<TRootNavigator>()
 
@@ -64,10 +66,11 @@ const RootNavigator = () => {
         <Stack.Screen name="Feedback" component={Feedback} />
         <Stack.Screen name="CreateFeedback" options={{animation: 'slide_from_right'}} component={CreateFeedback} />
         <Stack.Screen name="FeedbackDetail" component={FeedbackDetail} />
+        <Stack.Screen name="LibraryFiles" component={LibraryFiles} />
 
         <Stack.Screen name="PaymentHistories" component={PaymentHistories} />
         <Stack.Screen name="PayDetail" component={PayDetail} />
-
+        <Stack.Screen name="LibraryFolders" component={LibraryFolders} />
         <Stack.Screen name="Webview" component={WebScreen} />
         <Stack.Screen
           options={{animation: 'slide_from_right'}}
@@ -75,7 +78,6 @@ const RootNavigator = () => {
           component={ReviewOrderScreen}
         />
         <Stack.Screen options={{animation: 'slide_from_right'}} name="NotiScreen" component={NotiScreen} />
-
         <Stack.Screen options={{animation: 'slide_from_right'}} name="ClassDetail" component={ClassDetail} />
         <Stack.Screen options={{animation: 'fade_from_bottom'}} name="UserPassword" component={UserPassword} />
         <Stack.Screen options={{animation: 'fade_from_bottom'}} name="UserInformation" component={UserInformation} />

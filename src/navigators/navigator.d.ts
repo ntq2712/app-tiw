@@ -40,4 +40,7 @@ type TRootNavigator = {
   CreateFeedback?: any
   FeedbackDetail?: any
   PayDetail?: any
+
+  LibraryFolders?: any
+  LibraryFiles?: any
 }
