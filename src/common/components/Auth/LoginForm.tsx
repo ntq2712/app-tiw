@@ -19,8 +19,8 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
     formState: {errors},
   } = useForm({
     defaultValues: {
-      userName: 'thupham', //
-      password: '123456', // 123456
+      userName: '', // thupham - hoangyen - giabao
+      password: '', // 123456
     },
   })
 
@@ -43,13 +43,13 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
         wrapStyle={{marginTop: 16}}
       />
 
-      <View style={{width: '100%', flexDirection: 'row', marginTop: 0, justifyContent: 'flex-end'}}>
+      {/* <View style={{width: '100%', flexDirection: 'row', marginTop: 0, justifyContent: 'flex-end'}}>
         <TouchableOpacity activeOpacity={0.6} style={{paddingVertical: 8}}>
           <Text style={{color: '#000'}}>Quên mật khẩu</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
-      <Button loading={loading} text="Đăng nhập" onPress={handleSubmit(onSubmit)} style={{marginTop: 8}} />
+      <Button loading={loading} text="Đăng nhập" onPress={handleSubmit(onSubmit)} style={{marginTop: 24}} />
     </View>
   )
 }

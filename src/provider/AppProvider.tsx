@@ -28,6 +28,7 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
   const [notifications, setNotifications] = useState([])
 
   const [isProd, setIsProd] = useState(true)
+  const [curChildren, setCurChildren] = useState<IUser>(null)
 
   function parseJwt(token) {
     if (token) {
@@ -38,14 +39,11 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     }
   }
 
-  useEffect(() => {
-    if (user?.token) {
-    }
-  }, [user])
-
   async function getNotifications() {
     if (user?.UserName) {
-      getSchedule()
+      if (user?.RoleId == 3) {
+        getSchedule()
+      }
 
       try {
         const response = await RestApi.get<any>('Notification', {pageIndex: 1, pageSize: 999999})
@@ -60,18 +58,28 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     }
   }
 
+  useEffect(() => {
+    if (user?.RoleId == 8 && !!curChildren?.UserInformationId) {
+      getSchedule()
+    }
+  }, [curChildren])
+
   const [schedule, setSchedule] = useState<Array<TClassSchedule>>([])
 
   // LẤY LỊCH HỌC
   async function getSchedule() {
+    const studentId = user?.RoleId == 3 ? user?.UserInformationId : curChildren?.UserInformationId || null
+
     try {
-      const res = await RestApi.get<any>('Schedule', {
-        pageSize: 99999,
-        pageIndex: 1,
-        studentId: user?.UserInformationId,
-        from: moment().startOf('day').format('YYYY-MM-DDTHH:mm:ssZ'),
-        to: moment().endOf('day').format('YYYY-MM-DDTHH:mm:ssZ'),
-      })
+      const res = await RestApi.get<any>(
+        'Schedule',
+        {
+          studentId: studentId,
+          from: moment().startOf('day').format('YYYY-MM-DDTHH:mm:ssZ'),
+          to: moment().endOf('day').format('YYYY-MM-DDTHH:mm:ssZ'),
+        },
+        true,
+      )
       if (res.status == 200) {
         setSchedule(res.data.data)
       } else {
@@ -82,10 +90,15 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
 
   async function getMyInfo(token, id) {
     try {
-      const res = await RestApi.get<any>('UserInformation/' + id, {})
+      const res = await RestApi.getBy<any>('UserInformation', id)
       if (res.status == 200) {
         console.log('Current USER: ', {token: token, ...res?.data?.data})
+
         !!setUser && setUser({token: token, ...res?.data?.data})
+
+        if (res?.data?.data?.RoleId == 8) {
+          getMyChildrens(res?.data?.data?.UserInformationId)
+        }
       }
     } catch (error) {
     } finally {
@@ -138,19 +151,32 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     if (user?.RoleId == 3) {
       // Học viên
       getMyClass()
-
       getHomeClass()
     }
   }, [user])
 
-  const [classes, setClasses] = useState([])
+  useEffect(() => {
+    if (curChildren) {
+      console.log('---- curChildren: ', curChildren)
 
-  // console.log('-------- classes: ', classes)
+      if (user?.RoleId == 8) {
+        // Phụ huynh
+        getMyClass()
+        getHomeClass()
+      }
+    }
+  }, [curChildren, user])
+
+  // curChildren
+
+  const [classes, setClasses] = useState([])
 
   async function getMyClass() {
     if (user?.UserName) {
+      const studentId = user?.RoleId == 3 ? user?.UserInformationId : curChildren?.UserInformationId || null
+
       try {
-        const response = await RestApi.get<any>('Class', {pageIndex: 1, pageSize: 999999})
+        const response = await RestApi.get<any>('Class', {studentId: studentId}, true)
         if (response?.status == 200) {
           setClasses(response.data?.data)
         } else {
@@ -166,11 +192,14 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
 
   async function getHomeClass() {
     if (user?.UserName) {
+      const studentId = user?.RoleId == 3 ? user?.UserInformationId : curChildren?.UserInformationId || null
+
       try {
         const response = await RestApi.get<any>('Class', {
           pageIndex: 1,
           pageSize: 3,
           status: 2,
+          studentId: studentId,
         })
         if (response?.status == 200) {
           setHomeClasses(response.data?.data)
@@ -183,7 +212,34 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     }
   }
 
-  // const nav = useNavigation<any>()
+  const [childrens, setChildrent] = useState(null)
+
+  async function getMyChildrens(parentIds?: number) {
+    try {
+      const response = await RestApi.get<any>(
+        'UserInformation',
+        {parentIds: parentIds || user?.UserInformationId},
+        true,
+      )
+
+      if (response?.status == 200) {
+        setChildrent(response.data?.data)
+        if (response.data?.data.length > 1) {
+          setCurChildren(response.data?.data[0])
+        }
+      } else {
+        setChildrent([])
+        setCurChildren(null)
+      }
+    } catch (error) {
+      setCarts([])
+    }
+  }
+
+  const is = {
+    parent: user?.RoleId == 8,
+    student: user?.RoleId == 3,
+  }
 
   const contextValue = {
     mainText,
@@ -191,10 +247,14 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     mainLoading,
     setMainLoading,
     user,
+    is,
+    curChildren,
+    setCurChildren,
     schedule,
     homeClasses,
-    // navigation: nav,
+    childrens,
     setUser: setUser,
+    getMyChildrens,
     remoteConfigs,
     setRemoteConfig,
     canBack: null,

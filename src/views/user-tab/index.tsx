@@ -39,7 +39,7 @@ const UserTab = () => {
   const insets = useSafeAreaInsets()
   const focused = useIsFocused()
 
-  const {user, setUser, isProd} = useGlobalContext()
+  const {user, setUser, isProd, is} = useGlobalContext()
   const [loading, setLoading] = useState<boolean>(false)
 
   const navigation = useNavigation<any>()
@@ -79,12 +79,18 @@ const UserTab = () => {
         </TouchableOpacity>
 
         <View style={[styles.itemContainer, {width: windowWidth - 32, flexDirection: 'column'}]}>
-          {/* <Item
-            onPress={() => navigation.navigate('UserInformation')}
-            icon={<Image source={require('~/assets/icons/lr-switch.png')} style={{width: 22, height: 22}} />}
-            iconColor="#3391e7"
-            title="Lịch sử học"
-          /> */}
+          {is.parent && (
+            <>
+              <Item
+                onPress={() => navigation.navigate('Students')}
+                icon={<Image source={require('~/assets/icons/group_line.png')} style={{width: 24, height: 24}} />}
+                iconColor="#3391e7"
+                title="Học viên"
+              />
+
+              <Divider marginVertical={16} />
+            </>
+          )}
 
           <Item
             onPress={() => navigation.navigate('UserPassword')}

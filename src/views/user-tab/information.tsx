@@ -12,6 +12,8 @@ import Input from '~/common/components/Controller/Input'
 import {LocalStorage} from '~/common'
 import {Picker} from '@react-native-picker/picker'
 import RNPickerSelect from 'react-native-picker-select'
+import {GStatusBar, HeaderWhite} from '~/common/components'
+import Select from '~/common/components/Controller/Select'
 
 const UserInformation = () => {
   const insets = useSafeAreaInsets()
@@ -90,70 +92,27 @@ const UserInformation = () => {
 
   useEffect(() => {
     if (focused) {
-      getWareHouseFrom()
-      getWareHouseTo()
+      // getWareHouseFrom()
+      // getWareHouseTo()
     }
   }, [focused])
 
   const [selectedFrom, setSelectedFrom] = useState<any>(null)
   const [selectedTo, setSelectedTo] = useState<any>(null)
-  const [wareHouseFrom, setWareHouseFrom] = useState([])
-  const [wareHouseTo, setWareHouseTo] = useState([])
 
-  async function getWareHouseFrom() {
-    try {
-      const res = await RestApi.get<any>('Auth/warehouse-from', {})
-      if (res.status == 200) {
-        setWareHouseFrom(res?.data?.data)
-      }
-    } catch (error) {}
-  }
-
-  async function getWareHouseTo() {
-    try {
-      const res = await RestApi.get<any>('Auth/warehouse-to', {})
-      if (res.status == 200) {
-        setWareHouseTo(res?.data?.data)
-      }
-    } catch (error) {}
-  }
   const whfRef = useRef(null)
   const whtRef = useRef(null)
 
   return (
     <>
+      <GStatusBar.Dark />
+      <HeaderWhite>Thay đổi thông tin</HeaderWhite>
+
       <ScrollView
         endFillColor={Colors.transparent}
         automaticallyAdjustKeyboardInsets={true}
         contentContainerStyle={[{minHeight: scrollHeight}]}>
         <View style={{flex: 1}}>
-          <StatusBar barStyle="light-content" />
-
-          <View style={[{paddingTop: isIOS() ? insets.top + 4 : insets.top + 12}, styles.headerContainer]}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={() => navigation.goBack()}
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                paddingHorizontal: 16,
-              }}>
-              <Icon type="MaterialIcons" name="arrow-back-ios" color="#fff" size={20} />
-            </TouchableOpacity>
-            <TouchableOpacity style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={styles.headerTitle}>Thay đổi thông tin</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                paddingHorizontal: 16,
-                opacity: 0,
-              }}>
-              <Icon type="MaterialIcons" name="arrow-back-ios" color="#fff" size={20} />
-            </TouchableOpacity>
-          </View>
-
           <View
             style={{
               width: '100%',
@@ -164,29 +123,64 @@ const UserInformation = () => {
             <Input
               inputStyle={{height: 40}}
               control={control}
-              name="FirstName"
-              label="Họ"
-              errors={errors.FirstName}
+              name="FullName"
+              label="Họ tên"
+              errors={errors.FullName}
               wrapStyle={{marginTop: 16}}
             />
+
             <Input
               inputStyle={{height: 40}}
               control={control}
-              name="LastName"
-              label="Tên"
-              errors={errors.LastName}
+              name="UserName"
+              label="Tên đăng nhập"
+              errors={errors.UserName}
               wrapStyle={{marginTop: 16}}
             />
+
+            <Input
+              inputStyle={{height: 40}}
+              control={control}
+              name="Phone"
+              label="Điện thoại"
+              errors={errors.Mobile}
+              wrapStyle={{marginTop: 16}}
+            />
+
+            <Input
+              inputStyle={{height: 40}}
+              control={control}
+              name="Email"
+              label="Email"
+              errors={errors.Email}
+              wrapStyle={{marginTop: 16}}
+            />
+
+            <Select
+              inputStyle={{height: 40}}
+              control={control}
+              name="Gender"
+              label="Giới tính"
+              errors={errors.Gender}
+              data={[
+                {value: 0, title: 'Nam'},
+                {value: 1, title: 'Nữ'},
+                {value: 2, title: 'Khác'},
+              ]}
+              wrapStyle={{marginTop: 16}}
+            />
+
+            <Input
+              inputStyle={{height: 40}}
+              control={control}
+              name="UserName"
+              label="Tên đăng nhập"
+              errors={errors.UserName}
+              wrapStyle={{marginTop: 16}}
+            />
+
             {isProd && (
               <>
-                <Input
-                  inputStyle={{height: 40}}
-                  control={control}
-                  name="Phone"
-                  label="Điện thoại"
-                  errors={errors.Phone}
-                  wrapStyle={{marginTop: 16}}
-                />
                 <Input
                   inputStyle={{height: 40}}
                   control={control}
@@ -200,7 +194,7 @@ const UserInformation = () => {
 
             {isProd && (
               <>
-                <View style={{marginTop: 16}}>
+                {/* <View style={{marginTop: 16}}>
                   <Text style={styles.lable}>Kho TQ</Text>
                   {isIOS() && (
                     <View style={{height: 0, opacity: 0}}>
@@ -238,9 +232,9 @@ const UserInformation = () => {
                     </Text>
                     <Icon name="caretdown" type="AntDesign" color="#000" size={14} />
                   </TouchableOpacity>
-                </View>
+                </View> */}
 
-                <View style={{marginTop: 16}}>
+                {/* <View style={{marginTop: 16}}>
                   <Text style={styles.lable}>Kho VN</Text>
 
                   {isIOS() && (
@@ -277,9 +271,9 @@ const UserInformation = () => {
                     <Text style={{color: '#000', flex: 1}}>{!selectedTo?.Name ? 'Chọn kho TQ' : selectedTo?.Name}</Text>
                     <Icon name="caretdown" type="AntDesign" color="#000" size={14} />
                   </TouchableOpacity>
-                </View>
+                </View> */}
 
-                {textError && (
+                {/* {textError && (
                   <Text
                     style={{
                       color: 'red',
@@ -291,7 +285,7 @@ const UserInformation = () => {
                     }}>
                     {textError}
                   </Text>
-                )}
+                )} */}
               </>
             )}
 
@@ -313,7 +307,7 @@ const UserInformation = () => {
         </View>
       </ScrollView>
 
-      {!isIOS() && (
+      {/* {!isIOS() && (
         <>
           <Picker
             key="pk-wh-from"
@@ -336,7 +330,7 @@ const UserInformation = () => {
             ))}
           </Picker>
         </>
-      )}
+      )} */}
 
       <Spinner visible={loading} textContent={'Chờ xíu, tôi đang xử lý...'} />
     </>

@@ -131,6 +131,7 @@ const WelcomeScreen = () => {
         }}>
         <Button
           activeOpacity={0.7}
+          style={{borderRadius: 8, height: 50}}
           onPress={() => {
             if (curStep != 3) {
               setCurStep(curStep + 1)

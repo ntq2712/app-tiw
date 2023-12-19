@@ -32,6 +32,8 @@ import PaymentHistories from '~/views/payments'
 import PayDetail from '~/views/payments/PayDetail'
 import {LibraryFolders} from '~/views/library'
 import LibraryFiles from '~/views/library/screens/Files'
+import Students from '~/views/students'
+import SelectStudent from '~/common/components/FilterStudent/SelectStudent'
 
 const Stack = createNativeStackNavigator<TRootNavigator>()
 
@@ -67,6 +69,8 @@ const RootNavigator = () => {
         <Stack.Screen name="CreateFeedback" options={{animation: 'slide_from_right'}} component={CreateFeedback} />
         <Stack.Screen name="FeedbackDetail" component={FeedbackDetail} />
         <Stack.Screen name="LibraryFiles" component={LibraryFiles} />
+        <Stack.Screen name="Students" component={Students} />
+        <Stack.Screen name="SelectStudent" component={SelectStudent} />
 
         <Stack.Screen name="PaymentHistories" component={PaymentHistories} />
         <Stack.Screen name="PayDetail" component={PayDetail} />

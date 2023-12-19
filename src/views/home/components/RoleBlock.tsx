@@ -18,8 +18,8 @@ const RoleBlock = () => {
 
   return (
     <View style={styles.container}>
-      <Icon type="fontawesome5" name="user-alt" color="#1E88E5" size={10} />
-      <Text style={styles.textStudent}>{user?.RoleName}</Text>
+      <Icon type="fontawesome5" name="user-alt" color="#00897B" size={10} />
+      <Text style={[styles.textStudent, {color: '#00897B'}]}>{user?.RoleName}</Text>
     </View>
   )
 }

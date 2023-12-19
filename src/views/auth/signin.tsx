@@ -60,14 +60,10 @@ const Signin = () => {
       const res = await loginApi(params)
       if (res?.token) {
         await setToken(res?.token)
-
         const tempUser = await parseJwt(res?.token)
-
         getMyInfo(res?.token, tempUser?.UserInformationId || null)
-
-        // oneSignalUser()
       } else {
-        Alert.alert('Quáo.. lỗi rồi', res?.message)
+        Alert.alert('Lỗi', res?.message)
       }
     } catch (error) {
       console.log(error?.message)

@@ -8,6 +8,7 @@ import HomeHeader from './components/Header'
 import HomeMenu from './components/Menu'
 import ScheduleBlock from './components/ScheduleBlock'
 import ClassBlock from './components/ClassBlock'
+import FilterStudent from '~/common/components/FilterStudent'
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets()
@@ -30,6 +31,8 @@ const HomeScreen = () => {
       <HomeHeader />
 
       <ScrollView style={{flex: 1, backgroundColor: null}}>
+        <FilterStudent />
+
         <View>
           <HomeMenu />
 

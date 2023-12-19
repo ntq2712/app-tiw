@@ -20,7 +20,7 @@
     "@react-navigation/native-stack": "^6.9.4",
     "@types/react-native-vector-icons": "^6.4.12",
     "axios": "^1.2.0",
-    "green-native-ts": "^1.2.0",
+    "green-native-ts": "^1.2.1",
     "moment": "^2.29.4",
     "react": "18.1.0",
     "react-hook-form": "^7.39.7",

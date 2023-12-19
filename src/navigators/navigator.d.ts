@@ -43,4 +43,6 @@ type TRootNavigator = {
 
   LibraryFolders?: any
   LibraryFiles?: any
+  Students?: any
+  SelectStudent?: any
 }

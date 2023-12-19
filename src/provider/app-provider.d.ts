@@ -7,9 +7,16 @@ type IMainProvider = {
   canBack?: boolean
   setCanBack?: Function
   schedule?: Array<any>
-
+  childrens?: Array<IUser>
+  is?: {
+    student?: boolean
+    parent?: boolean
+  }
+  curChildren?: IUser
   webState?: any
   setWebState?: Function
+  setCurChildren?: Function
+  getMyChildrens?: Function
 
   isDetail?: any
   setDetail?: Function

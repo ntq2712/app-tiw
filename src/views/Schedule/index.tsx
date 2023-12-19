@@ -8,6 +8,8 @@ import {fonts} from '~/configs'
 import RestApi from '~/api/RestApi'
 import {Colors, Icon} from 'green-native-ts'
 import {headerStyles} from '~/common/components/Header/header.styles'
+import FilterStudent from '~/common/components/FilterStudent'
+import {useGlobalContext} from '~/provider'
 
 LocaleConfig.locales['vi'] = calendarConfigs
 LocaleConfig.defaultLocale = 'vi'
@@ -60,23 +62,44 @@ const ScheduleTab = () => {
 
   const [loading, setLoading] = useState<boolean>(true)
 
+  const {is, user, curChildren} = useGlobalContext()
+
   useEffect(() => {
-    getSchedule()
+    if (is.student) {
+      getSchedule()
+    }
 
     setSelected(moment(new Date()).format('YYYY-MM-DD'))
   }, [])
+
+  useEffect(() => {
+    if (is.parent && !!curChildren?.UserInformationId) {
+      getSchedule()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (is.parent && !!curChildren?.UserInformationId) {
+      getSchedule()
+    }
+  }, [curChildren])
 
   const [schedule, setSchedule] = useState<Array<TClassSchedule>>([])
 
   // LẤY LỊCH HỌC
   async function getSchedule() {
+    const studentId = user?.RoleId == 3 ? user?.UserInformationId : curChildren?.UserInformationId || null
+
     setLoading(true)
     try {
-      const res = await RestApi.get<any>('Schedule', {pageSize: 99999, pageIndex: 1})
+      const res = await RestApi.get<any>('Schedule', {studentId: studentId}, true)
       if (res.status == 200) {
         setSchedule(res.data.data)
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -84,7 +107,7 @@ const ScheduleTab = () => {
   }, [schedule])
 
   useEffect(() => {
-    if (selected && schedule.length > 0) {
+    if (selected && !!schedule) {
       searchData()
     }
   }, [selected, schedule])
@@ -106,6 +129,8 @@ const ScheduleTab = () => {
 
   // TÌM CÁC BUỔI HỌC TRONG NGÀY ĐÃ CHỌN
   function searchData() {
+    console.log('--- searchData')
+
     let temp = []
     schedule.forEach(element => {
       if (moment(element.StartTime).format('YYYY-MM-DD') == selected) {
@@ -143,29 +168,32 @@ const ScheduleTab = () => {
         ListHeaderComponent={
           <>
             {visible && (
-              <View
-                style={{
-                  marginHorizontal: 16,
-                  marginTop: 16,
-                  padding: 16,
-                  paddingTop: 8,
-                  backgroundColor: '#fff',
-                  borderRadius: 8,
-                }}>
-                <Calendar
-                  onDayPress={day => setSelected(day.dateString)}
-                  markedDates={{...markedDates, ...selectedDate}}
-                  theme={{
-                    backgroundColor: 'red',
-                    calendarBackground: '#ffffff',
-                    textSectionTitleColor: '#b6c1cd',
-                    selectedDayBackgroundColor: '#2196F3',
-                    selectedDayTextColor: '#fff',
-                    todayTextColor: '#00adf5',
-                    dayTextColor: '#2d4150',
-                  }}
-                />
-              </View>
+              <>
+                <FilterStudent />
+                <View
+                  style={{
+                    marginHorizontal: 16,
+                    marginTop: 16,
+                    padding: 16,
+                    paddingTop: 8,
+                    backgroundColor: '#fff',
+                    borderRadius: 8,
+                  }}>
+                  <Calendar
+                    onDayPress={day => setSelected(day.dateString)}
+                    markedDates={{...markedDates, ...selectedDate}}
+                    theme={{
+                      backgroundColor: 'red',
+                      calendarBackground: '#ffffff',
+                      textSectionTitleColor: '#b6c1cd',
+                      selectedDayBackgroundColor: '#2196F3',
+                      selectedDayTextColor: '#fff',
+                      todayTextColor: '#00adf5',
+                      dayTextColor: '#2d4150',
+                    }}
+                  />
+                </View>
+              </>
             )}
 
             <View style={{marginTop: 16, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16}}>

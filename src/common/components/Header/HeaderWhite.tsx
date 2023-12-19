@@ -28,7 +28,7 @@ const HeaderWhite: FC<TGreenHeader> = props => {
           activeOpacity={canBack ? 0.7 : 0}
           onPress={goBack}
           style={[headerStyles.btnBack, {opacity: canBack ? 1 : 0}]}>
-          <Icon type="materialicons" name="arrow-back-ios" color="#000" size={20} />
+          <Icon type="materialicons" name="arrow-back-ios" color="#000" size={16} />
         </TouchableOpacity>
 
         <View style={headerStyles.title}>
@@ -41,7 +41,7 @@ const HeaderWhite: FC<TGreenHeader> = props => {
           customRight
         ) : (
           <TouchableOpacity style={headerStyles.right}>
-            <Icon type="materialicons" name="arrow-back-ios" color="#fff" size={20} />
+            <Icon type="materialicons" name="arrow-back-ios" color="#fff" size={16} />
           </TouchableOpacity>
         )}
       </View>
