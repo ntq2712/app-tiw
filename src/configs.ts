@@ -29,6 +29,10 @@ const appConfigs = {
   },
 }
 
+export const theme = {
+  attackDance: 2, // 1 = chọn buổi ; 2 = show hết
+}
+
 export const webViewURLs = {
   taobao: {
     targetUrl: 'https://m.intl.taobao.com/',

@@ -38,7 +38,7 @@ const ClassDetailScreen = () => {
         {curTab == 4 && <Document router={router} detail={detail} schedule={schedule} curStudent={curStudent} />}
         {curTab == 5 && <ClassNotifications />}
         {curTab == 6 && <Examinations />}
-        {curTab == 7 && <Schedule />}
+        {curTab == 7 && <Schedule router={router} />}
 
         <View style={{flex: 1}} />
         <View style={{height: 24}} />

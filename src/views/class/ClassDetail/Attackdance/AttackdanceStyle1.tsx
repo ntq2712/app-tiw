@@ -7,7 +7,7 @@ import {Icon, isIOS} from 'green-native-ts'
 import RestApi from '~/api/RestApi'
 import SuperLoading from '~/common/components/SuperLoading'
 
-const Attackdance = ({detail, router, schedule, curStudent}) => {
+const Attackdance1 = ({detail, router, schedule, curStudent}) => {
   const [curSchedule, setCurSchedule] = useState(null)
 
   useEffect(() => {
@@ -139,7 +139,7 @@ const Attackdance = ({detail, router, schedule, curStudent}) => {
               <View style={{width: '100%', backgroundColor: '#A4A4A433', height: 1, marginVertical: 8}} />
 
               <Text style={{fontFamily: fonts.Semibold, color: '#000', fontSize: 15}}>
-                Điểm danh:{' '}
+                Tình trạng:{' '}
                 <Text style={{color: item?.StatusName ? '#2196F3' : '#F44336'}}>
                   {item?.StatusName || 'Chưa có thông tin'}
                 </Text>
@@ -165,7 +165,7 @@ const Attackdance = ({detail, router, schedule, curStudent}) => {
   )
 }
 
-export default Attackdance
+export default Attackdance1
 
 const styles = StyleSheet.create({
   container: {

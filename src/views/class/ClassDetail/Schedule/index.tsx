@@ -6,20 +6,13 @@ import {useClassContext} from '~/provider'
 import {fonts} from '~/configs'
 import {Divider, Empty} from '~/common/components'
 import {calendarConfigs} from '~/common/calendars.configs'
+import RestApi from '~/api/RestApi'
+import ScheduleItem from './RenderItem'
 
 LocaleConfig.locales['vi'] = calendarConfigs
 LocaleConfig.defaultLocale = 'vi'
 
-function InfoItem({title, value}) {
-  return (
-    <View style={styles.scheduleItemInfo}>
-      <Text style={styles.scheduleText}>{title}</Text>
-      <Text style={styles.scheduleText}>{value}</Text>
-    </View>
-  )
-}
-
-const Schedule = () => {
+const Schedule = ({router}) => {
   const {schedule} = useClassContext()
 
   const [selected, setSelected] = useState('')
@@ -72,47 +65,38 @@ const Schedule = () => {
       data={data}
       scrollEnabled={false}
       ListHeaderComponent={
-        <View style={{marginHorizontal: 16, padding: 16, paddingTop: 8, backgroundColor: '#fff', borderRadius: 8}}>
-          <Calendar
-            onDayPress={day => setSelected(day.dateString)}
-            markedDates={{...markedDates, ...selectedDate}}
-            theme={{
-              backgroundColor: 'red',
-              calendarBackground: '#ffffff',
-              textSectionTitleColor: '#b6c1cd',
-              selectedDayBackgroundColor: '#2196F3',
-              selectedDayTextColor: '#fff',
-              todayTextColor: '#00adf5',
-              dayTextColor: '#2d4150',
-            }}
-          />
-        </View>
-      }
-      renderItem={({item, index}: {item: TClassSchedule; index: number}) => (
-        <View key={`sche-${item?.Id}-${index}`} style={[styles.container, {marginTop: 16}]}>
-          <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-            <Text
-              style={[
-                styles.name,
-                {
-                  fontSize: 15,
-                  color: item?.Status == 2 ? '#59b96c' : '#fb862d',
-                },
-              ]}>
-              {moment(item?.StartTime).format('DD/MM/YYYY')}
-            </Text>
-            <Text style={{fontFamily: fonts.Semibold, color: '#000', fontSize: 15}}>
-              {moment(item?.StartTime).format('HH:mm')} - {moment(item?.EndTime).format('HH:mm')}
-            </Text>
+        <>
+          <View style={{marginHorizontal: 16, padding: 16, paddingTop: 8, backgroundColor: '#fff', borderRadius: 8}}>
+            <Calendar
+              onDayPress={day => setSelected(day.dateString)}
+              markedDates={{...markedDates, ...selectedDate}}
+              theme={{
+                backgroundColor: 'red',
+                calendarBackground: '#ffffff',
+                textSectionTitleColor: '#b6c1cd',
+                selectedDayBackgroundColor: '#2196F3',
+                selectedDayTextColor: '#fff',
+                todayTextColor: '#00adf5',
+                dayTextColor: '#2d4150',
+              }}
+            />
           </View>
 
-          <Divider marginBottom={4} />
+          <View style={{marginTop: 16, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{backgroundColor: '#59b96c', width: 10, height: 10, borderRadius: 999}} />
+              <Text style={{fontFamily: fonts.Medium, marginLeft: 8}}>Đã học</Text>
+            </View>
 
-          <InfoItem title="Giảng viên" value={item?.TeacherName} />
-          {item?.RoomName && <InfoItem title="Phòng học" value={item?.RoomName} />}
-          {item?.ZoomId && <InfoItem title="Phòng Zoom" value={item?.ZoomId} />}
-          {item?.ZoomPass && <InfoItem title="Mật khẩu" value={item?.ZoomPass} />}
-        </View>
+            <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 16}}>
+              <View style={{backgroundColor: '#fb862d', width: 10, height: 10, borderRadius: 999}} />
+              <Text style={{fontFamily: fonts.Medium, marginLeft: 8}}>Chưa học</Text>
+            </View>
+          </View>
+        </>
+      }
+      renderItem={({item, index}: {item: TClassSchedule; index: number}) => (
+        <ScheduleItem key={`sche-${item?.Id}-${index}`} item={item} index={index} />
       )}
       keyExtractor={(item: any) => {
         return item.Id
