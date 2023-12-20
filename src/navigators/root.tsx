@@ -34,6 +34,8 @@ import {LibraryFolders} from '~/views/library'
 import LibraryFiles from '~/views/library/screens/Files'
 import Students from '~/views/students'
 import SelectStudent from '~/common/components/FilterStudent/SelectStudent'
+import UserAddress from '~/views/user-tab/address'
+import UserLearn from '~/views/user-tab/learn'
 
 const Stack = createNativeStackNavigator<TRootNavigator>()
 
@@ -71,6 +73,8 @@ const RootNavigator = () => {
         <Stack.Screen name="LibraryFiles" component={LibraryFiles} />
         <Stack.Screen name="Students" component={Students} />
         <Stack.Screen name="SelectStudent" component={SelectStudent} />
+        <Stack.Screen name="UserAddress" component={UserAddress} />
+        <Stack.Screen name="UserLearn" component={UserLearn} />
 
         <Stack.Screen name="PaymentHistories" component={PaymentHistories} />
         <Stack.Screen name="PayDetail" component={PayDetail} />

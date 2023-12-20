@@ -129,8 +129,6 @@ const ScheduleTab = () => {
 
   // TÌM CÁC BUỔI HỌC TRONG NGÀY ĐÃ CHỌN
   function searchData() {
-    console.log('--- searchData')
-
     let temp = []
     schedule.forEach(element => {
       if (moment(element.StartTime).format('YYYY-MM-DD') == selected) {

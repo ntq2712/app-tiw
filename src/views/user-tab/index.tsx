@@ -102,6 +102,28 @@ const UserTab = () => {
           <Divider marginVertical={16} />
 
           <Item
+            onPress={() => navigation.navigate('UserAddress')}
+            icon={<Image source={require('~/assets/icons/home_4_line.png')} style={{width: 22, height: 22}} />}
+            iconColor="#3391e7"
+            title="Thay đổi địa chỉ"
+          />
+
+          {is.student && (
+            <>
+              <Divider marginVertical={16} />
+
+              <Item
+                onPress={() => navigation.navigate('UserLearn')}
+                icon={<Image source={require('~/assets/icons/book_line.png')} style={{width: 22, height: 22}} />}
+                iconColor="#3391e7"
+                title="Thông tin học"
+              />
+            </>
+          )}
+
+          <Divider marginVertical={16} />
+
+          <Item
             onPress={() => navigation.navigate('PaymentHistories')}
             icon={<Image source={require('~/assets/icons/paper_line.png')} style={{width: 22, height: 22}} />}
             iconColor="#3391e7"
