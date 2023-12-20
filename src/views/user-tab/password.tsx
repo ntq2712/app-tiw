@@ -1,12 +1,11 @@
-import {Alert, ScrollView, StyleSheet, View} from 'react-native'
+import {Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import React, {useState} from 'react'
 import {Colors} from 'green-native-ts'
-import {sizes} from '~/configs'
+import {fonts} from '~/configs'
 import {useNavigation} from '@react-navigation/native'
 import RestApi from '~/api/RestApi'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {GInput, GStatusBar, HeaderWhite, TextError} from '~/common/components'
-import Button from '~/common/components/Button'
 
 const UserPassword = () => {
   const insets = useSafeAreaInsets()
@@ -106,13 +105,21 @@ const UserPassword = () => {
 
             <TextError>{textError}</TextError>
 
-            <Button
+            <TouchableOpacity
               onPress={onSubmit}
-              loading={loading}
-              disabled={!curPass || !newPass || !confPass}
-              style={{marginTop: 16, height: 42}}>
-              Lưu thay đổi
-            </Button>
+              activeOpacity={0.7}
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#2196F3',
+                borderRadius: 8,
+                height: 44,
+                marginTop: 16,
+                opacity: !curPass || !newPass || !confPass ? 0.5 : 1,
+              }}>
+              <Text style={{fontFamily: fonts.Bold, fontSize: 16, color: '#fff'}}>Lưu thay đổi</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
