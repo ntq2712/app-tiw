@@ -2,10 +2,11 @@ import {Dimensions} from 'react-native'
 
 const {width, height} = Dimensions.get('window')
 
-// Live:
+// Live: https://lms.gdcenglish.edu.vn
 // Dev: https://gdc.monamedia.net
 
 const appConfigs = {
+  // hostURL: 'https://lms.gdcenglish.edu.vn',
   hostURL: 'https://gdc.monamedia.net',
   configURL: 'https://nguyenchau.w3spaces.com',
   oneSignalID: '',

@@ -11,7 +11,7 @@ const FilterStudent = () => {
 
   const navigation = useNavigation<any>()
 
-  if (!is.parent) {
+  if (!is.parent || !childrens) {
     return <></>
   }
 

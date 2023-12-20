@@ -9,11 +9,12 @@ import Spinner from 'react-native-loading-spinner-overlay'
 import {Empty, GreenHeader} from '~/common/components'
 import RestApi from '~/api/RestApi'
 import RenderItem from './RenderItem'
+import FilterStudent from '~/common/components/FilterStudent'
 
 const PaymentHistories = () => {
   const insets = useSafeAreaInsets()
 
-  const {isProd, user} = useGlobalContext()
+  const {isProd, curChildren, user} = useGlobalContext()
 
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -27,14 +28,20 @@ const PaymentHistories = () => {
     }
   }, [focused])
 
+  useEffect(() => {
+    if (curChildren) {
+      getData()
+    }
+  }, [curChildren])
+
   const navigation = useNavigation<any>()
 
   async function getData() {
+    const studentId = user?.RoleId == 3 ? user?.UserInformationId : curChildren?.UserInformationId || null
+
     try {
       const res = await RestApi.get<TPayment>('Bill', {
-        pageSize: 99999,
-        pageIndex: 1,
-        studentIds: user?.UserInformationId || null,
+        studentIds: studentId || null,
       })
       if (res?.status == 200) {
         setData(res.data.data)
@@ -55,8 +62,9 @@ const PaymentHistories = () => {
         <GreenHeader canBack={true}>Lịch sử thanh toán</GreenHeader>
 
         <FlatList
-          key="mona-payments"
+          key="payments"
           data={data}
+          ListHeaderComponent={<FilterStudent />}
           renderItem={({item}) => <RenderItem key={`pay-item-${item?.Id}`} item={item} />}
           keyExtractor={(item: any) => {
             return item.Id

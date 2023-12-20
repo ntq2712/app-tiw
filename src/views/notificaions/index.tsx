@@ -30,7 +30,7 @@ const NotiScreen = () => {
         <HeaderWhite>Thông báo</HeaderWhite>
 
         <FlatList
-          key="piget-noti"
+          key="notis"
           data={notifications}
           renderItem={({item}) => <NotiItem key={`cart-item-${item?.Id}`} item={item} />}
           keyExtractor={(item: any) => {
