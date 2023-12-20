@@ -1,11 +1,9 @@
 import * as React from 'react'
 import {Text, View} from 'react-native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-
 import Tabs from '~/common/components/TabNavigator'
 import HomeScreen from '~/views/home'
 import UserTab from '~/views/user-tab'
-import SearchTab from '~/views/search-tab'
 import {isIOS} from 'green-native-ts'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {useGlobalContext} from '~/provider/AppProvider'

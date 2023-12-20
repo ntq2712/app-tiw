@@ -21,12 +21,6 @@ type TRootNavigator = {
   DetailOrder: any
 
   PaymentHistories: any
-  CreateOtherOrder: any
-  OtherOrders: any
-  TransportationOrders: any
-
-  DetailTrans: any
-  CreateTrans: any
 
   NotiScreen: any
 

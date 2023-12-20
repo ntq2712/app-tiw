@@ -45,7 +45,9 @@ const PayDetail = () => {
         data={data}
         renderItem={({item}) => (
           <View key={`pay-item-${item?.Id}`} style={styles.itemContainer}>
-            <Text style={{fontFamily: fonts.Bold, fontSize: 16, color: '#000'}}>{item?.ProductName}</Text>
+            <Text style={{fontFamily: fonts.Bold, fontSize: 16, color: '#000'}}>
+              {item?.ProductName || item?.ClassName}
+            </Text>
 
             <Divider />
 

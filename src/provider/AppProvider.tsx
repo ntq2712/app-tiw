@@ -1,32 +1,20 @@
 import React, {createContext, useContext, useState, useEffect, FC} from 'react'
 import {setToken} from '~/api/instance'
-import {LocalStorage, logout, wait} from '~/common'
-import ConfigsApi from '~/api/Configs'
+import {LocalStorage, wait} from '~/common'
 import RestApi from '~/api/RestApi'
 import SplashScreen from 'react-native-splash-screen'
-import {Alert, Platform} from 'react-native'
-import {getVersion} from 'react-native-device-info'
-import {isIOS} from 'green-native-ts'
 import {Buffer} from 'buffer'
 import moment from 'moment'
-import {useNavigation} from '@react-navigation/native'
 
 const initUser = null
 
 export const GlobalContext = createContext<IMainProvider>({})
 
 const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
-  const [mainText, setMainText] = useState('Click me!')
   const [mainLoading, setMainLoading] = useState(true)
   const [user, setUser] = useState<IUser>(initUser)
-
   const [remoteConfigs, setRemoteConfig] = useState<any>({})
-
-  const [carts, setCarts] = useState([])
-  const [cartChecked, setCartChecked] = useState([])
-
   const [notifications, setNotifications] = useState([])
-
   const [isProd, setIsProd] = useState(true)
   const [curChildren, setCurChildren] = useState<IUser>(null)
 
@@ -53,7 +41,7 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
           setNotifications([])
         }
       } catch (error) {
-        setCarts([])
+        setNotifications([])
       }
     }
   }
@@ -90,14 +78,16 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
 
   async function getMyInfo(token, id) {
     try {
-      const res = await RestApi.getBy<any>('UserInformation', id)
-      if (res.status == 200) {
-        console.log('Current USER: ', {token: token, ...res?.data?.data})
+      if (token) {
+        const res = await RestApi.getBy<any>('UserInformation', id)
+        if (res.status == 200) {
+          console.log('Current USER: ', {token: token, ...res?.data?.data})
 
-        !!setUser && setUser({token: token, ...res?.data?.data})
+          !!setUser && setUser({token: token, ...res?.data?.data})
 
-        if (res?.data?.data?.RoleId == 8) {
-          getMyChildrens(res?.data?.data?.UserInformationId)
+          if (res?.data?.data?.RoleId == 8) {
+            getMyChildrens(res?.data?.data?.UserInformationId)
+          }
         }
       }
     } catch (error) {
@@ -157,8 +147,6 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
 
   useEffect(() => {
     if (curChildren) {
-      console.log('---- curChildren: ', curChildren)
-
       if (user?.RoleId == 8) {
         // Phụ huynh
         getMyClass()
@@ -166,8 +154,6 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
       }
     }
   }, [curChildren, user])
-
-  // curChildren
 
   const [classes, setClasses] = useState([])
 
@@ -183,7 +169,7 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
           setClasses([])
         }
       } catch (error) {
-        setCarts([])
+        setClasses([])
       }
     }
   }
@@ -207,7 +193,7 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
           setHomeClasses([])
         }
       } catch (error) {
-        setCarts([])
+        setHomeClasses([])
       }
     }
   }
@@ -232,7 +218,8 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
         setCurChildren(null)
       }
     } catch (error) {
-      setCarts([])
+      setChildrent([])
+      setCurChildren(null)
     }
   }
 
@@ -242,8 +229,6 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
   }
 
   const contextValue = {
-    mainText,
-    setMainText,
     mainLoading,
     setMainLoading,
     user,
@@ -253,45 +238,19 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     schedule,
     homeClasses,
     childrens,
-    setUser: setUser,
     getMyChildrens,
     remoteConfigs,
     setRemoteConfig,
-    canBack: null,
-    setCanBack: null,
-    webState: null,
-    setWebState: null,
-    isDetail: null,
-    setDetail: null,
-    wvProcess: null,
-    setwvProcess: null,
-    carts,
-    setCarts: setCarts,
-    getCarts: () => {},
-    cartChecked,
-    setCartChecked: setCartChecked,
-    orders: null,
-    getOrders: () => {},
-    orderStatus: null,
-    getOrderStatus: () => {},
-
-    orderOtherStatus: null,
-    getOrderOtherStatus: () => {},
-
-    otherOrders: null,
-    getOtherOrders: () => {},
-
     notifications,
-    getNotifications: getNotifications,
-
     isProd,
-    setIsProd: setIsProd,
-    getConfigs: () => {},
-
     isWelcome,
-    setIsWelcome: setIsWelcome,
     classes,
+    setUser: setUser,
+    setIsProd: setIsProd,
     getClasses: getMyClass,
+    getNotifications: getNotifications,
+    setIsWelcome: setIsWelcome,
+    getConfigs: () => {},
   }
 
   return <GlobalContext.Provider value={contextValue}>{children}</GlobalContext.Provider>
