@@ -55,7 +55,7 @@ const Input: FC<TInputController> = props => {
 
 const styles = StyleSheet.create({
   input: {
-    borderRadius: 6,
+    borderRadius: 8,
     paddingHorizontal: 16,
     height: 50,
     flex: 1,
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   wrapInput: {
     backgroundColor: '#fff',
     width: '100%',
-    borderRadius: 6,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: 'rgba(0, 0, 0, 0.2)',
     flexDirection: 'row',
