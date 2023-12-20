@@ -14,7 +14,7 @@ const GreenAvatar: FC<TGreenAvatar> = props => {
 
   useEffect(() => {
     getImageSource()
-  }, [])
+  }, [source])
 
   // TRUYỀN RỖNG THÌ HIỆN DEFAULT AVATAR
   function getImageSource() {
