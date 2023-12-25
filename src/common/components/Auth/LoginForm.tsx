@@ -32,7 +32,14 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
 
   return (
     <View style={styles.container}>
-      <Input control={control} name="userName" label="Tên đăng nhập" errors={errors.userName} />
+      <Input
+        control={control}
+        name="userName"
+        label="Tên đăng nhập"
+        errors={errors.userName}
+        isLogin={true}
+        inputStyle={{height: 44}}
+      />
 
       <Input
         control={control}
@@ -41,6 +48,8 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
         isPassword
         errors={errors.password}
         wrapStyle={{marginTop: 16}}
+        isLogin={true}
+        inputStyle={{height: 44}}
       />
 
       {/* <View style={{width: '100%', flexDirection: 'row', marginTop: 0, justifyContent: 'flex-end'}}>
@@ -49,7 +58,7 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
         </TouchableOpacity>
       </View> */}
 
-      <Button loading={loading} text="Đăng nhập" onPress={handleSubmit(onSubmit)} style={{marginTop: 24}} />
+      <Button loading={loading} text="Đăng nhập" onPress={handleSubmit(onSubmit)} style={{marginTop: 24, height: 44}} />
     </View>
   )
 }
@@ -58,7 +67,7 @@ export default LoginForm
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 30,
+    marginTop: 16,
     backgroundColor: '#fff',
     alignItems: 'center',
   },

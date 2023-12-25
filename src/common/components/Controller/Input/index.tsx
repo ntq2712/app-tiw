@@ -3,17 +3,17 @@ import React, {FC, useState} from 'react'
 import {Controller} from 'react-hook-form'
 import {TInputController} from '../controller'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import appConfigs from '~/configs'
+import appConfigs, {colors} from '~/configs'
 
 const Input: FC<TInputController> = props => {
   const {label, name, placeholder, control, disabled, required = true, hideError = false, onEnter} = props
-  const {style, errors, wrapStyle, isPassword, inputStyle} = props
+  const {style, errors, wrapStyle, isPassword, inputStyle, isLogin} = props
 
   const [showPassword, setShowPassword] = useState(isPassword)
 
   return (
     <View style={!!wrapStyle ? {...wrapStyle} : {}}>
-      <Text style={styles.lable}>{label} </Text>
+      <Text style={[styles.lable, {color: !isLogin ? '#000' : '#b00000'}]}>{label} </Text>
       <View style={{...styles.wrapInput, ...style}}>
         <Controller
           control={control}

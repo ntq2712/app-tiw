@@ -14,6 +14,7 @@ type TInputController = {
   wrapStyle?: any
   isPassword?: boolean
   inputStyle?: any
+  isLogin?: boolean
 }
 
 type TSelectController = {

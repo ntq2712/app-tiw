@@ -2,7 +2,7 @@ import {View, StyleSheet, StatusBar, ScrollView, Alert, SafeAreaView} from 'reac
 import React, {useEffect, useState} from 'react'
 import LoginForm from '~/common/components/Auth/LoginForm'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
-import {fonts} from '~/configs'
+import {colors, fonts} from '~/configs'
 import {useGlobalContext} from '~/provider/AppProvider'
 import RestApi from '~/api/RestApi'
 import {loginApi} from '~/api/Auth/login'
@@ -83,17 +83,43 @@ const Signin = () => {
         automaticallyAdjustKeyboardInsets={true}
         style={{marginBottom: -90}}
         contentContainerStyle={[styles.contentContainer, {marginBottom: -56}]}>
-        <Animatable.Text
-          animation="slideInDown"
-          style={{fontFamily: fonts.Semibold, fontSize: 34, color: '#393D48', lineHeight: 36, marginTop: 24}}>
-          Đăng nhập
-        </Animatable.Text>
+        <View style={{width: '100%', alignItems: 'center'}}>
+          <Animatable.Image
+            resizeMode="contain"
+            source={require('~/assets/images/logo-gdc-01.png')}
+            style={{
+              width: 140,
+              height: 140,
+            }}
+            animation="slideInDown"
+          />
 
-        <Animatable.Text
-          animation="slideInDown"
-          style={{fontFamily: fonts.Regular, fontSize: 14, color: '#555962', lineHeight: 21, marginBottom: 16}}>
-          Đội ngũ GDC English rất vui khi được chia sẻ và đồng hành cùng bạn trong quá trình chinh phục IELTS.
-        </Animatable.Text>
+          {/* <Animatable.Text
+            animation="slideInDown"
+            style={{
+              fontFamily: fonts.Bold,
+              fontSize: 20,
+              color: '#b00000',
+              lineHeight: 36,
+              marginTop: -8,
+            }}>
+            Đăng nhập
+          </Animatable.Text> */}
+
+          <Animatable.Text
+            animation="slideInDown"
+            style={{
+              fontFamily: fonts.Regular,
+              fontSize: 14,
+              color: '#555962',
+
+              lineHeight: 21,
+              marginBottom: 16,
+              textAlign: 'center',
+            }}>
+            Đội ngũ GDC sẽ luôn đồng hành và chia sẻ cùng bạn trong suốt quá trình chinh phục IELTS!
+          </Animatable.Text>
+        </View>
 
         <LoginForm onLogin={onLogin} loading={loading} />
 

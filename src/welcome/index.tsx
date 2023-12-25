@@ -1,9 +1,10 @@
 import {windowWidth} from 'green-native-ts'
 import React, {useState} from 'react'
-import {View} from 'react-native'
+import {StatusBar, View} from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {LocalStorage} from '~/common'
+import {GStatusBar} from '~/common/components'
 import Button from '~/common/components/Button'
 import {colors, fonts} from '~/configs'
 import {useGlobalContext} from '~/provider/AppProvider'
@@ -22,6 +23,8 @@ const WelcomeScreen = () => {
 
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
+      <StatusBar barStyle="dark-content" />
+
       {curStep == 1 && (
         <View
           style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1, height: '100%'}}>
@@ -35,7 +38,7 @@ const WelcomeScreen = () => {
           <Animatable.Text
             animation="zoomInUp"
             style={{fontFamily: fonts.Bold, fontSize: 28, color: colors.primary, marginTop: 32}}>
-            Chào mừng
+            GDC Xin chào
           </Animatable.Text>
 
           <Animatable.Text
@@ -49,8 +52,8 @@ const WelcomeScreen = () => {
               textAlign: 'center',
               lineHeight: 21,
             }}>
-            Trung tâm ngoại ngữ GDC English là đơn vị cung cấp dịch vụ học ngoại ngữ và luyện thi IELTS uy tín cho học
-            viên tại khu vực tỉnh Hưng Yên
+            Trung tâm Anh ngữ GDC English là đơn vị cung cấp dịch vụ học ngoại ngữ và luyện thi IELTS - TOEIC uy tín cho
+            học viên
           </Animatable.Text>
         </View>
       )}
@@ -61,7 +64,7 @@ const WelcomeScreen = () => {
           <Animatable.Image
             resizeMode="contain"
             source={require('~/assets/images/welcome-02.png')}
-            style={{width: windowWidth - 32, height: windowWidth - 32}}
+            style={{width: windowWidth - 32, height: windowWidth - 100, borderRadius: 12}}
             animation="zoomInUp"
           />
 
@@ -82,8 +85,8 @@ const WelcomeScreen = () => {
               textAlign: 'center',
               lineHeight: 21,
             }}>
-            Mục tiêu cốt lõi của hệ thống đào tạo tại GDC là đưa học sinh đến với đỉnh cao của tiếng Anh một cách thực
-            chất
+            Mục tiêu cốt lõi của GDC là đồng hành cùng học viên chinh phục thành công chứng chỉ IELTS, TOEIC,... và có
+            khả năng sử dụng Tiếng Anh hiệu quả trong thực tế
           </Animatable.Text>
         </View>
       )}
@@ -94,7 +97,7 @@ const WelcomeScreen = () => {
           <Animatable.Image
             resizeMode="contain"
             source={require('~/assets/images/welcome-03.png')}
-            style={{width: windowWidth - 32, height: windowWidth - 32}}
+            style={{width: windowWidth - 32, height: windowWidth - 32, borderRadius: 8}}
             animation="zoomInUp"
           />
 
@@ -115,7 +118,8 @@ const WelcomeScreen = () => {
               textAlign: 'center',
               lineHeight: 21,
             }}>
-            Giá trị cốt lõi trong hoạt động của cả công ty và trung tâm là 3T - Tâm - Tầm - Tín
+            Tâm - Tầm - Tín với sứ mệnh đem đến dịch vụ và chất lượng học tậptốt nhất cho học viên. Hàng trăm học viên
+            đạt kết quả cao trong kỳ thi IELTS - TOEIC chính là minh chứng rõ ràng nhất cho lời cam kết của GDC.
           </Animatable.Text>
         </View>
       )}
