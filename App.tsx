@@ -20,7 +20,7 @@ LogBox.ignoreAllLogs()
 const App = () => {
   async function initOneSignal() {
     // OneSignal Initialization
-    OneSignal.setAppId('fc42aa9e-7969-4f75-9280-7bc867e8915a')
+    OneSignal.setAppId('939f0293-b2f9-4eed-92b6-4bdb8e7a7a06')
 
     // requestPermission will show the native iOS or Android notification permission prompt.
     // We recommend removing the following code and instead using an In-App Message to prompt for notification permission
