@@ -12,6 +12,13 @@ import {Colors, isIOS, useKeyboard, windowWidth} from 'green-native-ts'
 import OneSignal from 'react-native-onesignal'
 import * as Animatable from 'react-native-animatable'
 
+export function parseJwt(token) {
+  var base64Url = token.split('.')[1]
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  var jsonPayload = decodeURIComponent(Buffer.from(base64, 'base64').toString())
+  return JSON.parse(jsonPayload) || {}
+}
+
 import {Buffer} from 'buffer'
 
 const Signin = () => {
@@ -44,13 +51,6 @@ const Signin = () => {
       console.log('--- deviceState: ', deviceState)
       await RestApi.put('Auth/one-signal', {PlayerId: deviceState?.userId})
     } catch (error) {}
-  }
-
-  function parseJwt(token) {
-    var base64Url = token.split('.')[1]
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-    var jsonPayload = decodeURIComponent(Buffer.from(base64, 'base64').toString())
-    return JSON.parse(jsonPayload) || {}
   }
 
   async function onLogin(params: any) {

@@ -6,8 +6,8 @@ const {width, height} = Dimensions.get('window')
 // Dev: https://gdc.monamedia.net
 
 const appConfigs = {
-  // hostURL: 'https://lms.gdcenglish.edu.vn',
-  hostURL: 'https://gdc.monamedia.net',
+  hostURL: 'https://lms.gdcenglish.edu.vn',
+  // hostURL: 'https://gdc.monamedia.net',
   configURL: 'https://nguyenchau.w3spaces.com',
   oneSignalID: '',
   colors: {

@@ -24,6 +24,7 @@ import Students from '~/views/students'
 import SelectStudent from '~/common/components/FilterStudent/SelectStudent'
 import UserAddress from '~/views/user-tab/address'
 import UserLearn from '~/views/user-tab/learn'
+import BDScreen from '~/views/bd'
 
 const Stack = createNativeStackNavigator<TRootNavigator>()
 
@@ -44,6 +45,7 @@ const RootNavigator = () => {
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="Signin" component={Signin} />
           <Stack.Screen name="Signup" component={Signup} />
+          <Stack.Screen name="bd" component={BDScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     )

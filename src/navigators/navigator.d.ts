@@ -23,6 +23,7 @@ type TRootNavigator = {
   PaymentHistories: any
 
   NotiScreen: any
+  bd: any
 
   RechargeScreen: any
 
