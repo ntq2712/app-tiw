@@ -25,7 +25,9 @@ type TScoreColumn = TApiAuth & {
 const StudentInfo = (props: {scores: Array<TScore>; scoreColumns: Array<TScoreColumn>}) => {
   const {scores, scoreColumns} = props
 
-  const {user} = useGlobalContext()
+  const {user, curChildren, is} = useGlobalContext()
+
+  const theUser = is?.student ? user : curChildren
 
   function sortByIndexAscending(array) {
     return array.sort(function (a, b) {
@@ -48,9 +50,9 @@ const StudentInfo = (props: {scores: Array<TScore>; scoreColumns: Array<TScoreCo
       <View style={{flexDirection: 'row', marginBottom: 8}}>
         <GreenAvatar source={user?.Avatar} />
         <View style={{marginLeft: 16, alignItems: 'flex-start'}}>
-          <Text style={styles.studentName}>{user?.FullName}</Text>
+          <Text style={styles.studentName}>{theUser?.FullName}</Text>
           <View style={styles.tagCode}>
-            <Text style={styles.textCode}>{user?.UserCode}</Text>
+            <Text style={styles.textCode}>{theUser?.UserCode}</Text>
           </View>
         </View>
       </View>

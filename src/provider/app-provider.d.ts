@@ -1,4 +1,5 @@
 type IMainProvider = {
+  published?: boolean
   user?: IUser
   setUser?: Function
   mainLoading?: boolean

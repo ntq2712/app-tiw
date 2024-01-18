@@ -52,11 +52,13 @@ const styles = StyleSheet.create({
   input: {
     borderRadius: 6,
     paddingHorizontal: 16,
+    marginTop: 8,
     flex: 1,
     fontFamily: appConfigs.fonts.Medium,
     color: '#000',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+    minHeight: 100,
   },
   wrapInput: {
     backgroundColor: '#fff',

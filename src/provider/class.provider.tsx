@@ -25,7 +25,7 @@ const ClassProvider: FC<{children: React.ReactNode}> = ({children}) => {
   const router: any = useRoute()
   const focused = useIsFocused()
 
-  const {user} = useGlobalContext()
+  const {user, curChildren} = useGlobalContext()
 
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -45,6 +45,8 @@ const ClassProvider: FC<{children: React.ReactNode}> = ({children}) => {
   useEffect(() => {
     if (user?.RoleId == 3) {
       setCurStudent(user?.UserInformationId)
+    } else {
+      setCurStudent(curChildren)
     }
   }, [])
 

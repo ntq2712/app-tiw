@@ -5,7 +5,7 @@ import {useGlobalContext} from '~/provider/AppProvider'
 const Tabs = ({route, focused}: {route: any; focused: boolean}) => {
   let iconName
 
-  const {isProd} = useGlobalContext()
+  const {published} = useGlobalContext()
 
   if (route.name == 'Home') {
     return (iconName = focused ? (
@@ -17,9 +17,17 @@ const Tabs = ({route, focused}: {route: any; focused: boolean}) => {
 
   if (route.name == 'ScheduleTab') {
     return (iconName = focused ? (
-      <Tab actived={true} title="Lịch học" icon={require('~/assets/icons/acivated/search.png')} />
+      <Tab
+        actived={true}
+        title={published ? 'Lịch học' : 'Lịch'}
+        icon={require('~/assets/icons/acivated/search.png')}
+      />
     ) : (
-      <Tab actived={false} title="Lịch học" icon={require('~/assets/icons/primary/search.png')} />
+      <Tab
+        actived={false}
+        title={published ? 'Lịch học' : 'Lịch'}
+        icon={require('~/assets/icons/primary/search.png')}
+      />
     ))
   }
 

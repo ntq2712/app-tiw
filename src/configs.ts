@@ -8,7 +8,7 @@ const {width, height} = Dimensions.get('window')
 const appConfigs = {
   hostURL: 'https://lms.gdcenglish.edu.vn',
   // hostURL: 'https://gdc.monamedia.net',
-  configURL: 'https://nguyenchau.w3spaces.com',
+  configURL: 'https://skillhub.mona.software/chau/gdc-configs.json',
   oneSignalID: '',
   colors: {
     primary: '#EB3349',

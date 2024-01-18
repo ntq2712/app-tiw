@@ -98,6 +98,7 @@ const Transcript = () => {
       </View>
 
       <StudentInfo scores={scores} scoreColumns={scoreColumns} />
+
       <MoreInfo scores={scores} scoreColumns={scoreColumns} />
 
       <SuperLoading loading={loading} />

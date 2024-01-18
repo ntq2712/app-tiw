@@ -6,19 +6,19 @@ import {ScheduleItem} from '~/views/Schedule'
 import {useGlobalContext} from '~/provider'
 
 const ScheduleBlock = () => {
-  const {schedule} = useGlobalContext()
+  const {schedule, published} = useGlobalContext()
 
   return (
     <View>
       <View style={styles.title}>
         <Icon type="materialcommunityicons" name="calendar-month" color="#000" size={20} />
-        <Text style={styles.textTitle}>Lịch hôm nay</Text>
+        <Text style={styles.textTitle}>{published ? 'Lịch hôm nay' : 'Hôm nay'}</Text>
       </View>
 
       {schedule.length == 0 && (
         <View style={styles.containerEmpty}>
           <Image resizeMode="contain" source={require('~/assets/empty-schedule.png')} style={styles.imgEmpty} />
-          <Text style={styles.textEmpty}>Hôm nay không có buổi học</Text>
+          {published && <Text style={styles.textEmpty}>Hôm nay không có buổi học</Text>}
         </View>
       )}
 

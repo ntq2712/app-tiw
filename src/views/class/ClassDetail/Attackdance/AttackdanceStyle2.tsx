@@ -1,9 +1,8 @@
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
-import React, {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {fonts} from '~/configs'
 import moment from 'moment'
-import RNPickerSelect from 'react-native-picker-select'
-import {Colors, Icon, isIOS, windowWidth} from 'green-native-ts'
+import {Colors, Icon, windowWidth} from 'green-native-ts'
 import RestApi from '~/api/RestApi'
 import SuperLoading from '~/common/components/SuperLoading'
 import {Divider, Empty} from '~/common/components'
@@ -57,7 +56,7 @@ const Attackdance2 = ({detail, router, schedule, curStudent}) => {
         pageIndex: 1,
         pageSize: 990,
         scheduleId: curSchedule?.Id,
-        studentIds: curStudent,
+        studentIds: curStudent?.UserInformationId || curStudent,
       })
       if (res.status == 200) {
         setData(res.data.data)

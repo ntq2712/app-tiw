@@ -15,7 +15,7 @@ const HomeScreen = () => {
   const navigation = useNavigation<any>()
   const focused = useIsFocused()
 
-  const {user, isProd, getConfigs, getNotifications} = useGlobalContext()
+  const {user, published, getConfigs, getNotifications} = useGlobalContext()
 
   useEffect(() => {
     if (focused) {
@@ -38,7 +38,7 @@ const HomeScreen = () => {
 
           <ScheduleBlock />
 
-          <ClassBlock />
+          {published && <ClassBlock />}
         </View>
 
         <View style={{height: 24}} />

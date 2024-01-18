@@ -47,7 +47,7 @@ const UserTab = () => {
   const insets = useSafeAreaInsets()
   const focused = useIsFocused()
 
-  const {user, setUser, isProd, is} = useGlobalContext()
+  const {user, setUser, published, is} = useGlobalContext()
   const [loading, setLoading] = useState<boolean>(false)
 
   const navigation = useNavigation<any>()
@@ -150,7 +150,14 @@ const UserTab = () => {
             setLoading(true)
             await wait(3000)
             setLoading(false)
-            Alert.alert('Yêu cầu đã được gửi đi', 'Chúng tôi sẽ xử lý trong 24 giờ.')
+            Alert.alert('Yêu cầu đã được gửi đi', 'Chúng tôi sẽ xử lý trong 24 giờ.', [
+              {
+                text: 'OK',
+                onPress: async () => {
+                  handleLogout()
+                },
+              },
+            ])
           },
         },
       ],
@@ -240,7 +247,7 @@ const UserTab = () => {
             title="Thay đổi địa chỉ"
           />
 
-          {is.student && (
+          {is.student && published && (
             <>
               <Divider marginVertical={16} />
 
@@ -253,26 +260,27 @@ const UserTab = () => {
             </>
           )}
 
+          {published && (
+            <>
+              <Divider marginVertical={16} />
+              <Item
+                onPress={() => navigation.navigate('PaymentHistories')}
+                icon={<Image source={require('~/assets/icons/paper_line.png')} style={{width: 22, height: 22}} />}
+                iconColor="#3391e7"
+                title="Lịch sử thanh toán"
+              />
+
+              <Divider marginVertical={16} />
+              <Item
+                onPress={() => navigation.navigate('LearningHistory')}
+                icon={<Image source={require('~/assets/icons/lr-switch.png')} style={{width: 22, height: 22}} />}
+                iconColor="#3391e7"
+                title="Lịch sử học"
+              />
+            </>
+          )}
+
           <Divider marginVertical={16} />
-
-          <Item
-            onPress={() => navigation.navigate('PaymentHistories')}
-            icon={<Image source={require('~/assets/icons/paper_line.png')} style={{width: 22, height: 22}} />}
-            iconColor="#3391e7"
-            title="Lịch sử thanh toán"
-          />
-
-          <Divider marginVertical={16} />
-
-          <Item
-            onPress={() => navigation.navigate('LearningHistory')}
-            icon={<Image source={require('~/assets/icons/lr-switch.png')} style={{width: 22, height: 22}} />}
-            iconColor="#3391e7"
-            title="Lịch sử học"
-          />
-
-          <Divider marginVertical={16} />
-
           <Item
             onPress={() => navigation.navigate('Feedback')}
             icon={<Image source={require('~/assets/icons/message-dots.png')} style={{width: 20, height: 20}} />}
@@ -280,7 +288,7 @@ const UserTab = () => {
             title="Phản hồi cho trung tâm"
           />
 
-          {isIOS() && (
+          {isIOS() && !published && (
             // Cái này là chính sách của Apple, xoá đi là ăn cứt đó
             <>
               <Divider marginVertical={16} />

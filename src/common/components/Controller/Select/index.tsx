@@ -3,13 +3,16 @@ import React, {FC, useState} from 'react'
 import {Controller} from 'react-hook-form'
 import {TSelectController} from '../controller'
 import appConfigs, {fonts} from '~/configs'
-import {Colors, Icon, windowWidth} from 'green-native-ts'
+import {Colors, Icon, isIOS, windowWidth} from 'green-native-ts'
 import {headerStyles, whiteStyles} from '../../Header/header.styles'
 import Empty from '../../Empty'
+import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
 const Select: FC<TSelectController> = props => {
   const {label, name, control, required = true, hideError = false, onChangeValue} = props
   const {style, errors, wrapStyle, closeOnPress = true, headerTitle, data, inputStyle} = props
+
+  const insets = useSafeAreaInsets()
 
   function getSelectedItem(value) {
     if (data.length == 0) {
@@ -58,6 +61,7 @@ const Select: FC<TSelectController> = props => {
 
                 <Modal visible={visible} transparent animationType="none">
                   <View style={{backgroundColor: '#f2f2f2', flex: 1}}>
+                    {isIOS() && <View style={{height: insets.top, backgroundColor: '#fff'}} />}
                     {visible ? <StatusBar barStyle="dark-content" /> : <></>}
 
                     <View style={[{paddingTop: 16}, whiteStyles.headerContainer]}>

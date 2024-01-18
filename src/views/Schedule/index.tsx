@@ -62,7 +62,7 @@ const ScheduleTab = () => {
 
   const [loading, setLoading] = useState<boolean>(true)
 
-  const {is, user, curChildren} = useGlobalContext()
+  const {is, user, published, curChildren} = useGlobalContext()
 
   useEffect(() => {
     if (is.student) {
@@ -157,7 +157,7 @@ const ScheduleTab = () => {
             />
           </TouchableOpacity>
         }>
-        Lịch học
+        {published ? ' Lịch học' : 'Lịch'}
       </HeaderWhite>
 
       <FlatList
@@ -194,17 +194,19 @@ const ScheduleTab = () => {
               </>
             )}
 
-            <View style={{marginTop: 16, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16}}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={{backgroundColor: '#59b96c', width: 10, height: 10, borderRadius: 999}} />
-                <Text style={{fontFamily: fonts.Medium, marginLeft: 8}}>Đã học</Text>
-              </View>
+            {published && (
+              <View style={{marginTop: 16, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16}}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View style={{backgroundColor: '#59b96c', width: 10, height: 10, borderRadius: 999}} />
+                  <Text style={{fontFamily: fonts.Medium, marginLeft: 8}}>Đã học</Text>
+                </View>
 
-              <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 16}}>
-                <View style={{backgroundColor: '#fb862d', width: 10, height: 10, borderRadius: 999}} />
-                <Text style={{fontFamily: fonts.Medium, marginLeft: 8}}>Chưa học</Text>
+                <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 16}}>
+                  <View style={{backgroundColor: '#fb862d', width: 10, height: 10, borderRadius: 999}} />
+                  <Text style={{fontFamily: fonts.Medium, marginLeft: 8}}>Chưa học</Text>
+                </View>
               </View>
-            </View>
+            )}
           </>
         }
         renderItem={({item, index}: {item: TClassSchedule; index: number}) => (

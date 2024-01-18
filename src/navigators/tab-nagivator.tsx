@@ -21,7 +21,7 @@ function SettingsScreen() {
 const Tab = createBottomTabNavigator()
 
 function TabNavigator() {
-  const {isProd} = useGlobalContext()
+  const {published} = useGlobalContext()
   const insets = useSafeAreaInsets()
 
   return (
@@ -38,8 +38,8 @@ function TabNavigator() {
         headerShown: false,
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
-      {isProd && <Tab.Screen name="ScheduleTab" component={ScheduleTab} />}
-      {isProd && <Tab.Screen name="ClassTab" component={ClassTab} />}
+      <Tab.Screen name="ScheduleTab" component={ScheduleTab} />
+      {published && <Tab.Screen name="ClassTab" component={ClassTab} />}
       <Tab.Screen name="User" component={UserTab} />
     </Tab.Navigator>
   )

@@ -8,7 +8,7 @@ import RestApi from '~/api/RestApi'
 import {loginApi} from '~/api/Auth/login'
 import {LocalStorage} from '~/common'
 import {setToken} from '~/api/instance'
-import {Colors, isIOS, useKeyboard, windowWidth} from 'green-native-ts'
+import {Colors, is18x9, isIOS, useKeyboard, windowWidth} from 'green-native-ts'
 import OneSignal from 'react-native-onesignal'
 import * as Animatable from 'react-native-animatable'
 
@@ -83,7 +83,7 @@ const Signin = () => {
         automaticallyAdjustKeyboardInsets={true}
         style={{marginBottom: -90}}
         contentContainerStyle={[styles.contentContainer, {marginBottom: -56}]}>
-        <View style={{width: '100%', alignItems: 'center'}}>
+        <View style={{width: '100%', backgroundColor: '#fff', alignItems: 'center'}}>
           <Animatable.Image
             resizeMode="contain"
             source={require('~/assets/images/logo-gdc-01.png')}
@@ -135,7 +135,7 @@ const Signin = () => {
             height: windowWidth,
             zIndex: -1,
             position: 'absolute',
-            bottom: 0,
+            bottom: is18x9() ? 0 : -50,
             left: 0,
           }}
           animation="slideInUp"
@@ -156,5 +156,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 16,
+    backgroundColor: '#fff',
   },
 })

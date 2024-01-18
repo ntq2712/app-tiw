@@ -34,38 +34,58 @@ const FilterStudent = () => {
           flexDirection: 'row',
           alignItems: 'center',
         }}>
-        <GreenAvatar
-          source={curChildren?.Avatar}
-          imageProps={{
-            style: {width: 36, height: 36},
-          }}
-        />
+        {childrens?.length > 0 && (
+          <GreenAvatar source={curChildren?.Avatar} imageProps={{style: {width: 36, height: 36}}} />
+        )}
 
-        <View style={{flex: 1, marginLeft: 8, alignItems: 'flex-start'}}>
-          <Text numberOfLines={1} style={{fontSize: 14, fontFamily: fonts.Bold, color: '#000'}}>
-            {curChildren?.FullName}
+        <View
+          style={{
+            flex: 1,
+            marginLeft: 8,
+            alignItems: 'flex-start',
+            paddingVertical: childrens?.length > 0 ? 0 : 8,
+          }}>
+          <Text
+            numberOfLines={1}
+            style={{
+              fontSize: 14,
+              fontFamily: fonts.Bold,
+              color: childrens?.length > 0 ? '#000' : 'red',
+            }}>
+            {childrens?.length > 0 ? curChildren?.FullName : 'Chưa liên kết học viên'}
           </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View
-              style={{
-                backgroundColor: '#1E88E5',
-                paddingHorizontal: 6,
-                paddingVertical: 1,
-                borderRadius: 99,
-                marginTop: 4,
-                paddingBottom: 1.5,
-              }}>
-              <Text numberOfLines={1} style={{fontSize: 11, fontFamily: fonts.Bold, color: '#fff'}}>
-                Đang chọn
-              </Text>
+
+          {childrens?.length > 0 && (
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View
+                style={{
+                  backgroundColor: '#1E88E5',
+                  paddingHorizontal: 6,
+                  paddingVertical: 1,
+                  borderRadius: 99,
+                  marginTop: 4,
+                  paddingBottom: 1.5,
+                }}>
+                <Text numberOfLines={1} style={{fontSize: 11, fontFamily: fonts.Bold, color: '#fff'}}>
+                  Đang chọn
+                </Text>
+              </View>
             </View>
-          </View>
+          )}
         </View>
 
-        <View>
-          <Icon name="arrow-drop-up" type="materialicons" size={26} color={Colors.trans50} />
-          <Icon name="arrow-drop-down" type="materialicons" size={26} style={{marginTop: -18}} color={Colors.trans50} />
-        </View>
+        {childrens?.length > 0 && (
+          <View>
+            <Icon name="arrow-drop-up" type="materialicons" size={26} color={Colors.trans50} />
+            <Icon
+              name="arrow-drop-down"
+              type="materialicons"
+              size={26}
+              style={{marginTop: -18}}
+              color={Colors.trans50}
+            />
+          </View>
+        )}
       </TouchableOpacity>
     </>
   )

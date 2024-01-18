@@ -26,11 +26,11 @@ instance.interceptors.request.use(
   async (config: AxiosRequestConfig & {startCall: any}) => {
     config.startCall = new Date().getTime()
 
-    console.log(`%c ${config?.method?.toUpperCase()} - ${getUrl(config)}:`, 'color: #0086b3; font-weight: bold', config)
+    // console.log(`%c ${config?.method?.toUpperCase()} - ${getUrl(config)}:`, 'color: #0086b3; font-weight: bold', config)
     return config
   },
   (error: any) => {
-    console.log(`%c ${error?.response?.status}  :`, 'color: red; font-weight: bold', error?.response?.data)
+    // console.log(`%c ${error?.response?.status}  :`, 'color: red; font-weight: bold', error?.response?.data)
     return Promise.reject(error)
   },
 )
@@ -56,11 +56,11 @@ instance.interceptors.response.use(
     return response
   },
   (error: any) => {
-    console.log(
-      `%c ${error?.response?.status} - ${getUrl(error?.response?.config)}:`,
-      'color: #a71d5d; font-weight: bold',
-      error?.response,
-    )
+    // console.log(
+    //   `%c ${error?.response?.status} - ${getUrl(error?.response?.config)}:`,
+    //   'color: #a71d5d; font-weight: bold',
+    //   error?.response,
+    // )
     return Promise.reject(error?.response || error?.response)
   },
 )

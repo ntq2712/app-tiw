@@ -5,6 +5,10 @@ import RestApi from '~/api/RestApi'
 import SplashScreen from 'react-native-splash-screen'
 import {Buffer} from 'buffer'
 import moment from 'moment'
+import {getVersion} from 'react-native-device-info'
+import {Platform} from 'react-native'
+import {isIOS} from 'green-native-ts'
+import appConfigs from '~/configs'
 
 const initUser = null
 
@@ -17,6 +21,28 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
   const [notifications, setNotifications] = useState([])
   const [isProd, setIsProd] = useState(true)
   const [curChildren, setCurChildren] = useState<IUser>(null)
+
+  const [published, setPublished] = useState<boolean>(false)
+
+  async function getConfigs() {
+    fetch(`${appConfigs.configURL}?time=${new Date().getTime()}`, {method: 'GET'})
+      .then(response => response.text())
+      .then((result: any) => {
+        const currentVersion = parseFloat(getVersion())
+        const publishedVersion = parseFloat(JSON.parse(result)?.version)
+
+        setPublished(!isIOS() ? true : publishedVersion >= currentVersion)
+      })
+      .catch(error => console.log('error', error))
+  }
+
+  useEffect(() => {
+    if (user?.token) {
+      console.log('----- XXXX USER: ', user)
+
+      getMyInfo(user?.token, user?.UserInformationId)
+    }
+  }, [user?.token])
 
   function parseJwt(token) {
     if (token) {
@@ -77,6 +103,8 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
   }
 
   async function getMyInfo(token, id) {
+    console.log('--- getMyInfo ---')
+
     try {
       if (token) {
         const res = await RestApi.getBy<any>('UserInformation', id)
@@ -84,6 +112,8 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
           console.log('Current USER: ', {token: token, ...res?.data?.data})
 
           !!setUser && setUser({token: token, ...res?.data?.data})
+
+          console.log('--- res?.data?.data?.RoleId: res?.data?.data?.RoleId')
 
           if (res?.data?.data?.RoleId == 8) {
             getMyChildrens(res?.data?.data?.UserInformationId)
@@ -132,6 +162,7 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
   }
 
   useEffect(() => {
+    getConfigs()
     getCurrentToken()
   }, [])
 
@@ -200,6 +231,8 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
 
   const [childrens, setChildrent] = useState(null)
 
+  console.log('--- childrens: ', childrens)
+
   async function getMyChildrens(parentIds?: number) {
     try {
       const response = await RestApi.get<any>(
@@ -210,7 +243,7 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
 
       if (response?.status == 200) {
         setChildrent(response.data?.data)
-        if (response.data?.data.length > 1) {
+        if (response.data?.data.length > 0) {
           setCurChildren(response.data?.data[0])
         }
       } else {
@@ -245,12 +278,13 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     isProd,
     isWelcome,
     classes,
+    published,
     setUser: setUser,
     setIsProd: setIsProd,
     getClasses: getMyClass,
     getNotifications: getNotifications,
     setIsWelcome: setIsWelcome,
-    getConfigs: () => {},
+    getConfigs: getConfigs,
   }
 
   return <GlobalContext.Provider value={contextValue}>{children}</GlobalContext.Provider>

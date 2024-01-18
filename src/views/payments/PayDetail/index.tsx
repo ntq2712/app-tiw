@@ -13,6 +13,8 @@ const PayDetail = () => {
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState([])
 
+  console.log('--- data: ', data[0])
+
   useEffect(() => {
     if (focused && router?.params) {
       getData()
@@ -46,11 +48,9 @@ const PayDetail = () => {
         renderItem={({item}) => (
           <View key={`pay-item-${item?.Id}`} style={styles.itemContainer}>
             <Text style={{fontFamily: fonts.Bold, fontSize: 16, color: '#000'}}>
-              {item?.ProductName || item?.ClassName}
+              {item?.ProductName || item?.ClassName || item?.ProgramName}
             </Text>
-
             <Divider />
-
             <View style={{flexDirection: 'row', alignItems: 'center', width: '100%'}}>
               <Text style={{fontFamily: fonts.Semibold, color: '#000', flex: 1}}>Tổng</Text>
               <Text style={{fontFamily: fonts.Bold, color: '#4CAF50'}}>{parseMoney(item?.TotalPrice + '')}</Text>
@@ -80,3 +80,31 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 })
+
+const xxx = {
+  BillId: 1352,
+  CartId: 0,
+  ClassChangeId: 0,
+  ClassId: 0,
+  ClassName: null,
+  CreatedBy: 'GDC ENGLISH',
+  CreatedOn: '2023-12-01T10:14:04.117',
+  CurriculumId: null,
+  CurriculumName: null,
+  Enable: true,
+  Id: 1388,
+  ModifiedBy: 'GDC ENGLISH',
+  ModifiedOn: '2023-12-01T10:14:04.117',
+  NewClassId: null,
+  NewClassName: null,
+  OldClassId: null,
+  OldClassName: null,
+  Price: 5000000,
+  ProductId: null,
+  ProductName: null,
+  ProgramId: 17,
+  ProgramName: 'Base 0- 2.5',
+  Quantity: 1,
+  StudentId: 1433,
+  TotalPrice: 5000000,
+}

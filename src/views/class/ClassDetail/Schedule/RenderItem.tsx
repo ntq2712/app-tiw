@@ -4,7 +4,7 @@ import moment from 'moment'
 import {Divider} from '~/common/components'
 import {fonts} from '~/configs'
 import RestApi from '~/api/RestApi'
-import {useGlobalContext} from '~/provider'
+import {useClassContext, useGlobalContext} from '~/provider'
 import {Colors} from 'green-native-ts'
 
 function InfoItem({title, value}) {
@@ -19,6 +19,8 @@ function InfoItem({title, value}) {
 const ScheduleItem = ({item, index}) => {
   const {user} = useGlobalContext()
 
+  const {curStudent} = useClassContext()
+
   const [loading, setLoading] = useState<boolean>(true)
   const [data, setData] = useState([])
 
@@ -30,7 +32,7 @@ const ScheduleItem = ({item, index}) => {
         {
           classId: item?.ClassId,
           scheduleId: scheduleId,
-          studentIds: user.RoleId == 3 ? user?.UserInformationId : '',
+          studentIds: curStudent,
         },
         true,
       )

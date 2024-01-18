@@ -4,7 +4,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
 
-target 'piget' do
+target 'GDCEnglishCenter' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -18,7 +18,7 @@ target 'piget' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'pigetTests' do
+  target 'GDCEnglishCenterTests' do
     inherit! :complete
   end
 
