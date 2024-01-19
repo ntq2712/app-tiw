@@ -12,6 +12,7 @@ type TRootNavigator = {
   Search: any
   Cart: any
   User: any
+  ChauDashboard: any
 
   Webview: any
   ReviewOrderScreen: any

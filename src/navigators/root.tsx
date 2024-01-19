@@ -25,6 +25,8 @@ import SelectStudent from '~/common/components/FilterStudent/SelectStudent'
 import UserAddress from '~/views/user-tab/address'
 import UserLearn from '~/views/user-tab/learn'
 import BDScreen from '~/views/bd'
+import ChauDashboard from '~/views/chau'
+import SWebview from '~/views/chau/Webview'
 
 const Stack = createNativeStackNavigator<TRootNavigator>()
 
@@ -46,6 +48,9 @@ const RootNavigator = () => {
           <Stack.Screen name="Signin" component={Signin} />
           <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="bd" component={BDScreen} />
+
+          <Stack.Screen name="Webview" component={SWebview} />
+          <Stack.Screen name="ChauDashboard" component={ChauDashboard} />
         </Stack.Navigator>
       </NavigationContainer>
     )
@@ -68,6 +73,7 @@ const RootNavigator = () => {
         <Stack.Screen name="PaymentHistories" component={PaymentHistories} />
         <Stack.Screen name="PayDetail" component={PayDetail} />
         <Stack.Screen name="LibraryFolders" component={LibraryFolders} />
+
         <Stack.Screen options={{animation: 'slide_from_right'}} name="NotiScreen" component={NotiScreen} />
         <Stack.Screen options={{animation: 'slide_from_right'}} name="ClassDetail" component={ClassDetail} />
         <Stack.Screen options={{animation: 'fade_from_bottom'}} name="UserPassword" component={UserPassword} />
