@@ -9,6 +9,7 @@ import {getVersion} from 'react-native-device-info'
 import {Platform} from 'react-native'
 import {isIOS} from 'green-native-ts'
 import appConfigs from '~/configs'
+import OneSignal from 'react-native-onesignal'
 
 const initUser = null
 
@@ -53,6 +54,14 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
     }
   }
 
+  async function oneSignalUser() {
+    try {
+      const deviceState = await OneSignal.getDeviceState()
+      console.log('--- deviceState: ', deviceState)
+      await RestApi.put('UserInformation/onesignal-deviceId', {oneSignalDeviceId: deviceState?.userId})
+    } catch (error) {}
+  }
+
   async function getNotifications() {
     if (user?.UserName) {
       if (user?.RoleId == 3) {
@@ -63,6 +72,7 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
         const response = await RestApi.get<any>('Notification', {pageIndex: 1, pageSize: 999999})
         if (response?.status == 200) {
           setNotifications(response.data?.data)
+          oneSignalUser()
         } else {
           setNotifications([])
         }

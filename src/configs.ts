@@ -61,3 +61,17 @@ const colors = appConfigs.colors
 
 export {fonts, sizes, colors}
 export default appConfigs
+
+// {
+//   ClassId: 1111
+//   CreatedBy: 'Nguyễn Thị Quỳnh Trang'
+//   CreatedOn: '2024-02-01T18:26:27.77'
+//   Enable: true
+//   Id: 708
+//   ModifiedBy: 'Nguyễn Thị Quỳnh Trang'
+//   ModifiedOn: '2024-02-01T18:26:27.77'
+//   ScoreColumnId: 287
+//   StudentId: 1636
+//   TranscriptId: 76
+//   Value: '8'
+// }

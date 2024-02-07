@@ -23,7 +23,9 @@ type TScoreColumn = TApiAuth & {
 const MoreInfo = (props: {scores: Array<TScore>; scoreColumns: Array<TScoreColumn>}) => {
   const {scores, scoreColumns} = props
 
-  const {user} = useGlobalContext()
+  const {user, curChildren, is} = useGlobalContext()
+
+  const theUser = is?.student ? user : curChildren
 
   function sortByIndexAscending(array) {
     return array.sort(function (a, b) {
@@ -42,28 +44,33 @@ const MoreInfo = (props: {scores: Array<TScore>; scoreColumns: Array<TScoreColum
   }
 
   return (
-    <View style={[styles.container, {marginTop: 16}]}>
-      <View style={{flexDirection: 'column', marginTop: -8}}>
-        {sortByIndexAscending(scoreColumns).map((score: TScoreColumn, sindex) => {
-          if (score?.Type != 1 && score?.Type != 2) {
-            return (
-              <View key={`scol-${sindex}`} style={[styles.scoreContainer, {alignItems: 'flex-start', marginTop: 8}]}>
-                <Text style={{color: '#000', fontFamily: fonts.Regular}}>{score?.Name}</Text>
-                <Text
-                  style={{
-                    color: getThisScore(user?.UserInformationId, score?.Id)?.Value ? '#2196F3' : '#F44336',
-                    fontFamily: fonts.Medium,
-                  }}>
-                  {getThisScore(user?.UserInformationId, score?.Id)?.Value || 'Chưa nhập'}
-                </Text>
+    <>
+      {sortByIndexAscending(scoreColumns).map((score: TScoreColumn, sindex) => {
+        if (score?.Type != 1 && score?.Type != 2) {
+          return (
+            <View style={[styles.container, {marginTop: 16}]}>
+              <View style={{flexDirection: 'column', marginTop: -8}}>
+                <View
+                  key={`scol-${sindex}`}
+                  style={[styles.scoreContainer, {alignItems: 'flex-start', flexDirection: 'column', marginTop: 8}]}>
+                  <Text style={{color: '#000', fontFamily: fonts.Semibold}}>{score?.Name}</Text>
+                  <Text
+                    style={{
+                      color: getThisScore(theUser?.UserInformationId, score?.Id)?.Value ? '#2196F3' : '#F44336',
+                      fontFamily: fonts.Regular,
+                      marginTop: 8,
+                    }}>
+                    {getThisScore(theUser?.UserInformationId, score?.Id)?.Value || 'Chưa nhập'}
+                  </Text>
+                </View>
               </View>
-            )
-          }
+            </View>
+          )
+        }
 
-          return <></>
-        })}
-      </View>
-    </View>
+        return <></>
+      })}
+    </>
   )
 }
 

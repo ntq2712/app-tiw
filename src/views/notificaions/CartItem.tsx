@@ -27,7 +27,7 @@ const NotiItem = ({item}) => {
       }}>
       <View style={{flex: 1}}>
         <Text style={{color: Colors.trans50, marginBottom: 4, fontFamily: fonts.Regular}}>
-          {moment(item?.CreatedDate).format('HH:mm DD/MM/YYYY')}
+          {moment(new Date(item?.CreatedOn)).format('HH:mm DD/MM/YYYY')}
         </Text>
         <Text style={{color: '#000', marginBottom: 4, fontFamily: fonts.Semibold, fontSize: 16}}>{item?.Title}</Text>
         <Text style={{color: '#000', fontFamily: fonts.Regular, fontSize: 14}}>{item?.Content}</Text>

@@ -49,7 +49,7 @@ const Signin = () => {
     try {
       const deviceState = await OneSignal.getDeviceState()
       console.log('--- deviceState: ', deviceState)
-      await RestApi.put('Auth/one-signal', {PlayerId: deviceState?.userId})
+      await RestApi.put('UserInformation/onesignal-deviceId', {oneSignalDeviceId: deviceState?.userId})
     } catch (error) {}
   }
 
@@ -62,6 +62,7 @@ const Signin = () => {
         await setToken(res?.token)
         const tempUser = await parseJwt(res?.token)
         getMyInfo(res?.token, tempUser?.UserInformationId || null)
+        oneSignalUser()
       } else {
         Alert.alert('Lỗi', res?.message)
       }

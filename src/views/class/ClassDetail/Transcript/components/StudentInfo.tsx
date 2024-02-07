@@ -48,7 +48,7 @@ const StudentInfo = (props: {scores: Array<TScore>; scoreColumns: Array<TScoreCo
   return (
     <View style={[styles.container, {marginTop: 16}]}>
       <View style={{flexDirection: 'row', marginBottom: 8}}>
-        <GreenAvatar source={user?.Avatar} />
+        <GreenAvatar source={theUser?.Avatar} />
         <View style={{marginLeft: 16, alignItems: 'flex-start'}}>
           <Text style={styles.studentName}>{theUser?.FullName}</Text>
           <View style={styles.tagCode}>
@@ -67,10 +67,10 @@ const StudentInfo = (props: {scores: Array<TScore>; scoreColumns: Array<TScoreCo
                 <Text style={{color: '#000', fontFamily: fonts.Regular}}>{score?.Name}</Text>
                 <Text
                   style={{
-                    color: getThisScore(user?.UserInformationId, score?.Id)?.Value ? '#2196F3' : '#F44336',
+                    color: getThisScore(theUser?.UserInformationId, score?.Id)?.Value ? '#2196F3' : '#F44336',
                     fontFamily: fonts.Medium,
                   }}>
-                  {getThisScore(user?.UserInformationId, score?.Id)?.Value || 'Chưa nhập'}
+                  {getThisScore(theUser?.UserInformationId, score?.Id)?.Value || 'Chưa nhập'}
                 </Text>
               </View>
             )
