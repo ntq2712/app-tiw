@@ -1,18 +1,28 @@
-import {Alert, Image, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
-import React, {useState} from 'react'
-import appConfigs, {colors, fonts} from '~/configs'
-import {useSafeAreaInsets} from 'react-native-safe-area-context'
-import {Colors, Icon, isIOS, windowWidth} from 'green-native-ts'
-import {useGlobalContext} from '~/provider/AppProvider'
-import {LocalStorage, logout, wait} from '~/common'
 import {useIsFocused, useNavigation} from '@react-navigation/native'
-import Spinner from 'react-native-loading-spinner-overlay'
+import {Colors, Icon, isIOS, windowWidth} from 'green-native-ts'
+import React, {useState} from 'react'
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import {getReadableVersion} from 'react-native-device-info'
+import {launchImageLibrary} from 'react-native-image-picker'
+import Spinner from 'react-native-loading-spinner-overlay'
+import {useSafeAreaInsets} from 'react-native-safe-area-context'
+import RestApi from '~/api/RestApi'
+import {LocalStorage, logout, wait} from '~/common'
 import {Divider, HeaderWhite} from '~/common/components'
 import GreenAvatar from '~/common/components/Avatar'
 import GreenTag from '~/common/components/GreenTag'
-import {launchImageLibrary} from 'react-native-image-picker'
-import RestApi from '~/api/RestApi'
+import appConfigs, {colors, fonts} from '~/configs'
+import {useGlobalContext} from '~/provider/AppProvider'
 
 type IImgageSlected = {
   type: string
@@ -21,7 +31,7 @@ type IImgageSlected = {
 }
 
 function Item(props: any) {
-  const {onPress, icon, title, iconColor} = props
+  const {onPress, icon, title, iconColor, loading = false} = props
 
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.7} style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -37,9 +47,35 @@ function Item(props: any) {
         }}>
         {icon}
       </View>
+      {loading && (
+        <ActivityIndicator
+          style={{
+            marginRight: 8,
+          }}
+          size="small"
+        />
+      )}
       <Text style={{fontFamily: fonts.Medium, fontSize: 16, color: '#000', flex: 1}}>{title}</Text>
       <Icon type="materialicons" name="chevron-right" size={22} color="#000" />
     </TouchableOpacity>
+  )
+}
+
+const LogoutItem = ({handleLogout}) => {
+  const [loading, setLoading] = useState<boolean>(false)
+  const _handleLogout = async () => {
+    setLoading(true)
+    await handleLogout()
+    setLoading(false)
+  }
+  return (
+    <Item
+      loading={loading}
+      onPress={_handleLogout}
+      icon={<Image source={require('~/assets/icons/out.png')} style={{width: 24, height: 24}} />}
+      iconColor="#f27375"
+      title="Đăng xuất"
+    />
   )
 }
 
@@ -52,8 +88,15 @@ const UserTab = () => {
 
   const navigation = useNavigation<any>()
 
-  function handleLogout() {
-    logout(setUser)
+  async function handleLogout() {
+    try {
+      await RestApi.put('UserInformation/onesignal-deviceId', {
+        oneSignalDeviceId: '',
+      })
+      logout(setUser)
+    } catch (error) {
+      Alert.alert('Lỗi', error?.data?.message)
+    }
   }
 
   // Xử lý khi nhấn nút chọn hình
@@ -304,17 +347,12 @@ const UserTab = () => {
         </View>
 
         <View style={[styles.itemContainer, {width: windowWidth - 32, flexDirection: 'column'}]}>
-          <Item
-            onPress={handleLogout}
-            icon={<Image source={require('~/assets/icons/out.png')} style={{width: 24, height: 24}} />}
-            iconColor="#f27375"
-            title="Đăng xuất"
-          />
+          <LogoutItem handleLogout={handleLogout} />
         </View>
 
         <Text style={styles.appVersion}>v{getReadableVersion()}</Text>
 
-        <View style={{height: 24}}></View>
+        <View style={{height: 24}} />
       </ScrollView>
 
       <Spinner visible={loading} textContent={'Đang xử lý...'} textStyle={{color: '#fff'}} />
