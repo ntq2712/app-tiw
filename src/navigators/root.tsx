@@ -27,6 +27,7 @@ import UserLearn from '~/views/user-tab/learn'
 import BDScreen from '~/views/bd'
 import ChauDashboard from '~/views/chau'
 import SWebview from '~/views/chau/Webview'
+import ForgotPassword from '~/common/components/Auth/ForgotPassword'
 
 const Stack = createNativeStackNavigator<TRootNavigator>()
 
@@ -48,7 +49,7 @@ const RootNavigator = () => {
           <Stack.Screen name="Signin" component={Signin} />
           <Stack.Screen name="Signup" component={Signup} />
           <Stack.Screen name="bd" component={BDScreen} />
-
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="Webview" component={SWebview} />
           <Stack.Screen name="ChauDashboard" component={ChauDashboard} />
         </Stack.Navigator>

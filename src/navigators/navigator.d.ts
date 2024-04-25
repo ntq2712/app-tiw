@@ -2,6 +2,7 @@ type TRootNavigator = {
   // AUTH
   Signin?: any
   Signup?: any
+  ForgotPassword?: any
 
   Auth: any
   RootTabs: any

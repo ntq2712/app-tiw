@@ -1,4 +1,5 @@
 import {Control, Controller, FieldValues, Path, RegisterOptions} from 'react-hook-form'
+import {TextInputProps} from 'react-native'
 
 type TInputController = {
   control?: any
@@ -6,6 +7,7 @@ type TInputController = {
   name?: string
   label?: string
   disabled?: boolean
+  autoCapitalize: TextInputProps['autoCapitalize']
   hideError?: boolean
   placeholder?: string
   onEnter?: () => void

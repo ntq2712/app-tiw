@@ -1,10 +1,9 @@
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native'
+import {View, Text, StyleSheet, Image, TouchableOpacity, Alert} from 'react-native'
 import React, {FC} from 'react'
 import Input from '../Controller/Input'
 import {useForm, Controller} from 'react-hook-form'
 import Button from '../Button'
 import appConfigs, {sizes} from '~/configs'
-import ButtonRegister from '../Button/ButtonRegister'
 import {useNavigation} from '@react-navigation/native'
 
 type ILoginForm = {
@@ -61,6 +60,13 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
         isLogin={true}
         inputStyle={{height: 44}}
       />
+      <TouchableOpacity
+        onPress={() => {
+          navigation.push('ForgotPassword')
+        }}
+        style={styles.forgotPassword}>
+        <Text>Quên mật khẩu?</Text>
+      </TouchableOpacity>
 
       {/* <View style={{width: '100%', flexDirection: 'row', marginTop: 0, justifyContent: 'flex-end'}}>
         <TouchableOpacity activeOpacity={0.6} style={{paddingVertical: 8}}>
@@ -76,6 +82,12 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
 export default LoginForm
 
 const styles = StyleSheet.create({
+  forgotPassword: {
+    width: '100%',
+    flexDirection: 'row',
+    marginTop: 10,
+    justifyContent: 'flex-end',
+  },
   container: {
     marginTop: 16,
     backgroundColor: '#fff',

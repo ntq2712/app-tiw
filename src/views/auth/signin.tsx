@@ -1,4 +1,4 @@
-import {View, StyleSheet, StatusBar, ScrollView, Alert, SafeAreaView} from 'react-native'
+import {View, StyleSheet, StatusBar, ScrollView, Alert, SafeAreaView, Text} from 'react-native'
 import React, {useEffect, useState} from 'react'
 import LoginForm from '~/common/components/Auth/LoginForm'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'

@@ -6,7 +6,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import appConfigs, {colors} from '~/configs'
 
 const Input: FC<TInputController> = props => {
-  const {label, name, placeholder, control, disabled, required = true, hideError = false, onEnter} = props
+  const {
+    label,
+    name,
+    autoCapitalize,
+    placeholder,
+    control,
+    disabled,
+    required = true,
+    hideError = false,
+    onEnter,
+  } = props
   const {style, errors, wrapStyle, isPassword, inputStyle, isLogin} = props
 
   const [showPassword, setShowPassword] = useState(isPassword)
@@ -20,6 +30,7 @@ const Input: FC<TInputController> = props => {
           rules={{required: required}}
           render={({field: {onChange, onBlur, value}}) => (
             <TextInput
+              autoCapitalize={autoCapitalize}
               secureTextEntry={showPassword ? true : false}
               editable={!disabled}
               placeholder={placeholder}

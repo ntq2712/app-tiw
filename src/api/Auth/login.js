@@ -1,4 +1,5 @@
 import appConfigs from '~/configs'
+import instance from '../instance'
 
 const FormData = require('form-data')
 
@@ -35,3 +36,9 @@ export const loginApi = async data => {
     return Promise.reject(error)
   }
 }
+
+export const authApi = {
+  forgotPassword: (data: { UserName: string }) => {
+    return instance.post('/KeyForgotPassword', data)
+  }
+};
