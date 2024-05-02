@@ -73,8 +73,8 @@ const ForgotPassword = () => {
             control={control}
             name="username"
             autoCapitalize="none"
-            label="Tài khoản"
-            placeholder="Vui lòng nhập vào tài khoản"
+            label="Tài khoản hoặc email"
+            placeholder="Vui lòng nhập tài khoản hoặc email"
             errors={errors.username}
             isLogin={true}
             inputStyle={{height: 44}}
