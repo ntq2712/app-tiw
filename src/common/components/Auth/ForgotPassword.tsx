@@ -1,13 +1,14 @@
-import {Alert, ScrollView, StatusBar, StyleSheet, Text, View} from 'react-native'
-import React, {useState} from 'react'
-import HeaderWhite from '../Header/HeaderWhite'
-import * as Animatable from 'react-native-animatable'
 import {Colors} from 'green-native-ts'
-import Input from '../Controller/Input'
+import React, {useState} from 'react'
 import {useForm} from 'react-hook-form'
-import Button from '../Button'
+import {Alert, ScrollView, StatusBar, StyleSheet, View} from 'react-native'
+import * as Animatable from 'react-native-animatable'
 import {authApi} from '~/api/Auth/login'
+import {fonts} from '~/configs'
 import useCountDown from '~/hooks/useCountDown'
+import Button from '../Button'
+import Input from '../Controller/Input'
+import HeaderWhite from '../Header/HeaderWhite'
 
 const ForgotPassword = () => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -33,7 +34,7 @@ const ForgotPassword = () => {
       reset()
       setCount(10)
     } catch (error) {
-      Alert.alert(error?.data?.message || 'Lỗi đã xảy ra rồi !')
+      Alert.alert('Có lỗi xảy ra !', error?.data?.message || 'Lỗi đã xảy ra rồi !')
     }
     setLoading(false)
   }
