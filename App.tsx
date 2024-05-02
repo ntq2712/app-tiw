@@ -15,6 +15,9 @@ import OneSignal from 'react-native-onesignal'
 import RootNavigator from '~/navigators/root'
 import AppProvider from '~/provider/AppProvider'
 
+import {requestMultiple, PERMISSIONS} from 'react-native-permissions'
+import {isAndroid} from 'green-native-ts/src/function'
+
 LogBox.ignoreAllLogs()
 
 const App = () => {
@@ -46,8 +49,18 @@ const App = () => {
     })
   }
 
+  function getPermisson() {
+    if (isAndroid()) {
+      requestMultiple([PERMISSIONS.ANDROID.POST_NOTIFICATIONS]).then(statuses => {
+        console.log('- Quyền thông báo: ', statuses[PERMISSIONS.ANDROID.POST_NOTIFICATIONS])
+
+        initOneSignal()
+      })
+    }
+  }
+
   useEffect(() => {
-    initOneSignal()
+    getPermisson()
   }, [])
 
   return (
