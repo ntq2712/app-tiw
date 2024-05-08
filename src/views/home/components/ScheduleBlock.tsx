@@ -1,9 +1,9 @@
-import {Image, StyleSheet, Text, View} from 'react-native'
-import React from 'react'
 import {Colors, Icon, windowWidth} from 'green-native-ts'
+import React from 'react'
+import {Image, StyleSheet, Text, View} from 'react-native'
 import {fonts} from '~/configs'
-import {ScheduleItem} from '~/views/Schedule'
 import {useGlobalContext} from '~/provider'
+import {ScheduleItem} from '~/views/Schedule'
 
 const ScheduleBlock = () => {
   const {schedule, published} = useGlobalContext()

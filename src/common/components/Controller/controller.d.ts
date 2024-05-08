@@ -1,4 +1,3 @@
-import {Control, Controller, FieldValues, Path, RegisterOptions} from 'react-hook-form'
 import {TextInputProps} from 'react-native'
 
 type TInputController = {
@@ -7,7 +6,7 @@ type TInputController = {
   name?: string
   label?: string
   disabled?: boolean
-  autoCapitalize: TextInputProps['autoCapitalize']
+  autoCapitalize?: TextInputProps['autoCapitalize']
   hideError?: boolean
   placeholder?: string
   onEnter?: () => void
@@ -48,4 +47,4 @@ type TDateController = {
   placeholder: string
 }
 
-export {TInputController, TSelectController, TDateController}
+export {TDateController, TInputController, TSelectController}

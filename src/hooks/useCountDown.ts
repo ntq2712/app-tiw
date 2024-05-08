@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from 'react'
 
-const useCountDown = initValue => {
+const useCountDown = (initValue): [number, (value: number) => void] => {
   const [count, setCount] = useState<number>(initValue)
 
   const setCountDown = useCallback(value => {

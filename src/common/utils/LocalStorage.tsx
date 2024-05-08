@@ -38,6 +38,24 @@ const LocalStorage = {
     const response = await AsyncStorage.getItem(WELCOME)
     return response == null ? null : response
   },
+  async getRememberLogin(): Promise<{
+    username: string
+    password: string
+  } | null> {
+    const response = await AsyncStorage.getItem('rememberLogin')
+    if (response) {
+      return JSON.parse(response)
+    }
+    return null
+  },
+  async setRememberLogin(params: {username: string; password: string}) {
+    try {
+      let temp = JSON.stringify(params)
+      await AsyncStorage.setItem('rememberLogin', temp)
+    } catch (error) {
+      console.log(error)
+    }
+  },
 }
 
 export default LocalStorage

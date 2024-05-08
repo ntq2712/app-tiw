@@ -6,7 +6,7 @@ const {width, height} = Dimensions.get('window')
 // Dev: https://gdc.monamedia.net
 
 const appConfigs = {
-  hostURL: 'https://lms.gdcenglish.edu.vn',
+  hostURL: 'https://gdc.monamedia.net',
   // hostURL: 'https://gdc.monamedia.net',
   configURL: 'https://skillhub.mona.software/chau/gdc-configs.json',
   oneSignalID: '',
@@ -59,7 +59,7 @@ const fonts = appConfigs.fonts
 const sizes = appConfigs.sizes
 const colors = appConfigs.colors
 
-export {fonts, sizes, colors}
+export {colors, fonts, sizes}
 export default appConfigs
 
 // {

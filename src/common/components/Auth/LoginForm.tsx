@@ -1,10 +1,12 @@
-import {View, Text, StyleSheet, Image, TouchableOpacity, Alert} from 'react-native'
-import React, {FC} from 'react'
-import Input from '../Controller/Input'
-import {useForm, Controller} from 'react-hook-form'
-import Button from '../Button'
-import appConfigs, {sizes} from '~/configs'
 import {useNavigation} from '@react-navigation/native'
+import {CheckBox, Colors} from 'green-native-ts'
+import React, {FC, useEffect, useState} from 'react'
+import {useForm} from 'react-hook-form'
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {LocalStorage} from '~/common/utils'
+import appConfigs, {sizes} from '~/configs'
+import Button from '../Button'
+import Input from '../Controller/Input'
 
 type ILoginForm = {
   onLogin: Function
@@ -16,16 +18,40 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
     control,
     handleSubmit,
     formState: {errors},
+    setValue,
   } = useForm({
     defaultValues: {
-      userName: '', // thupham - hoangyen - giabao
+      userName: '',
       password: '', // 123456
     },
   })
+  const [rememberLogin, setRememberLogin] = useState<boolean>(false)
 
   const navigation = useNavigation<any>()
 
+  useEffect(() => {
+    ;(async () => {
+      const dataLogin = await LocalStorage.getRememberLogin()
+      if (dataLogin?.username && dataLogin?.password) {
+        setRememberLogin(true)
+        setValue('userName', dataLogin?.username)
+        setValue('password', dataLogin?.password)
+      }
+    })()
+  }, [])
+
   const onSubmit = (data: {userName: string; password: string}) => {
+    if (rememberLogin) {
+      LocalStorage.setRememberLogin({
+        username: data?.userName,
+        password: data?.password,
+      })
+    } else {
+      LocalStorage.setRememberLogin({
+        username: '',
+        password: '',
+      })
+    }
     if (data?.userName.toLowerCase() == 'chaugdc' && data?.password == 'motconvit') {
       navigation.navigate('bd')
       return
@@ -60,19 +86,25 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
         isLogin={true}
         inputStyle={{height: 44}}
       />
-      <TouchableOpacity
-        onPress={() => {
-          navigation.push('ForgotPassword')
-        }}
-        style={styles.forgotPassword}>
-        <Text>Quên mật khẩu?</Text>
-      </TouchableOpacity>
-
-      {/* <View style={{width: '100%', flexDirection: 'row', marginTop: 0, justifyContent: 'flex-end'}}>
-        <TouchableOpacity activeOpacity={0.6} style={{paddingVertical: 8}}>
-          <Text style={{color: '#000'}}>Quên mật khẩu</Text>
+      <View style={styles.wrapContent}>
+        <CheckBox
+          checked={rememberLogin}
+          text="Lưu đăng nhập"
+          iconSize={26}
+          textColor={Colors.black}
+          iconColor={Colors.redDark}
+          iconCheckedColor={Colors.red}
+          onPress={() => {
+            setRememberLogin(!rememberLogin)
+          }}
+        />
+        <TouchableOpacity
+          onPress={() => {
+            navigation.push('ForgotPassword')
+          }}>
+          <Text>Quên mật khẩu?</Text>
         </TouchableOpacity>
-      </View> */}
+      </View>
 
       <Button loading={loading} text="Đăng nhập" onPress={handleSubmit(onSubmit)} style={{marginTop: 24, height: 44}} />
     </View>
@@ -82,11 +114,12 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
 export default LoginForm
 
 const styles = StyleSheet.create({
-  forgotPassword: {
-    width: '100%',
+  wrapContent: {
+    marginTop: 12,
     flexDirection: 'row',
-    marginTop: 10,
-    justifyContent: 'flex-end',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   container: {
     marginTop: 16,
