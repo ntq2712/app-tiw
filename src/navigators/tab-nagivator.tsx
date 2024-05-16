@@ -1,22 +1,13 @@
-import * as React from 'react'
-import {Text, View} from 'react-native'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import {isIOS} from 'green-native-ts'
+import * as React from 'react'
+import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import Tabs from '~/common/components/TabNavigator'
+import {useGlobalContext} from '~/provider/AppProvider'
+import ScheduleTab from '~/views/Schedule'
+import ClassTab from '~/views/class'
 import HomeScreen from '~/views/home'
 import UserTab from '~/views/user-tab'
-import {isIOS} from 'green-native-ts'
-import {useSafeAreaInsets} from 'react-native-safe-area-context'
-import {useGlobalContext} from '~/provider/AppProvider'
-import ClassTab from '~/views/class'
-import ScheduleTab from '~/views/Schedule'
-
-function SettingsScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Settings!</Text>
-    </View>
-  )
-}
 
 const Tab = createBottomTabNavigator()
 

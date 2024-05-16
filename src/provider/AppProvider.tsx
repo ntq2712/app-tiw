@@ -1,15 +1,14 @@
-import React, {createContext, useContext, useState, useEffect, FC} from 'react'
+import {Buffer} from 'buffer'
+import {isIOS} from 'green-native-ts'
+import moment from 'moment'
+import React, {FC, createContext, useContext, useEffect, useState} from 'react'
+import {getVersion} from 'react-native-device-info'
+import OneSignal from 'react-native-onesignal'
+import SplashScreen from 'react-native-splash-screen'
+import RestApi from '~/api/RestApi'
 import {setToken} from '~/api/instance'
 import {LocalStorage, wait} from '~/common'
-import RestApi from '~/api/RestApi'
-import SplashScreen from 'react-native-splash-screen'
-import {Buffer} from 'buffer'
-import moment from 'moment'
-import {getVersion} from 'react-native-device-info'
-import {Platform} from 'react-native'
-import {isIOS} from 'green-native-ts'
 import appConfigs from '~/configs'
-import OneSignal from 'react-native-onesignal'
 
 const initUser = null
 
@@ -39,8 +38,6 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
 
   useEffect(() => {
     if (user?.token) {
-      console.log('----- XXXX USER: ', user)
-
       getMyInfo(user?.token, user?.UserInformationId)
     }
   }, [user?.token])
@@ -57,7 +54,6 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
   async function oneSignalUser() {
     try {
       const deviceState = await OneSignal.getDeviceState()
-      console.log('--- deviceState: ', deviceState)
       await RestApi.put('UserInformation/onesignal-deviceId', {oneSignalDeviceId: deviceState?.userId})
     } catch (error) {}
   }
@@ -113,17 +109,11 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
   }
 
   async function getMyInfo(token, id) {
-    console.log('--- getMyInfo ---')
-
     try {
       if (token) {
         const res = await RestApi.getBy<any>('UserInformation', id)
         if (res.status == 200) {
-          console.log('Current USER: ', {token: token, ...res?.data?.data})
-
           !!setUser && setUser({token: token, ...res?.data?.data})
-
-          console.log('--- res?.data?.data?.RoleId: res?.data?.data?.RoleId')
 
           if (res?.data?.data?.RoleId == 8) {
             getMyChildrens(res?.data?.data?.UserInformationId)
@@ -240,8 +230,6 @@ const AppProvider: FC<{children: React.ReactNode}> = ({children}) => {
   }
 
   const [childrens, setChildrent] = useState(null)
-
-  console.log('--- childrens: ', childrens)
 
   async function getMyChildrens(parentIds?: number) {
     try {

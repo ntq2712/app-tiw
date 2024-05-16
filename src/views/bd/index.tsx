@@ -1,11 +1,11 @@
-import {Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
-import React, {useEffect, useState} from 'react'
-import RestApi from '~/api/RestApi'
-import {Empty, HeaderWhite, SuperLoading} from '~/common/components'
-import {fonts} from '~/configs'
 import {Colors} from 'green-native-ts'
+import React, {useEffect, useState} from 'react'
+import {Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
+import RestApi from '~/api/RestApi'
 import {setToken} from '~/api/instance'
 import {LocalStorage} from '~/common'
+import {Empty, HeaderWhite, SuperLoading} from '~/common/components'
+import {fonts} from '~/configs'
 import {useGlobalContext} from '~/provider'
 import {parseJwt} from '../auth/signin'
 
@@ -128,8 +128,6 @@ const BDScreen = () => {
       const res: any = await RestApi.post('LoginDev', {...data})
 
       const thisTolen = res?.data?.token
-
-      console.log('-- res: ', thisTolen)
 
       if (thisTolen) {
         await setToken(thisTolen)

@@ -1,16 +1,16 @@
-import {View, StyleSheet, StatusBar, ScrollView, Alert, SafeAreaView, Text} from 'react-native'
-import React, {useEffect, useState} from 'react'
-import LoginForm from '~/common/components/Auth/LoginForm'
-import {useSafeAreaInsets} from 'react-native-safe-area-context'
-import {colors, fonts} from '~/configs'
-import {useGlobalContext} from '~/provider/AppProvider'
-import RestApi from '~/api/RestApi'
-import {loginApi} from '~/api/Auth/login'
-import {LocalStorage} from '~/common'
-import {setToken} from '~/api/instance'
 import {Colors, is18x9, isIOS, useKeyboard, windowWidth} from 'green-native-ts'
-import OneSignal from 'react-native-onesignal'
+import React, {useEffect, useState} from 'react'
+import {Alert, SafeAreaView, ScrollView, StatusBar, StyleSheet, View} from 'react-native'
 import * as Animatable from 'react-native-animatable'
+import OneSignal from 'react-native-onesignal'
+import {useSafeAreaInsets} from 'react-native-safe-area-context'
+import {loginApi} from '~/api/Auth/login'
+import RestApi from '~/api/RestApi'
+import {setToken} from '~/api/instance'
+import {LocalStorage} from '~/common'
+import LoginForm from '~/common/components/Auth/LoginForm'
+import {fonts} from '~/configs'
+import {useGlobalContext} from '~/provider/AppProvider'
 
 export function parseJwt(token) {
   var base64Url = token.split('.')[1]
@@ -19,10 +19,12 @@ export function parseJwt(token) {
   return JSON.parse(jsonPayload) || {}
 }
 
+import {CommonActions, useNavigation} from '@react-navigation/native'
 import {Buffer} from 'buffer'
 
 const Signin = () => {
   const insets = useSafeAreaInsets()
+  const navigation = useNavigation<any>()
 
   const {setUser, getConfigs} = useGlobalContext()
   const [loading, setLoading] = useState<boolean>(false)
@@ -48,7 +50,6 @@ const Signin = () => {
   async function oneSignalUser() {
     try {
       const deviceState = await OneSignal.getDeviceState()
-      console.log('--- deviceState: ', deviceState)
       await RestApi.put('UserInformation/onesignal-deviceId', {oneSignalDeviceId: deviceState?.userId})
     } catch (error) {}
   }
@@ -63,6 +64,16 @@ const Signin = () => {
         const tempUser = await parseJwt(res?.token)
         getMyInfo(res?.token, tempUser?.UserInformationId || null)
         oneSignalUser()
+        LocalStorage.setRefreshToken({
+          refreshToken: res?.refreshToken,
+          refreshTokenExpires: res?.refreshTokenExpires,
+        })
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{name: 'RootTabs'}],
+          }),
+        )
       } else {
         Alert.alert('Lỗi', res?.message)
       }

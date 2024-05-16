@@ -10,13 +10,13 @@
 
 import React, {useEffect} from 'react'
 import {LogBox, Platform, StatusBar, View} from 'react-native'
-import {SafeAreaProvider} from 'react-native-safe-area-context'
 import OneSignal from 'react-native-onesignal'
+import {SafeAreaProvider} from 'react-native-safe-area-context'
 import RootNavigator from '~/navigators/root'
 import AppProvider from '~/provider/AppProvider'
 
-import {requestMultiple, PERMISSIONS} from 'react-native-permissions'
 import {isAndroid} from 'green-native-ts/src/function'
+import {PERMISSIONS, requestMultiple} from 'react-native-permissions'
 
 LogBox.ignoreAllLogs()
 
@@ -32,10 +32,6 @@ const App = () => {
         console.log('App - Prompt response:', response)
       })
     }
-
-    const deviceState = await OneSignal.getDeviceState()
-
-    console.log('--- deviceState: ', deviceState)
 
     OneSignal.setNotificationWillShowInForegroundHandler(notificationReceivedEvent => {
       let notification = notificationReceivedEvent.getNotification()

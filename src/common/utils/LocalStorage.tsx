@@ -6,6 +6,13 @@ const USER = 'USER'
 const WELCOME = 'WELCOME'
 
 const LocalStorage = {
+  async setRefreshToken(data: {refreshToken: string; refreshTokenExpires: string}): Promise<void> {
+    await AsyncStorage.setItem('refresh_token', JSON.stringify(data))
+  },
+  async getRefreshToken(): Promise<{refreshToken: string; refreshTokenExpires: string} | null> {
+    const response: string | null = await AsyncStorage.getItem('refresh_token')
+    return response == null ? null : JSON.parse(response)
+  },
   async setToken(params: string) {
     await AsyncStorage.setItem(TOKEN, params)
   },

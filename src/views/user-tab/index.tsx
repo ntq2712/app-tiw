@@ -93,7 +93,7 @@ const UserTab = () => {
       await RestApi.put('UserInformation/onesignal-deviceId', {
         oneSignalDeviceId: '',
       })
-      logout(setUser)
+      logout()
     } catch (error) {
       Alert.alert('Lỗi', error?.data?.message)
     }

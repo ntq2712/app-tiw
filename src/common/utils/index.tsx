@@ -1,4 +1,6 @@
+import {CommonActions} from '@react-navigation/native'
 import {setToken} from '~/api/instance'
+import {rootNavigatorRef} from '~/navigators/root'
 import LocalStorage from './LocalStorage'
 
 export {LocalStorage}
@@ -112,10 +114,15 @@ export const languages: any = {
   zu: 'Zulu',
 }
 
-export function logout(setUser) {
+export function logout() {
   LocalStorage.logout()
   setToken('')
-  setUser(null)
+  rootNavigatorRef?.current?.dispatch(
+    CommonActions.reset({
+      index: 0,
+      routes: [{name: 'Signin'}],
+    }),
+  )
 }
 
 export const wait = (timeout: number) => {

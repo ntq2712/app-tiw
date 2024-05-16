@@ -1,5 +1,7 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios'
+import axios, {AxiosRequestConfig} from 'axios'
+import {LocalStorage, logout} from '~/common'
 import appConfigs from '~/configs'
+import {authApi} from './Auth/login'
 
 const apiConfig = {
   baseUrl: `${appConfigs.hostURL}/api`,
@@ -21,16 +23,17 @@ const getUrl = (config: any) => {
   return config?.url
 }
 
+let isRefreshToken = false
+let refreshSubscribers = []
+
 // Intercept all request
 instance.interceptors.request.use(
   async (config: AxiosRequestConfig & {startCall: any}) => {
     config.startCall = new Date().getTime()
-
-    console.log(`%c ${config?.method?.toUpperCase()} - ${getUrl(config)}:`, 'color: #0086b3; font-weight: bold', config)
     return config
   },
   (error: any) => {
-    // console.log(`%c ${error?.response?.status}  :`, 'color: red; font-weight: bold', error?.response?.data)
+    console.log(`%c ${error?.response?.status}  :`, 'color: red; font-weight: bold', error?.response?.data)
     return Promise.reject(error)
   },
 )
@@ -42,27 +45,74 @@ function convertMsToS(ms) {
 
 // Intercept all responses
 instance.interceptors.response.use(
-  (response: any) => {
+  async (response: any) => {
     const apiUrl = `${response?.status} - ${getUrl(response?.config)}`
     const elapsedTime = new Date().getTime() - response?.config?.startCall // Tính thời gian đã trôi qua
     const apiRating = elapsedTime < 1000 ? 'Rất nhanh' : elapsedTime > 2000 ? 'Rất chậm' : 'Hơi nhanh'
     const apiTime = `${elapsedTime}ms --> ${convertMsToS(elapsedTime)}s`
 
-    console.log(`%c ${response?.status} - ${getUrl(response?.config)}:`, 'color: #008000; font-weight: bold', {
-      timeSpend: apiTime,
-      rate: apiRating,
-      ...response,
-    })
+    console.log(
+      `%c REPONSE THÀNH CÔNG ${response?.status} - ${getUrl(response?.config)}:`,
+      'color: #008000; font-weight: bold',
+      {
+        timeSpend: apiTime,
+        rate: apiRating,
+        ...response,
+      },
+    )
     return response
   },
   (error: any) => {
     console.log(
-      `%c ${error?.response?.status} - ${getUrl(error?.response?.config)}:`,
+      `%c REQUEST LỖI ${error?.response?.status} - ${getUrl(error?.response?.config)}:`,
       'color: #a71d5d; font-weight: bold',
       error?.response,
+      error,
     )
+    const originalRequest = error.config
+
+    if (error?.response?.status === 401) {
+      if (!isRefreshToken) {
+        isRefreshToken = true
+        LocalStorage.getRefreshToken()
+          .then(dataRefresh => {
+            const refreshToken = dataRefresh.refreshToken
+            return authApi.refreshToken(refreshToken)
+          })
+          .then(res => {
+            isRefreshToken = false
+            const newToken = res?.data?.token
+            setToken(newToken)
+
+            return LocalStorage.setRefreshToken({
+              refreshToken: res?.data?.refreshToken,
+              refreshTokenExpires: res?.data?.refreshTokenExpires,
+            }).then(() => newToken)
+          })
+          .then(newToken => {
+            onRefreshed(newToken)
+          })
+          .catch(error => {
+            logout()
+          })
+      }
+      const retryOrigReq = new Promise((resolve, reject) => {
+        subscribeTokenRefresh(accessToken => {
+          originalRequest.headers['token'] = accessToken
+          resolve(instance(originalRequest))
+        })
+      })
+      return retryOrigReq
+    }
+
     return Promise.reject(error?.response || error?.response)
   },
 )
+function subscribeTokenRefresh(cb) {
+  refreshSubscribers.push(cb)
+}
+function onRefreshed(accessToken) {
+  refreshSubscribers.map(cb => cb(accessToken))
+}
 
 export default instance

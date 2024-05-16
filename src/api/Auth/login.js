@@ -1,10 +1,10 @@
+import axios from 'axios'
 import appConfigs from '~/configs'
 import instance from '../instance'
 
 const FormData = require('form-data')
 
 export const loginApi = async data => {
-  console.log('login Running.. : ', data)
 
   try {
     let formData = new FormData()
@@ -23,8 +23,8 @@ export const loginApi = async data => {
     await fetch(appConfigs.hostURL + '/api/Account/Login', requestOptions)
       .then(response => response.text())
       .then(result => {
-        console.log('-- result: ', result)
         temp = JSON.parse(result)
+        console.log('-- result: ', temp)
       })
       .catch(error => {
         console.log('---- error: ', error)
@@ -37,8 +37,16 @@ export const loginApi = async data => {
   }
 }
 
+
 export const authApi = {
-  forgotPassword: (data: { UserName: string }) => {
+  forgotPassword: (data) => {
     return instance.post('/KeyForgotPassword', data)
+  },
+  // POST /api/RefreshToken
+  // refreshToken
+  refreshToken: (refreshToken) => {
+    return axios.post(`${appConfigs.hostURL}/api/RefreshToken`, {
+      refreshToken
+    })
   }
 };
