@@ -1,7 +1,10 @@
 import axios, {AxiosRequestConfig} from 'axios'
 import {LocalStorage, logout} from '~/common'
 import appConfigs from '~/configs'
+import {throttle} from '~/utils/timeHandler'
 import {authApi} from './Auth/login'
+
+const throttleLogout = throttle(logout, 8000)
 
 const apiConfig = {
   baseUrl: `${appConfigs.hostURL}/api`,
@@ -93,8 +96,11 @@ instance.interceptors.response.use(
             onRefreshed(newToken)
           })
           .catch(error => {
-            logout()
+            throttleLogout()
           })
+      }
+      if (error?.response?.status === 403) {
+        throttleLogout()
       }
       const retryOrigReq = new Promise((resolve, reject) => {
         subscribeTokenRefresh(accessToken => {
