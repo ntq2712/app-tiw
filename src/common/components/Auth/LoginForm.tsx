@@ -92,8 +92,8 @@ const LoginForm: FC<ILoginForm> = ({onLogin, loading}) => {
           text="Lưu đăng nhập"
           iconSize={26}
           textColor={Colors.black}
-          iconColor={Colors.redDark}
-          iconCheckedColor={Colors.red}
+          iconColor={Colors.yellowDark}
+          iconCheckedColor={Colors.yellow}
           onPress={() => {
             setRememberLogin(!rememberLogin)
           }}

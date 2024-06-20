@@ -98,7 +98,7 @@ const Signin = () => {
         <View style={{width: '100%', backgroundColor: '#fff', alignItems: 'center'}}>
           <Animatable.Image
             resizeMode="contain"
-            source={require('~/assets/images/logo-gdc-01.png')}
+            source={require('~/assets/images/shot-logo.png')}
             style={{
               width: 140,
               height: 140,
@@ -129,7 +129,7 @@ const Signin = () => {
               marginBottom: 16,
               textAlign: 'center',
             }}>
-            Đội ngũ GDC sẽ luôn đồng hành và chia sẻ cùng bạn trong suốt quá trình chinh phục IELTS!
+            Đội ngũ TIW sẽ luôn đồng hành và chia sẻ cùng bạn trong suốt quá trình chinh phục IELTS!
           </Animatable.Text>
         </View>
 

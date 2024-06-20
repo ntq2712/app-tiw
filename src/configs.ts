@@ -11,7 +11,7 @@ const appConfigs = {
   configURL: 'https://skillhub.mona.software/chau/gdc-configs.json',
   oneSignalID: '',
   colors: {
-    primary: '#EB3349',
+    primary: '#F0DB2B',
     second: '#6610f2',
     placeholder: '#7C7C7C',
     boder: 'rgba(84, 84, 88, 0.2)',
