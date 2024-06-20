@@ -23,7 +23,7 @@ const Input: FC<TInputController> = props => {
 
   return (
     <View style={!!wrapStyle ? {...wrapStyle} : {}}>
-      <Text style={[styles.lable, {color: !isLogin ? '#000' : '#b00000'}]}>{label} </Text>
+      <Text style={[styles.lable, {color: !isLogin ? '#000' : '#F0DB2B'}]}>{label} </Text>
       <View style={{...styles.wrapInput, ...style}}>
         <Controller
           control={control}
